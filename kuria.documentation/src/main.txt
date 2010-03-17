@@ -1,0 +1,6 @@
+Kuria Handbook
+===============
+
+include::preface.txt[]
+
+
