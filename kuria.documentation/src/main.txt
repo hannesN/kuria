@@ -3,4 +3,12 @@ Kuria Handbook
 
 include::preface.txt[]
 
+include::intro.txt[]
 
+include::annotations.txt[]
+
+include::bindings.txt[]
+
+include::intro.txt[]
+
+include::swt-generator.txt[]
