@@ -124,7 +124,6 @@ public class CompactListWidget extends ListWidget {
 		if (!enabled)
 			setSelection(null);
 		updateView();
-		
 	}
 	
 	private class ListContentProvider implements IContentProvider {

@@ -57,7 +57,7 @@ public class InputMask implements IStateListener {
 	private final BindingContainer bindingContainer;
 
 	private IContentProvider contentProvider;
-
+	
 	public InputMask(Composite parent, Class<?> clazz, BindingContainer container) {
 		super();
 		this.clazz = clazz;

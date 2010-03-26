@@ -267,4 +267,12 @@ public class ComboWidget extends LabeledWidget {
 	public ComboBinding getPropertyBinding() {
 		return (ComboBinding) super.getPropertyBinding();
 	}
+	
+	@Override
+	public boolean isValid() {
+		if (!isOptional())
+			return combo.getSelectionIndex()>-1;
+			
+	    return super.isValid();
+	}
 }

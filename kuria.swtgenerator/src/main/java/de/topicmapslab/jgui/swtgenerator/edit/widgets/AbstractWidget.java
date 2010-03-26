@@ -96,6 +96,13 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 			listeners.remove(listener);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isOptional() {
+	    return propertyBinding.isOptional();
+    }
+	
 	protected void notifyStateListener(boolean isDirty) {
 		dirty = isDirty;
 		for (IStateListener l : getStateListeners()) {
@@ -109,4 +116,12 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 		}
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	public boolean isValid() {
+	    return true;
+	}
+	
 }

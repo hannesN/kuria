@@ -75,6 +75,14 @@ public class TextFieldWidget extends LabeledWidget {
 		addVerifyListener();
 		addModifyListener();
 	}
+	
+	@Override
+	public boolean isValid() {
+		if (!isOptional())
+			return textField.getText().length()>0;
+		// TODO regexp check
+		return super.isValid();
+	}
 
 	private void addModifyListener() {
 		textField.addModifyListener(new ModifyListener() {

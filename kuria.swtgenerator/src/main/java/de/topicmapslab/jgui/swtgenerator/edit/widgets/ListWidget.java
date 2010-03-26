@@ -90,6 +90,14 @@ public abstract class ListWidget extends LabeledWidget {
 	    return vals;
     }
 	
+	@Override
+	public boolean isValid() {
+		if (!isOptional())
+			return getSelection().length>0;
+		
+	    return super.isValid();
+	}
+	
 	/**
 	 * Updates the UI elements using the current selection.
 	 * 

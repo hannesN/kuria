@@ -82,4 +82,23 @@ public interface IInputMaskWidget {
 	 * @return the dirty state of the widget
 	 */
 	public boolean isDirty();
+	
+	/**
+	 * Returns the value of the optional flag.
+	 * 
+	 * If a widget is optional its value may be empty or null.
+	 * 
+	 * @return <code>true</code> if the widget is optional
+	 */
+	public boolean isOptional();
+
+	
+	/**
+	 * Checks if the value of the widget is valid. 
+	 * 
+	 * A check might be: If the value is non-optional the widget should contain a value which is not default.
+	 * 
+	 * @return <code>true</code> if the value is valid, <code>false</code> else
+	 */
+	public boolean isValid();
 }
