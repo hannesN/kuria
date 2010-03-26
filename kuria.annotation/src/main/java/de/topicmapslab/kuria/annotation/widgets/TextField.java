@@ -33,7 +33,10 @@ public @interface TextField {
 	/** the number of rows for the text field. More than one would indicate the need for a multiline textfield*/ 
 	int rows() default 1;
 	
-	/** inidicates that the text field should be higher than the given rows count if there is enough place below */
+	/** Indicates that the text field should be higher than the given rows count if there is enough place below */
 	boolean grabVerticalSpace() default false;
+	
+	/** Indicates if the field is optional and the edit mask may persist without it */
+	boolean optional() default false;
 	
 }

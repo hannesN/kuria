@@ -25,4 +25,7 @@ public @interface Date {
 	
 	/** The String format, see SimpleDateFormat */
 	String format() default "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+	
+	/** Indicates if the field is optional and the edit mask may persist without it */
+	boolean optional() default false;
 }

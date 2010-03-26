@@ -29,7 +29,10 @@ public @interface List {
 	 * @see  {@link ListStyle} */
 	ListStyle style() default ListStyle.COMPACT;
 	
-	/** Inidcates if a button next to the button is shown. This button opens a 
+	/** Indicates if a button next to the button is shown. This button opens a 
 	 * dialog which let you create a new instance of te type of the annotated field */
 	boolean createNew() default false;
+	
+	/** Indicates if the field is optional and the edit mask may persist without it */
+	boolean optional() default false;
 }

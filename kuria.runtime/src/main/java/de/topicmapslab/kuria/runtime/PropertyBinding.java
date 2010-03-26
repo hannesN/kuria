@@ -48,6 +48,7 @@ public abstract class PropertyBinding {
 
 	private String label;
 	private boolean readOnly = false;
+	private boolean optional = false;
 
 	private String fieldName;
 	private Type type;
@@ -101,6 +102,22 @@ public abstract class PropertyBinding {
 		this.readOnly = readOnly;
 	}
 
+	/**
+	 * Returns if this propterty is optional
+	 * @return <code>true</code> if the property is optional
+	 */
+	public boolean isOptional() {
+	    return optional;
+    }
+	
+	/**
+	 * Sets the flag which indicates if the property is optional
+	 * @param optional the new flag
+	 */
+	public void setOptional(boolean optional) {
+	    this.optional = optional;
+    }
+	
 	/**
 	 * Returns the name of the field of this binding.
 	 * 

@@ -23,4 +23,7 @@ public @interface Group {
 	
 	/** Indicates if widget is editable */
 	boolean readOnly() default false;
+	
+	/** Indicates if the field is optional and the edit mask may persist without it */
+	boolean optional() default false;
 }

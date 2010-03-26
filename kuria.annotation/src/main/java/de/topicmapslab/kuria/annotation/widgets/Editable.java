@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 
 /**
- * <p>Inidcates that a model the frintend should genreate an input mask for this model.</p>
+ * <p>Indicates that a model the factory should generate an input mask for this model.</p>
  * <p>All properties, which are not annotated with {@link Hidden}, will be shown in a control based on
  * their annotation or datatype.</p>
  * 
