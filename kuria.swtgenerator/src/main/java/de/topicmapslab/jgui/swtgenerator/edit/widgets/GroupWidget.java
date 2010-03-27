@@ -113,4 +113,9 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 	    notifyNewModelListener(newElement);	    
     }
 
+	@Override
+	public boolean isValid() {
+		return inputMask.isValid();
+	}
+	
 }

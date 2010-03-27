@@ -8,11 +8,11 @@ import de.topicmapslab.kuria.runtime.table.TableBinding;
 
 /**
  * The {@link ChildrenBinding} binds a field of a class to the classes
- * {@link TreeNodeBinding}.
+ * {@link ITreeNodeBinding}.
  * <p>
  * Children can be a Set or List of a specific type, an array or just a single
  * attribute. It is necessary, that the type of the field, array or collection
- * need to be bound to another {@link TreeNodeBinding}, because a child of a
+ * need to be bound to another {@link ITreeNodeBinding}, because a child of a
  * node needs to be rendered as node as well.
  * </p>
  * <p>
@@ -61,15 +61,14 @@ import de.topicmapslab.kuria.runtime.table.TableBinding;
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class ChildrenBinding extends PropertyBinding {
+public class ChildrenBinding extends PropertyBinding implements IChildrenBinding {
 
 	private String nodeTitle;
 
 	private String nodeImage;
 
 	/**
-	 * Returns the nodeTitle 
-	 * @return the nodeTitle or <code>null</code> if it is not set
+	 *  {@inheritDoc}
 	 */
 	public String getNodeTitle() {
 		return nodeTitle;
@@ -84,8 +83,7 @@ public class ChildrenBinding extends PropertyBinding {
 	}
 
 	/**
-	 * Returns the nodeImage
-	 * @return the path to the node image or <code>null</code> if not set.
+	 *  {@inheritDoc}
 	 */
 	public String getNodeImage() {
 		return nodeImage;

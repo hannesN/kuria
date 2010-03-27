@@ -10,7 +10,7 @@ import java.util.Collection;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
-import de.topicmapslab.kuria.runtime.tree.ChildrenBinding;
+import de.topicmapslab.kuria.runtime.tree.IChildrenBinding;
 import de.topicmapslab.kuria.runtime.util.TypeUtil;
 import de.topicmapslab.kuria.runtime.widget.CheckBinding;
 import de.topicmapslab.kuria.runtime.widget.ComboBinding;
@@ -40,11 +40,11 @@ import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
  * TODO explain more about generics and stuff
  * 
  * @see {@link TextFieldBinding}, {@link CheckBinding}, {@link ComboBinding}, {@link DateBinding}, {@link ListBinding}, {@link GroupBinding},
- * {@link CheckBinding}, {@link ChildrenBinding} 
+ * {@link CheckBinding}, {@link IChildrenBinding} 
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public abstract class PropertyBinding {
+public abstract class PropertyBinding implements IPropertyBinding {
 
 	private String label;
 	private boolean readOnly = false;
@@ -54,15 +54,7 @@ public abstract class PropertyBinding {
 	private Type type;
 
 	/**
-	 * Returns the value of the label attribute.
-	 * 
-	 * Labels are used for labeling all kind of input control, like textfields,
-	 * checkboxes and so on. Only with the labels the user knows what field she
-	 * actually edits.
-	 * 
-	 * If no label is set, a label is creates based on the field name.
-	 * 
-	 * @return the label or the field name with the first letter upcased
+	 *  {@inheritDoc}
 	 */
 	public String getLabel() {
 		if ((label == null) && (fieldName!=null))
@@ -81,12 +73,7 @@ public abstract class PropertyBinding {
 	}
 
 	/**
-	 * Returns if readOnly is true.
-	 * 
-	 * ReadOnly indicates, that a control is used to show the current value of
-	 * an field, without providing the modification of the field.
-	 * 
-	 * @return <code>true</code> if readOnly is true, <code>false</code> else
+	 *  {@inheritDoc}
 	 */
 	public boolean isReadOnly() {
 		return readOnly;
@@ -103,8 +90,7 @@ public abstract class PropertyBinding {
 	}
 
 	/**
-	 * Returns if this propterty is optional
-	 * @return <code>true</code> if the property is optional
+	 *  {@inheritDoc}
 	 */
 	public boolean isOptional() {
 	    return optional;
@@ -144,11 +130,7 @@ public abstract class PropertyBinding {
 	}
 
 	/**
-	 * Returns the type of this field. This may be either a {@link Class} or an
-	 * {@link ParameterizedType} based on the type of attribute in the bound
-	 * class.
-	 * 
-	 * @return the type of the field
+	 *  {@inheritDoc}
 	 */
 	public Type getType() {
 		return type;
@@ -164,13 +146,7 @@ public abstract class PropertyBinding {
 	}
 
 	/**
-	 * Returns the value of the field in the given instance.
-	 * 
-	 * @param instance the instance which field value should be returned
-	 * @return the value of the field in the given instance
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchMethodException
+	 *  {@inheritDoc}
 	 */
 	public Object getValue(Object instance) throws IllegalAccessException, InvocationTargetException,
 	        NoSuchMethodException {
@@ -201,10 +177,7 @@ public abstract class PropertyBinding {
 	}
 
 	/**
-	 * Checks if the type of this field is an array.
-	 * 
-	 * <p>This is a helper method to get information of the type.</p>
-	 * @return <code>true</code> if the type of this field is an array, <code>false</code> else
+	 *  {@inheritDoc}
 	 */
 	public boolean isArray() {
 		if (type instanceof Class<?>)
@@ -213,10 +186,7 @@ public abstract class PropertyBinding {
 	}
 	
 	/**
-	 * Checks if the type of this field is an implementation of {@link Collection}.
-	 * 
-	 * <p>This is a helper method to get information of the type.</p>
-	 * @return <code>true</code> if the type of this field is an implementation of {@link Collection}, <code>false</code> else
+	 *  {@inheritDoc}
 	 */
 	public boolean isCollection() {
 		if (type instanceof Class<?>)
@@ -229,15 +199,7 @@ public abstract class PropertyBinding {
 	}
 
 	/**
-	 * If the type is a {@link ParameterizedType} this method returns the type argument.
-	 * <p>For instance: The type of the field is <b>List&lt;String&gt;</b> then this 
-	 * method returns the class representing <b>String</b>.</p>
-	 * 
-	 * <p>If this type is an array, the component type will be returned. For instance
-	 * the field is of type <b>String[]</b>, the class representing <b>String</b> will be returned
-	 * @return <code>null</code> if the  type is neither an generic collection nor an array. 
-	 * <p>Else it returns the {@link Type} of the generic parameter or the component type of the array.</p>
-	 * <p>If an collection without parameter is used <b>Object.class</b> will be returned.</p>
+	 *  {@inheritDoc}
 	 */
 	public Type getElementType() {
 		try {

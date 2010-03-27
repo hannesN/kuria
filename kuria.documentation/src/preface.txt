@@ -1,5 +1,10 @@
 Preface
 =======
 
+_Kuria_ provides an easy way to create input masks based on an domain model.
 
-TODO write me
+_Kuria_ is divided in three parts: runtime, annotation and generators.
+
+== Runtime ==
+
+The runtime library  

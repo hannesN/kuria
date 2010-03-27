@@ -15,6 +15,7 @@ import de.topicmapslab.kuria.annotation.widgets.Combo;
 import de.topicmapslab.kuria.annotation.widgets.Date;
 import de.topicmapslab.kuria.annotation.widgets.Editable;
 import de.topicmapslab.kuria.annotation.widgets.Group;
+import de.topicmapslab.kuria.annotation.widgets.Hidden;
 import de.topicmapslab.kuria.annotation.widgets.TextField;
 import de.topicmapslab.kuria.runtime.widget.ListStyle;
 
@@ -44,6 +45,7 @@ public class Person {
 	private int age;
 
 	@Group
+	@Hidden
 	private Address address;
 	
 	@Children
@@ -58,17 +60,22 @@ public class Person {
     private Person wife;
 
 	@Date
+	@Hidden
 	private java.util.Date birthdate; 
-	
+
+	@Hidden
 	private boolean dumb;
 
 	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.TABLE, createNew=true)
+	@Hidden
 	private Set<Pet> pets;
 	
 	@TextField(rows=10, grabVerticalSpace=true)
+	@Hidden
 	private String description;
 	
 	@TextField(label="Hourly Wage")
+	@Hidden
 	private double hourlyWage;
 
 	@Text

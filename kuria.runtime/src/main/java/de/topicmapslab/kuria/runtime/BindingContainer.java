@@ -7,21 +7,21 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.topicmapslab.kuria.runtime.table.TableBinding;
-import de.topicmapslab.kuria.runtime.tree.TreeNodeBinding;
+import de.topicmapslab.kuria.runtime.table.ITableBinding;
+import de.topicmapslab.kuria.runtime.tree.ITreeNodeBinding;
 import de.topicmapslab.kuria.runtime.widget.EditableBinding;
 
 /**
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class BindingContainer {
+public class BindingContainer implements IBindingContainer {
 
 	private Map<Class<?>, TextBinding> textBindings;
 	
-	private Map<Class<?>, TableBinding> tableBindings;
+	private Map<Class<?>, ITableBinding> tableBindings;
 
-	private Map<Class<?>, TreeNodeBinding> treeNodeBindings;
+	private Map<Class<?>, ITreeNodeBinding> treeNodeBindings;
 
 	private Map<Class<?>, EditableBinding> editableBindings;
 
@@ -36,6 +36,9 @@ public class BindingContainer {
 		editableBindings.put(c, editableBinding);
 	}
 
+	/**
+	 *  {@inheritDoc}
+	 */
 	public EditableBinding getEditableBinding(Class<?> clazz) {
 		if (editableBindings == null) {
 			return null;
@@ -43,55 +46,71 @@ public class BindingContainer {
 		return editableBindings.get(clazz);
 	}
 
+	/**
+	 *  {@inheritDoc}
+	 */
 	public Map<Class<?>, EditableBinding> getEditableBindings() {
     	if (editableBindings==null)
     		return Collections.emptyMap();
     	return editableBindings;
     }
 
-	public void setTableBindings(Map<Class<?>, TableBinding> tableBindings) {
+	public void setTableBindings(Map<Class<?>, ITableBinding> tableBindings) {
 		this.tableBindings = tableBindings;
 	}
 
-	public void putTableBindings(Class<?> c, TableBinding tableBinding) {
+	public void putTableBindings(Class<?> c, ITableBinding tableBinding) {
 		if (tableBindings == null) {
-			tableBindings = new HashMap<Class<?>, TableBinding>();
+			tableBindings = new HashMap<Class<?>, ITableBinding>();
 		}
 		tableBindings.put(c, tableBinding);
 	}
 
-	public TableBinding getTableBinding(Class<?> clazz) {
+	/**
+	 *  {@inheritDoc}
+	 */
+	public ITableBinding getTableBinding(Class<?> clazz) {
     	if (tableBindings == null) {
     		return null;
     	}
     	return tableBindings.get(clazz);
     }
 
-	public Map<Class<?>, TableBinding> getTableBindings() {
+	/**
+	 * 
+	 *  {@inheritDoc}
+	 */
+	public Map<Class<?>, ITableBinding> getTableBindings() {
     	if (tableBindings==null)
     		return Collections.emptyMap();
     	return tableBindings;
     }
 
-	public void setTreeNodeBindings(Map<Class<?>, TreeNodeBinding> treeNodeBindings) {
+	public void setTreeNodeBindings(Map<Class<?>, ITreeNodeBinding> treeNodeBindings) {
 		this.treeNodeBindings = treeNodeBindings;
 	}
 
-	public void putTreeNodeBindings(Class<?> c, TreeNodeBinding treeNodeBinding) {
+	public void putTreeNodeBindings(Class<?> c, ITreeNodeBinding treeNodeBinding) {
 		if (treeNodeBindings == null) {
-			treeNodeBindings = new HashMap<Class<?>, TreeNodeBinding>();
+			treeNodeBindings = new HashMap<Class<?>, ITreeNodeBinding>();
 		}
 		treeNodeBindings.put(c, treeNodeBinding);
 	}
 
-	public TreeNodeBinding getTreeNodeBinding(Class<?> clazz) {
+	/**
+	 *  {@inheritDoc}
+	 */
+	public ITreeNodeBinding getTreeNodeBinding(Class<?> clazz) {
 		if (treeNodeBindings == null) {
 			return null;
 		}
 		return treeNodeBindings.get(clazz);
 	}
 	
-	public Map<Class<?>, TreeNodeBinding> getTreeNodeBindings() {
+	/**
+	 *  {@inheritDoc}
+	 */
+	public Map<Class<?>, ITreeNodeBinding> getTreeNodeBindings() {
 		if (treeNodeBindings==null)
 			return Collections.emptyMap();
 	    return treeNodeBindings;
@@ -101,6 +120,9 @@ public class BindingContainer {
 	    this.textBindings = textBindings;
     }
 	
+	/**
+	 *  {@inheritDoc}
+	 */
 	public Map<Class<?>, TextBinding> getTextBindings() {
 		if (textBindings==null)
 			return Collections.emptyMap();
@@ -115,6 +137,9 @@ public class BindingContainer {
 		textBindings.put(c, textBinding);
 	}
 	
+	/**
+	 *  {@inheritDoc}
+	 */
 	public TextBinding getTextBinding(Class<?> c) {
 		return getTextBindings().get(c);
 	}

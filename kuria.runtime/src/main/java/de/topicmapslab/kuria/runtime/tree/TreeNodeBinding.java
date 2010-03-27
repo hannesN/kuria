@@ -13,7 +13,7 @@ import de.topicmapslab.kuria.runtime.TextBinding;
  * A TreeNode Binding is used to bind a class with a Tree UI element.
  * <p>
  * Every tree node may have an image, which is actually a path to the image and
- * a list of {@link ChildrenBinding}s. The {@link ChildrenBinding} represent the
+ * a list of {@link IChildrenBinding}s. The {@link IChildrenBinding} represent the
  * child nodes in a tree. The list may be empty, indicating that this node has no
  * children. Every class bound to a child node needs to be bound by a TreeNode as 
  * well.</p>
@@ -25,21 +25,18 @@ import de.topicmapslab.kuria.runtime.TextBinding;
  * @author Hannes Niederhausen 
  * @version 1.0.0
  */
-public class TreeNodeBinding {
+public class TreeNodeBinding implements ITreeNodeBinding {
 
 	/** path to the image used for this node */
 	private String image;
 
 	/** the list of children bindings */
-	private List<ChildrenBinding> children;
+	private List<IChildrenBinding> children;
 
 	/**
-	 * Returns the list of {@link ChildrenBinding}
-	 * @return the list of children of this TreeNode
-	 * <p>This is an unmodifiable list, if you want to modify the list use the methods
-	 * {@link #addChild(ChildrenBinding)} and {@link #removeChild(ChildrenBinding)}.</p>
+	 *  {@inheritDoc}
 	 */
-	public List<ChildrenBinding> getChildren() {
+	public List<IChildrenBinding> getChildren() {
 		if (children == null)
 			return Collections.emptyList();
 		return Collections.unmodifiableList(children);
@@ -54,34 +51,33 @@ public class TreeNodeBinding {
 	}
 
 	/**
-	 * Returns the path of the image
-	 * @return the path of the image or <code>null</code> if non is set.
+	 *  {@inheritDoc}
 	 */
 	public String getImage() {
 		return image;
 	}
 
 	/**
-	 * Adds a {@link ChildrenBinding} to this {@link TreeNodeBinding}.
-	 * <p>A {@link ChildrenBinding} can be added more than once</p>
+	 * Adds a {@link IChildrenBinding} to this {@link ITreeNodeBinding}.
+	 * <p>A {@link IChildrenBinding} can be added more than once</p>
 	 * 
-	 * @param cb the new {@link ChildrenBinding}
+	 * @param cb the new {@link IChildrenBinding}
 	 */
-	public void addChild(ChildrenBinding cb) {
+	public void addChild(IChildrenBinding cb) {
 		if (children == null) {
-			children = new ArrayList<ChildrenBinding>();
+			children = new ArrayList<IChildrenBinding>();
 		}
 		children.add(cb);
 	}
 
 	/**
-	 * Removes a {@link ChildrenBinding} from the list.
-	 * <p>if the given {@link ChildrenBinding} is in the list more than one times 
+	 * Removes a {@link IChildrenBinding} from the list.
+	 * <p>if the given {@link IChildrenBinding} is in the list more than one times 
 	 * only the first occurrence will be removed.</p>
-	 * <p> If the given {@link ChildrenBinding} is not in the list it is jsut ignored.</p>
-	 * @param cb the {@link ChildrenBinding} to remove.
+	 * <p> If the given {@link IChildrenBinding} is not in the list it is jsut ignored.</p>
+	 * @param cb the {@link IChildrenBinding} to remove.
 	 */
-	public void removeChild(ChildrenBinding cb) {
+	public void removeChild(IChildrenBinding cb) {
 		if (children != null) {
 			children.remove(cb);
 		}

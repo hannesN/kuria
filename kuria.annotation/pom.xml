@@ -5,12 +5,13 @@
 		<groupId>de.topicmapslab</groupId>
 		<artifactId>kuria</artifactId>
 		<version>1.0.1</version>
+		<relativePath>..</relativePath>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.topicmapslab.kuria</groupId>
 	<artifactId>kuria-annotation</artifactId>
-	<version>${parent.version}</version>
+	<version>${project.parent.version}</version>
 	<name>Kuria Annotation Library</name>
 	<description>Kuria Annotation Library</description>
 	

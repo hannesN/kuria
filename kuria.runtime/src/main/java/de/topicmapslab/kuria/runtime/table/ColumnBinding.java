@@ -21,7 +21,7 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class ColumnBinding {
+public class ColumnBinding implements IColumnBinding {
 
 	private String fieldName;
 
@@ -32,21 +32,14 @@ public class ColumnBinding {
 	private String columnImage;
 
 	/**
-	 * Returns a path to an image which is rendered in every cell of the column.
-	 * 
-	 * @return path to an image file or <code>null</code> if no image exists
+	 *  {@inheritDoc}
 	 */
 	public String getColumnImage() {
 		return columnImage;
 	}
 
 	/**
-	 * Returns the title of the column.
-	 * <p>
-	 * A title is used as label for the table header
-	 * </p>
-	 * 
-	 * @return the column title for this column
+	 *  {@inheritDoc}
 	 */
 	public String getColumnTitle() {
 		if (columnTitle == null)
@@ -76,11 +69,17 @@ public class ColumnBinding {
 		this.fieldName = fieldName;
 	}
 
+	/**
+	 *  {@inheritDoc}
+	 */
 	public Object getValue(Object instance) throws IllegalAccessException, InvocationTargetException,
 	        NoSuchMethodException {
 		return PropertyUtils.getProperty(instance, fieldName);
 	}
 
+	/**
+	 *  {@inheritDoc}
+	 */
 	public void setValue(Object instance, Object value) throws IllegalAccessException, InvocationTargetException,
 	        NoSuchMethodException {
 		PropertyUtils.setProperty(instance, fieldName, value);

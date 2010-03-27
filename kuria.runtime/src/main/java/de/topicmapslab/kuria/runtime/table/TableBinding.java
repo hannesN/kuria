@@ -13,25 +13,23 @@ import java.util.List;
  * <p>
  * Every instance of the bound class can be used as input for a table generated
  * tables on this binding. The columns of the table are specified by the list of
- * {@link ColumnBinding}.
+ * {@link IColumnBinding}.
  * </p>
  * 
  * 
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class TableBinding {
+public class TableBinding implements ITableBinding {
 
 	/** bound class */
 	private Class<?> clazz;
 
 	/** List of columns */
-	private List<ColumnBinding> columnBindings;
+	private List<IColumnBinding> columnBindings;
 
 	/**
-	 * Returns the class bound by this binding.
-	 * 
-	 * @return the bound class
+	 *  {@inheritDoc}
 	 */
 	public Class<?> getClazz() {
 		return clazz;
@@ -42,61 +40,53 @@ public class TableBinding {
 	 * 
 	 * @param clazz
 	 *            the class instance which is used to build the
-	 *            {@link ColumnBinding}s.
+	 *            {@link IColumnBinding}s.
 	 */
 	public void setClazz(Class<?> clazz) {
 		this.clazz = clazz;
 	}
-
 	/**
-	 * Returns a list which contains the {@link ColumnBinding} of this
-	 * {@link TableBinding}.
-	 * <p>
-	 * This list is unmodifiable. If you want to add or remove
-	 * {@link ColumnBinding}, use the methods {@link #addColumnBinding} and {@link #removeColumnBinding}
-	 * 
-	 * @return an unmodifiable list containing the {@link ColumnBinding}s of
-	 *         this binding
+	 *  {@inheritDoc}
 	 */
-	public List<ColumnBinding> getColumnBindings() {
+	public List<IColumnBinding> getColumnBindings() {
 		if (columnBindings == null)
 			return Collections.emptyList();
 		return Collections.unmodifiableList(columnBindings);
 	}
 
 	/**
-	 * Adds a new {@link ColumnBinding} to the list of {@link ColumnBinding}s.
+	 * Adds a new {@link IColumnBinding} to the list of {@link IColumnBinding}s.
 	 * <p>
-	 * This method does not check if the {@link ColumnBinding} already exists in
-	 * the list. Therefore it is possible to add a {@link ColumnBinding} more
+	 * This method does not check if the {@link IColumnBinding} already exists in
+	 * the list. Therefore it is possible to add a {@link IColumnBinding} more
 	 * than one time.
 	 * </p>
 	 * 
 	 * @param cb
-	 *            the new {@link ColumnBinding}
+	 *            the new {@link IColumnBinding}
 	 */
-	public void addColumnBinding(ColumnBinding cb) {
+	public void addColumnBinding(IColumnBinding cb) {
 		if (this.columnBindings == null)
-			this.columnBindings = new ArrayList<ColumnBinding>();
+			this.columnBindings = new ArrayList<IColumnBinding>();
 
 		this.columnBindings.add(cb);
 	}
 
 	/**
-	 * Removes the given {@link ColumnBinding} from the list of
-	 * {@link ColumnBinding}s .
+	 * Removes the given {@link IColumnBinding} from the list of
+	 * {@link IColumnBinding}s .
 	 * <p>
-	 * If the {@link ColumnBinding} is more than one times in the list, only the
+	 * If the {@link IColumnBinding} is more than one times in the list, only the
 	 * first appearance will be removed from the list.
 	 * </p>
 	 * <p>
-	 * If the given {@link ColumnBinding} is not in the list nothing will
+	 * If the given {@link IColumnBinding} is not in the list nothing will
 	 * happen.
 	 * </p>
 	 * 
-	 * @param cb the {@link ColumnBinding} which schould be removed
+	 * @param cb the {@link IColumnBinding} which schould be removed
 	 */
-	public void removeColumnBinding(ColumnBinding cb) {
+	public void removeColumnBinding(IColumnBinding cb) {
 		if (this.columnBindings != null)
 			this.columnBindings.remove(cb);
 	}

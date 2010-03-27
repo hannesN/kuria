@@ -1,6 +1,7 @@
 package de.topicmapslab.kuria.annotation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,7 +10,7 @@ import de.topicmapslab.kuria.annotation.data.Address;
 import de.topicmapslab.kuria.annotation.data.Person;
 import de.topicmapslab.kuria.runtime.BindingContainer;
 import de.topicmapslab.kuria.runtime.PropertyBinding;
-import de.topicmapslab.kuria.runtime.tree.TreeNodeBinding;
+import de.topicmapslab.kuria.runtime.tree.ITreeNodeBinding;
 import de.topicmapslab.kuria.runtime.widget.CheckBinding;
 import de.topicmapslab.kuria.runtime.widget.ComboBinding;
 import de.topicmapslab.kuria.runtime.widget.DateBinding;
@@ -53,7 +54,7 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 			assertNotNull(bc.getTextBinding(Person.class));
 			assertEquals("Meyer, Hans", bc.getTextBinding(Person.class).getText(p));
 
-			TreeNodeBinding tnb = bc.getTreeNodeBinding(p.getClass());
+			ITreeNodeBinding tnb = bc.getTreeNodeBinding(p.getClass());
 			Assert.assertNotNull(tnb);
 
 			Assert.assertNotNull("Children not null: " + tnb.getChildren());
