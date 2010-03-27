@@ -42,6 +42,7 @@ import de.topicmapslab.kuria.runtime.BindingContainer;
 @Ignore
 public class EditableTest implements IInputMaskListener {
 	private InputMask inputMask;
+	private Button button;
 
 	public static void main(String[] args) {
 		new EditableTest().run();
@@ -126,7 +127,7 @@ public class EditableTest implements IInputMaskListener {
 			}
 		});
 		
-		Button button = new Button(comp, SWT.PUSH);
+		button = new Button(comp, SWT.PUSH);
 		button.setText("Save");
 		button.addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings("unchecked")
@@ -141,7 +142,7 @@ public class EditableTest implements IInputMaskListener {
 			}
 		});
 		
-		button = new Button(comp, SWT.PUSH);
+		Button button = new Button(comp, SWT.PUSH);
 		button.setText("New");
 		button.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -203,6 +204,7 @@ public class EditableTest implements IInputMaskListener {
 
 	public void dirtyChanged() {
 	    System.out.println("Dirty Changed: "+inputMask.isDirty());
+	    button.setEnabled(inputMask.isValid());
     }
 
 	public void newModelElement(Object newElement) {

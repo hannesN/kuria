@@ -12,7 +12,7 @@ Export-Package: de.topicmapslab.jgui.swtgenerator,
  de.topicmapslab.jgui.swtgenerator.util
 Require-Bundle: de.topicmapslab.kuria-annotation;bundle-version="1.0.1",
  de.topicmapslab.kuria-runtime;bundle-version="1.0.1",
- org.eclipse.swt;bundle-version="3.5.1",
- org.eclipse.jface;bundle-version="3.5.1"
+ org.eclipse.swt;bundle-version="3.5.0",
+ org.eclipse.jface;bundle-version="3.5.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.junit;version="4.5.0";resolution:=optional

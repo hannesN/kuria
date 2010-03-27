@@ -4,6 +4,7 @@
 package de.topicmapslab.jgui.swtgenerator.edit;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +58,8 @@ public class InputMask implements IStateListener {
 	private final BindingContainer bindingContainer;
 
 	private IContentProvider contentProvider;
+	
+	private Map<IInputMaskWidget, String> errorMessages;
 	
 	public InputMask(Composite parent, Class<?> clazz, BindingContainer container) {
 		super();
@@ -133,6 +136,13 @@ public class InputMask implements IStateListener {
         } else {
         	dirtyMap.remove(property);
         }
+        // checking validity
+        IInputMaskWidget w = widgetMap.get(property);
+        if (w.isValid()) {
+        	putErrorMessage(w, null);
+        } else {// TODO get error message from widget
+        	putErrorMessage(w, "Invalid Value");
+        }
         notifyDirtyChanged();
     }
 
@@ -163,13 +173,20 @@ public class InputMask implements IStateListener {
     		w.setEnabled(enabled);
     	}
     }
+	
+	public boolean isValid() {
+		return getErrorMessagesMap().isEmpty();
+	}
+	
+	public Collection<String> getErrorMessages() {
+		return getErrorMessagesMap().values();
+	}
 
 	private void clearAndDisable() {
 		for (IInputMaskWidget w : getWidgetMap().values()) {
 			w.setEnabled(false);
 			w.setModel(null);
 		}
-
 	}
 
 	private void createControl(Composite parent) {
@@ -251,6 +268,25 @@ public class InputMask implements IStateListener {
 			return Collections.emptyMap();
 		return widgetMap;
 	}
+	
+	private Map<IInputMaskWidget, String> getErrorMessagesMap() {
+		if (errorMessages==null)
+			return Collections.emptyMap();
+		return errorMessages;
+	}
+
+	private void putErrorMessage(IInputMaskWidget w, String msg) {
+		if (errorMessages==null) {
+			errorMessages = new HashMap<IInputMaskWidget, String>();
+		}
+		
+		if ( (msg==null) && (errorMessages.containsKey(w)) ) {
+			errorMessages.remove(w);
+			return;
+		} 
+		
+		errorMessages.put(w, msg);
+	}
 
 	private void putToWidgetMap(PropertyBinding binding, IInputMaskWidget widget) {
 		if (widgetMap == null)
@@ -268,7 +304,8 @@ public class InputMask implements IStateListener {
 		for (IInputMaskListener l : getInputMaskListeners()) {
 			l.newModelElement(newModel);
 		}
-	    
     }
+	
+	
 
 }
