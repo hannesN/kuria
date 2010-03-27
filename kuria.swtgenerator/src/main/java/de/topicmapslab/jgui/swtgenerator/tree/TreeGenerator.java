@@ -17,9 +17,9 @@ import org.eclipse.swt.widgets.Composite;
 import de.topicmapslab.jgui.swtgenerator.AbstractSWTGenerator;
 import de.topicmapslab.jgui.swtgenerator.util.ImageRegistry;
 import de.topicmapslab.jgui.swtgenerator.util.TextBindingLabelProvider;
-import de.topicmapslab.kuria.runtime.BindingContainer;
-import de.topicmapslab.kuria.runtime.tree.ChildrenBinding;
-import de.topicmapslab.kuria.runtime.tree.TreeNodeBinding;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.tree.IChildrenBinding;
+import de.topicmapslab.kuria.runtime.tree.ITreeNodeBinding;
 import de.topicmapslab.kuria.runtime.util.TypeUtil;
 
 /**
@@ -28,7 +28,7 @@ import de.topicmapslab.kuria.runtime.util.TypeUtil;
  */
 public class TreeGenerator extends AbstractSWTGenerator {
 
-	public TreeGenerator(BindingContainer bindingContainer) {
+	public TreeGenerator(IBindingContainer bindingContainer) {
 		super(bindingContainer);
 	}
 
@@ -60,7 +60,7 @@ public class TreeGenerator extends AbstractSWTGenerator {
 						return ImageRegistry.getImage(image);
 				} else {
 
-					TreeNodeBinding tnb = bindingContainer.getTreeNodeBinding(element.getClass());
+					ITreeNodeBinding tnb = bindingContainer.getTreeNodeBinding(element.getClass());
 
 					if ((tnb != null) && (tnb.getImage() != null))
 						return ImageRegistry.getImage(tnb.getImage());
@@ -119,11 +119,11 @@ public class TreeGenerator extends AbstractSWTGenerator {
 				return children.toArray();
 
 			children = new ArrayList<Object>();
-			TreeNodeBinding tnb = bindingContainer.getTreeNodeBinding(arg0.getClass());
+			ITreeNodeBinding tnb = bindingContainer.getTreeNodeBinding(arg0.getClass());
 			if (tnb == null)
 				return new Object[0];
 
-			for (ChildrenBinding cb : tnb.getChildren()) {
+			for (IChildrenBinding cb : tnb.getChildren()) {
 				try {
 					Object child = cb.getValue(arg0);
 					if (cb.getNodeTitle() != null) {

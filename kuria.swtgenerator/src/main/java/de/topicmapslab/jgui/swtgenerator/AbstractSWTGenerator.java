@@ -1,6 +1,6 @@
 package de.topicmapslab.jgui.swtgenerator;
 
-import de.topicmapslab.kuria.runtime.BindingContainer;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 
 /**
  * 
@@ -9,9 +9,9 @@ import de.topicmapslab.kuria.runtime.BindingContainer;
  */
 public abstract class AbstractSWTGenerator {
 
-	protected final BindingContainer bindingContainer;
+	protected final IBindingContainer bindingContainer;
 
-	public AbstractSWTGenerator(BindingContainer bindingContainer) {
+	public AbstractSWTGenerator(IBindingContainer bindingContainer) {
 		super();
 		this.bindingContainer = bindingContainer;
 	}

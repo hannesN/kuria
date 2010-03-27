@@ -21,7 +21,7 @@ import org.junit.Ignore;
 
 import de.topicmapslab.jgui.swtgenerator.WidgetGenerator;
 import de.topicmapslab.kuria.annotation.AnnotationBindingFactory;
-import de.topicmapslab.kuria.runtime.BindingContainer;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 
 /**
  * @author Hannes Niederhausen
@@ -81,7 +81,7 @@ public class TreeTest {
 		fac.addClass(Address.class);
 		fac.addClass(Pet.class);
 		
-		BindingContainer bc = fac.getBindingContainer();
+		IBindingContainer bc = fac.getBindingContainer();
 		
 		WidgetGenerator gen = new WidgetGenerator(bc);
 		final TreeViewer viewer = gen.generateTree(comp, false);

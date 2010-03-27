@@ -2,18 +2,18 @@ package de.topicmapslab.kuria.runtime.widget;
 
 import java.util.List;
 
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.PropertyBinding;
 
 public interface IEditableBinding {
 
 	/**
-	 * Returns the {@link PropertyBinding}s of this binding.
-	 * <p>This list is unmodifiable. To add or remove a binding use the methods
-	 * {@link #addPropertyBinding(PropertyBinding)} and {@link #removePropertyBinding(PropertyBinding)}.
+	 * Returns the {@link IPropertyBinding}s of this binding.
+	 * <p>This list is unmodifiable. </p>
 	 * 
 	 * @return an unmodifiable list of the {@link PropertyBinding}s
 	 */
-	public abstract List<PropertyBinding> getPropertieBindings();
+	public abstract List<IPropertyBinding> getPropertieBindings();
 
 	/**
 	 * Returns the bound type.

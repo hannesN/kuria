@@ -16,7 +16,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import de.topicmapslab.jgui.swtgenerator.edit.Validators;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+import de.topicmapslab.kuria.runtime.widget.ITextFieldBinding;
 import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
 
 /**
@@ -27,7 +28,7 @@ public class TextFieldWidget extends LabeledWidget {
 
 	private Text textField;
 
-	public TextFieldWidget(PropertyBinding propertyBinding) {
+	public TextFieldWidget(IPropertyBinding propertyBinding) {
 		super(propertyBinding);
 		if (!(propertyBinding instanceof TextFieldBinding))
 			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
@@ -157,8 +158,8 @@ public class TextFieldWidget extends LabeledWidget {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public TextFieldBinding getPropertyBinding() {
-		return (TextFieldBinding) super.getPropertyBinding();
+	public ITextFieldBinding getPropertyBinding() {
+		return (ITextFieldBinding) super.getPropertyBinding();
 	}
 
 	/**

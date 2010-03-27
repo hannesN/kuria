@@ -17,7 +17,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.topicmapslab.jgui.swtgenerator.edit.IContentProvider;
 import de.topicmapslab.jgui.swtgenerator.util.TextBindingLabelProvider;
-import de.topicmapslab.kuria.runtime.BindingContainer;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 
 /**
  * @author Hannes Niederhausen
@@ -26,7 +26,7 @@ import de.topicmapslab.kuria.runtime.BindingContainer;
 public class SelectionDialog extends Dialog {
 
 	private final IContentProvider contentProvider;
-	private final BindingContainer bc;
+	private final IBindingContainer bc;
 	private final String fieldname;
 	private final Object model;
 	
@@ -35,7 +35,7 @@ public class SelectionDialog extends Dialog {
 	
 	private Object[] selection;
 	
-	public  SelectionDialog(Shell parentShell, BindingContainer bindingContainer, IContentProvider contentProvider, String fieldname, Object model) {
+	public  SelectionDialog(Shell parentShell, IBindingContainer bindingContainer, IContentProvider contentProvider, String fieldname, Object model) {
 	    super(parentShell);
 	    this.bc = bindingContainer;
 	    this.model = model;

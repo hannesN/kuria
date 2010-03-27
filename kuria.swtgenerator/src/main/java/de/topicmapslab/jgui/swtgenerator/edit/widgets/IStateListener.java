@@ -3,7 +3,7 @@
  */
 package de.topicmapslab.jgui.swtgenerator.edit.widgets;
 
-import de.topicmapslab.kuria.runtime.PropertyBinding;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 
 /**
  * A state listener is notified when a widget is modified. 
@@ -25,7 +25,7 @@ public interface IStateListener {
 	 * @param property the binding of the property
 	 * @param isDirty the dirty state
 	 */
-	public void stateChanged(PropertyBinding property, boolean isDirty);
+	public void stateChanged(IPropertyBinding property, boolean isDirty);
 	
 	/**
 	 * 

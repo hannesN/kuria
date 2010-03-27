@@ -1,6 +1,8 @@
 package de.topicmapslab.kuria.runtime.widget;
 
-public interface IComboBinding {
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+
+public interface IComboBinding extends IPropertyBinding {
 
 	/**
 	 * Returns the value of showNewButton

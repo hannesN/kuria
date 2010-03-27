@@ -6,7 +6,7 @@ package de.topicmapslab.jgui.swtgenerator.edit.widgets;
 import org.eclipse.swt.widgets.Composite;
 
 import de.topicmapslab.jgui.swtgenerator.edit.IContentProvider;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 
 /**
  * The interface for all widget types.
@@ -37,9 +37,9 @@ public interface IInputMaskWidget {
 	
 	/**
 	 * 
-	 * @return the {@link PropertyBinding} which is represented by this Widget
+	 * @return the {@link IPropertyBinding} which is represented by this Widget
 	 */
-	public PropertyBinding getPropertyBinding();
+	public IPropertyBinding getPropertyBinding();
 	
 	
 	/**

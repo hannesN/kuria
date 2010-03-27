@@ -20,7 +20,7 @@ import org.junit.Ignore;
 
 import de.topicmapslab.jgui.swtgenerator.WidgetGenerator;
 import de.topicmapslab.kuria.annotation.AnnotationBindingFactory;
-import de.topicmapslab.kuria.runtime.BindingContainer;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 
 /**
  * @author Hannes Niederhausen
@@ -62,7 +62,7 @@ public class TableTest {
 		fac.addClass(Person.class);
 		fac.addClass(Address.class);
 		
-		BindingContainer bc = fac.getBindingContainer();
+		IBindingContainer bc = fac.getBindingContainer();
 	
 		Label l = new Label(comp, SWT.NONE);
 		l.setText("Hallo!");

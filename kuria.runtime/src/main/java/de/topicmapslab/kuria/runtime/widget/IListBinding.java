@@ -2,7 +2,9 @@ package de.topicmapslab.kuria.runtime.widget;
 
 import java.lang.reflect.InvocationTargetException;
 
-public interface IListBinding {
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+
+public interface IListBinding extends IPropertyBinding {
 
 	/**
 	 * Returns the list style of this binding.

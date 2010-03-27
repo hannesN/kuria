@@ -1,5 +1,7 @@
 package de.topicmapslab.kuria.runtime.widget;
 
-public interface IGroupBinding {
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+
+public interface IGroupBinding extends IPropertyBinding {
 
 }

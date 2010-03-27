@@ -49,7 +49,7 @@ public class GenericBindingFactory implements IBindingFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public BindingContainer getBindingContainer() {
+	public IBindingContainer getBindingContainer() {
 		if (bindingContainer == null)
 			init();
 		return bindingContainer;

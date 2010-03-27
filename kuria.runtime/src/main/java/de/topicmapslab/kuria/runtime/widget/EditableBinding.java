@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.PropertyBinding;
 
 /**
@@ -21,13 +22,13 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
 public class EditableBinding implements IEditableBinding {
 
 	private Class<?> objectType;
-	private List<PropertyBinding> propertieBindings;
+	private List<IPropertyBinding> propertieBindings;
 
 	
 	/**
 	 *  {@inheritDoc}
 	 */
-	public List<PropertyBinding> getPropertieBindings() {
+	public List<IPropertyBinding> getPropertieBindings() {
 		if (propertieBindings == null) {
 			return Collections.emptyList();
 		}
@@ -41,7 +42,7 @@ public class EditableBinding implements IEditableBinding {
 	 */
 	public void addPropertyBinding(PropertyBinding b) {
 		if (propertieBindings == null) {
-			propertieBindings = new ArrayList<PropertyBinding>();
+			propertieBindings = new ArrayList<IPropertyBinding>();
 		}
 		propertieBindings.add(b);
 	}

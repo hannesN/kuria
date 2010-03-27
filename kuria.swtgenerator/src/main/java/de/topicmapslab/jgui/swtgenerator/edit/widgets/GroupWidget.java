@@ -14,18 +14,18 @@ import de.topicmapslab.jgui.swtgenerator.WidgetGenerator;
 import de.topicmapslab.jgui.swtgenerator.edit.IContentProvider;
 import de.topicmapslab.jgui.swtgenerator.edit.IInputMaskListener;
 import de.topicmapslab.jgui.swtgenerator.edit.InputMask;
-import de.topicmapslab.kuria.runtime.BindingContainer;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 
 /**
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
 public class GroupWidget extends AbstractWidget implements IInputMaskListener {
-	private final BindingContainer bindingContainer;
+	private final IBindingContainer bindingContainer;
 	private InputMask inputMask;
 
-	public GroupWidget(PropertyBinding propertyBinding, BindingContainer bindingContainer) {
+	public GroupWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 		super(propertyBinding);
 		this.bindingContainer = bindingContainer;
 	}

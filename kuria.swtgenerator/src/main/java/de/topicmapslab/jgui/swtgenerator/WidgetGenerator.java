@@ -11,7 +11,7 @@ import de.topicmapslab.jgui.swtgenerator.edit.EditableGenerator;
 import de.topicmapslab.jgui.swtgenerator.edit.InputMask;
 import de.topicmapslab.jgui.swtgenerator.table.TableGenerator;
 import de.topicmapslab.jgui.swtgenerator.tree.TreeGenerator;
-import de.topicmapslab.kuria.runtime.BindingContainer;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 
 /**
  * @author Hannes Niederhausen
@@ -23,7 +23,7 @@ public class WidgetGenerator {
 	private final TableGenerator tableGenerator;
 	private final EditableGenerator editableGenerator;
 
-	public WidgetGenerator(BindingContainer bindingContainer) {
+	public WidgetGenerator(IBindingContainer bindingContainer) {
 		this.treeGenerator = new TreeGenerator(bindingContainer);
 		tableGenerator = new TableGenerator(bindingContainer); 
 		editableGenerator = new EditableGenerator(bindingContainer);

@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import de.topicmapslab.kuria.annotation.data.Address;
 import de.topicmapslab.kuria.annotation.data.Person;
-import de.topicmapslab.kuria.runtime.BindingContainer;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.tree.ITreeNodeBinding;
 import de.topicmapslab.kuria.runtime.widget.CheckBinding;
 import de.topicmapslab.kuria.runtime.widget.ComboBinding;
@@ -22,7 +22,7 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 
 	@Test
 	public void testGetBindingContainer() {
-		BindingContainer bc = fac.getBindingContainer();
+		IBindingContainer bc = fac.getBindingContainer();
 		try {
 			assertEquals("Check table bindings", 2, bc.getTableBindings().values().size());
 			assertEquals("Check editable bindings", 2, bc.getEditableBindings().values().size());
@@ -36,7 +36,7 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 	@Test
 	public void testPersonBindings() {
 		try {
-			BindingContainer bc = fac.getBindingContainer();
+			IBindingContainer bc = fac.getBindingContainer();
 			Address address = getAddress();
 
 			Person p = new Person();
@@ -65,7 +65,7 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 			int checkCounter = 0;
 			int listCounter = 0;
 			int dateCounter = 0;
-			for (PropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
+			for (IPropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
 				if (pb instanceof TextFieldBinding)
 					textFieldCounter++;
 				if (pb instanceof ComboBinding)
@@ -87,7 +87,7 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 			assertEquals("Number of DateBindings", 1, dateCounter);
 			assertEquals("Number of ListBindings", 2, listCounter);
 
-			for (PropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
+			for (IPropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
 				if (pb instanceof ComboBinding) {
 					assertEquals("Check createNew", false, ((ComboBinding) pb).isShowNewButton());
 				}
@@ -102,7 +102,7 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 	@Test
 	public void testAddressBindings() {
 		try {
-			BindingContainer bc = fac.getBindingContainer();
+			IBindingContainer bc = fac.getBindingContainer();
 
 			Address a = getAddress();
 

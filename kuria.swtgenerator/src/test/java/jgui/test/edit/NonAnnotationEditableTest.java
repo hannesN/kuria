@@ -30,8 +30,8 @@ import org.junit.Ignore;
 import de.topicmapslab.jgui.swtgenerator.WidgetGenerator;
 import de.topicmapslab.jgui.swtgenerator.edit.IContentProvider;
 import de.topicmapslab.jgui.swtgenerator.edit.InputMask;
-import de.topicmapslab.kuria.runtime.BindingContainer;
 import de.topicmapslab.kuria.runtime.GenericBindingFactory;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 
 /**
  * @author niederhausen
@@ -86,7 +86,7 @@ public class NonAnnotationEditableTest {
 		fac.addClass(Address.class);
 		fac.addClass(Pet.class);
 		
-		BindingContainer bc = fac.getBindingContainer();
+		IBindingContainer bc = fac.getBindingContainer();
 	
 		
 		WidgetGenerator gen = new WidgetGenerator(bc);

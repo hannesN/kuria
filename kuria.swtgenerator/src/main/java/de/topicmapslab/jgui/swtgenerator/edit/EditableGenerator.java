@@ -6,7 +6,7 @@ package de.topicmapslab.jgui.swtgenerator.edit;
 import org.eclipse.swt.widgets.Composite;
 
 import de.topicmapslab.jgui.swtgenerator.AbstractSWTGenerator;
-import de.topicmapslab.kuria.runtime.BindingContainer;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 
 /**
  * @author Hannes Niederhausen
@@ -14,7 +14,7 @@ import de.topicmapslab.kuria.runtime.BindingContainer;
  */
 public class EditableGenerator extends AbstractSWTGenerator {
 
-	public EditableGenerator(BindingContainer bindingContainer) {
+	public EditableGenerator(IBindingContainer bindingContainer) {
 	    super(bindingContainer);
     }
 

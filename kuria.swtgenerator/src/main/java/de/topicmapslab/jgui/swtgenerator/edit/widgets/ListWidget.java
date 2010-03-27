@@ -16,9 +16,10 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.topicmapslab.jgui.swtgenerator.edit.dialog.NewInstanceWizard;
 import de.topicmapslab.jgui.swtgenerator.edit.dialog.NewPrimitiveValueWizard;
-import de.topicmapslab.kuria.runtime.BindingContainer;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.util.TypeUtil;
+import de.topicmapslab.kuria.runtime.widget.IListBinding;
 import de.topicmapslab.kuria.runtime.widget.ListBinding;
 
 /**
@@ -28,9 +29,9 @@ import de.topicmapslab.kuria.runtime.widget.ListBinding;
 public abstract class ListWidget extends LabeledWidget {
 
 	private Object[] selection;
-	private BindingContainer bindingContainer;
+	private IBindingContainer bindingContainer;
 	
-	public ListWidget(PropertyBinding propertyBinding, BindingContainer bindingContainer) {
+	public ListWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 		super(propertyBinding);
 		if (!(propertyBinding instanceof ListBinding))
 			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
@@ -147,7 +148,7 @@ public abstract class ListWidget extends LabeledWidget {
 		setSelection(newSelection);
 	}
 	
-	public BindingContainer getBindingContainer() {
+	public IBindingContainer getBindingContainer() {
 	    return bindingContainer;
     }
 	
@@ -179,7 +180,7 @@ public abstract class ListWidget extends LabeledWidget {
     }
 	
 	@Override
-	public ListBinding getPropertyBinding() {
-	    return (ListBinding) super.getPropertyBinding();
+	public IListBinding getPropertyBinding() {
+	    return (IListBinding) super.getPropertyBinding();
 	}
 }

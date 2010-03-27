@@ -23,16 +23,16 @@ import de.topicmapslab.jgui.swtgenerator.edit.widgets.IInputMaskWidget;
 import de.topicmapslab.jgui.swtgenerator.edit.widgets.IStateListener;
 import de.topicmapslab.jgui.swtgenerator.edit.widgets.TableSelectionWidget;
 import de.topicmapslab.jgui.swtgenerator.edit.widgets.TextFieldWidget;
-import de.topicmapslab.kuria.runtime.BindingContainer;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
-import de.topicmapslab.kuria.runtime.widget.CheckBinding;
-import de.topicmapslab.kuria.runtime.widget.ComboBinding;
-import de.topicmapslab.kuria.runtime.widget.DateBinding;
-import de.topicmapslab.kuria.runtime.widget.EditableBinding;
-import de.topicmapslab.kuria.runtime.widget.GroupBinding;
-import de.topicmapslab.kuria.runtime.widget.ListBinding;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+import de.topicmapslab.kuria.runtime.widget.ICheckBinding;
+import de.topicmapslab.kuria.runtime.widget.IComboBinding;
+import de.topicmapslab.kuria.runtime.widget.IDateBinding;
+import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
+import de.topicmapslab.kuria.runtime.widget.IGroupBinding;
+import de.topicmapslab.kuria.runtime.widget.IListBinding;
+import de.topicmapslab.kuria.runtime.widget.ITextFieldBinding;
 import de.topicmapslab.kuria.runtime.widget.ListStyle;
-import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
 
 /**
  * An InputMask is a wrapper of the control containing the widgets and labels
@@ -49,19 +49,19 @@ public class InputMask implements IStateListener {
 
 	private Object model;
 
-	private Map<PropertyBinding, IInputMaskWidget> widgetMap;
+	private Map<IPropertyBinding, IInputMaskWidget> widgetMap;
 	
-	private Map<PropertyBinding, Boolean> dirtyMap;
+	private Map<IPropertyBinding, Boolean> dirtyMap;
 	
 	private List<IInputMaskListener> inputMaskListeners;
 
-	private final BindingContainer bindingContainer;
+	private final IBindingContainer bindingContainer;
 
 	private IContentProvider contentProvider;
 	
 	private Map<IInputMaskWidget, String> errorMessages;
 	
-	public InputMask(Composite parent, Class<?> clazz, BindingContainer container) {
+	public InputMask(Composite parent, Class<?> clazz, IBindingContainer container) {
 		super();
 		this.clazz = clazz;
 		this.bindingContainer = container;
@@ -130,7 +130,7 @@ public class InputMask implements IStateListener {
     	}
     }
 
-	public void stateChanged(PropertyBinding property, boolean state) {
+	public void stateChanged(IPropertyBinding property, boolean state) {
         if (state) {
         	dirtyMap.put(property, state);
         } else {
@@ -193,21 +193,21 @@ public class InputMask implements IStateListener {
 		composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(3, false));
 
-		EditableBinding eb = bindingContainer.getEditableBinding(clazz);
+		IEditableBinding eb = bindingContainer.getEditableBinding(clazz);
 
-		for (PropertyBinding pb : eb.getPropertieBindings()) {
-			if (pb instanceof TextFieldBinding) {
-				createTextField(composite, (TextFieldBinding) pb);
-			} else if (pb instanceof ComboBinding) {
-				createCombo(composite, (ComboBinding) pb);
-			} else if (pb instanceof GroupBinding) {
-				createGroup(composite, (GroupBinding) pb);
-			} else if (pb instanceof CheckBinding) {
-				createCheck(composite, (CheckBinding) pb);
-			} else if (pb instanceof ListBinding) {
-				createList(composite, (ListBinding) pb);
-			} else if (pb instanceof DateBinding) {
-				createDate(composite, (DateBinding) pb);
+		for (IPropertyBinding pb : eb.getPropertieBindings()) {
+			if (pb instanceof ITextFieldBinding) {
+				createTextField(composite, (ITextFieldBinding) pb);
+			} else if (pb instanceof IComboBinding) {
+				createCombo(composite, (IComboBinding) pb);
+			} else if (pb instanceof IGroupBinding) {
+				createGroup(composite, (IGroupBinding) pb);
+			} else if (pb instanceof ICheckBinding) {
+				createCheck(composite, (ICheckBinding) pb);
+			} else if (pb instanceof IListBinding) {
+				createList(composite, (IListBinding) pb);
+			} else if (pb instanceof IDateBinding) {
+				createDate(composite, (IDateBinding) pb);
 			}
 
 		}
@@ -215,11 +215,11 @@ public class InputMask implements IStateListener {
 		for (IInputMaskWidget w : widgetMap.values()) {
 			w.addStateListener(this);
 		}
-		dirtyMap = new HashMap<PropertyBinding, Boolean>();
+		dirtyMap = new HashMap<IPropertyBinding, Boolean>();
 		clearAndDisable();
 	}
 
-	private void createList(Composite parent, final ListBinding pb) {
+	private void createList(Composite parent, final IListBinding pb) {
 		IInputMaskWidget w;
 		if (pb.getListStyle()==ListStyle.COMPACT) {
 			w = new CompactListWidget(pb, bindingContainer);
@@ -232,38 +232,38 @@ public class InputMask implements IStateListener {
 		putToWidgetMap(pb, w);
 	}
 
-	private void createCombo(Composite parent, final ComboBinding pb) {
+	private void createCombo(Composite parent, final IComboBinding pb) {
 		ComboWidget w = new ComboWidget(pb, bindingContainer);
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
 	
-	private void createDate(Composite parent, final DateBinding pb) {
+	private void createDate(Composite parent, final IDateBinding pb) {
 		DateWidget w = new DateWidget(pb);
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
 
-	private void createGroup(Composite parent, GroupBinding pb) {
+	private void createGroup(Composite parent, IGroupBinding pb) {
 		GroupWidget w = new GroupWidget(pb, bindingContainer);
 		// TODO ContentProvider
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
 
-	private void createCheck(Composite parent, CheckBinding cb) {
+	private void createCheck(Composite parent, ICheckBinding cb) {
 		CheckWidget w = new CheckWidget(cb);
 		w.createControl(parent);
 		putToWidgetMap(cb, w);
 	}
 
-	private void createTextField(Composite parent, TextFieldBinding pb) {
+	private void createTextField(Composite parent, ITextFieldBinding pb) {
 		TextFieldWidget w = new TextFieldWidget(pb);
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
 
-	private Map<PropertyBinding, IInputMaskWidget> getWidgetMap() {
+	private Map<IPropertyBinding, IInputMaskWidget> getWidgetMap() {
 		if (widgetMap == null)
 			return Collections.emptyMap();
 		return widgetMap;
@@ -288,9 +288,9 @@ public class InputMask implements IStateListener {
 		errorMessages.put(w, msg);
 	}
 
-	private void putToWidgetMap(PropertyBinding binding, IInputMaskWidget widget) {
+	private void putToWidgetMap(IPropertyBinding binding, IInputMaskWidget widget) {
 		if (widgetMap == null)
-			widgetMap = new HashMap<PropertyBinding, IInputMaskWidget>();
+			widgetMap = new HashMap<IPropertyBinding, IInputMaskWidget>();
 		widgetMap.put(binding, widget);
 	}
 

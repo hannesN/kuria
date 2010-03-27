@@ -21,8 +21,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 
-import de.topicmapslab.kuria.runtime.PropertyBinding;
-import de.topicmapslab.kuria.runtime.widget.DateBinding;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+import de.topicmapslab.kuria.runtime.widget.IDateBinding;
 
 /**
  * @author Hannes Niederhausen
@@ -32,7 +32,7 @@ public class DateWidget extends LabeledWidget {
 
 	private DateTime dateTimeWidget;
 
-	public DateWidget(PropertyBinding propertyBinding) {
+	public DateWidget(IPropertyBinding propertyBinding) {
 	    super(propertyBinding);
     }
 
@@ -122,7 +122,7 @@ public class DateWidget extends LabeledWidget {
     }
 
 	@Override
-	public DateBinding getPropertyBinding() {
-	    return (DateBinding) super.getPropertyBinding();
+	public IDateBinding getPropertyBinding() {
+	    return (IDateBinding) super.getPropertyBinding();
 	}
 }

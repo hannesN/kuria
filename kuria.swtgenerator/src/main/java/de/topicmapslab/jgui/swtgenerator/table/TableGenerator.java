@@ -18,10 +18,10 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import de.topicmapslab.jgui.swtgenerator.AbstractSWTGenerator;
 import de.topicmapslab.jgui.swtgenerator.util.ImageRegistry;
-import de.topicmapslab.kuria.runtime.BindingContainer;
-import de.topicmapslab.kuria.runtime.TextBinding;
-import de.topicmapslab.kuria.runtime.table.ColumnBinding;
-import de.topicmapslab.kuria.runtime.table.TableBinding;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.ITextBinding;
+import de.topicmapslab.kuria.runtime.table.IColumnBinding;
+import de.topicmapslab.kuria.runtime.table.ITableBinding;
 
 /**
  * @author Hannes Niederhausen
@@ -29,12 +29,12 @@ import de.topicmapslab.kuria.runtime.table.TableBinding;
  */
 public class TableGenerator extends AbstractSWTGenerator {
 
-	public TableGenerator(BindingContainer bindingContainer) {
+	public TableGenerator(IBindingContainer bindingContainer) {
 		super(bindingContainer);
 	}
 
 	public TableViewer generateTable(Composite parent, Class<?> clazz) {
-		TableBinding tb = bindingContainer.getTableBinding(clazz);
+		ITableBinding tb = bindingContainer.getTableBinding(clazz);
 		if (tb==null)
 			throw new IllegalArgumentException();
 		
@@ -52,11 +52,11 @@ public class TableGenerator extends AbstractSWTGenerator {
 	}
 
 	private void generateColumns(Class<?> clazz, Table table) {
-	    TableBinding tb = bindingContainer.getTableBinding(clazz);
+	    ITableBinding tb = bindingContainer.getTableBinding(clazz);
 	    
 	    TableColumnLayout layout = (TableColumnLayout) table.getParent().getLayout();
 	    
-	    for (ColumnBinding cb : tb.getColumnBindings()) {
+	    for (IColumnBinding cb : tb.getColumnBindings()) {
 	    	TableColumn tc = new TableColumn(table, 0);
 	    	tc.setText(cb.getColumnTitle());
 	    	tc.setWidth(50);
@@ -68,11 +68,11 @@ public class TableGenerator extends AbstractSWTGenerator {
 	private class LabelProvider implements ITableLabelProvider, IBaseLabelProvider {
 
 		public Image getColumnImage(Object element, int columnIndex) {
-			TableBinding tb = bindingContainer.getTableBinding(element.getClass());
+			ITableBinding tb = bindingContainer.getTableBinding(element.getClass());
 			if (tb == null)
 				throw new IllegalArgumentException("Element is " + element.getClass().getName());
 
-			ColumnBinding cb = tb.getColumnBindings().get(columnIndex);
+			IColumnBinding cb = tb.getColumnBindings().get(columnIndex);
 			if (cb.getColumnImage()!=null)
 				return ImageRegistry.getImage(cb.getColumnImage());
 			
@@ -80,11 +80,11 @@ public class TableGenerator extends AbstractSWTGenerator {
 		}
 
 		public String getColumnText(Object element, int columnIndex) {
-			TableBinding tb = bindingContainer.getTableBinding(element.getClass());
+			ITableBinding tb = bindingContainer.getTableBinding(element.getClass());
 			if (tb == null)
 				throw new IllegalArgumentException("Element is " + element.getClass().getName());
 
-			ColumnBinding cb = tb.getColumnBindings().get(columnIndex);
+			IColumnBinding cb = tb.getColumnBindings().get(columnIndex);
 
 			try {
 				Object o = cb.getValue(element);
@@ -92,7 +92,7 @@ public class TableGenerator extends AbstractSWTGenerator {
 					return (String) o;
 				else { 
 					if (o!=null) {
-						TextBinding binding = bindingContainer.getTextBinding(o.getClass());
+						ITextBinding binding = bindingContainer.getTextBinding(o.getClass());
 						if (binding==null)
 							return o.toString();
 						else

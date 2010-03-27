@@ -25,11 +25,12 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.topicmapslab.jgui.swtgenerator.edit.dialog.NewInstanceWizard;
 import de.topicmapslab.jgui.swtgenerator.edit.dialog.NewPrimitiveValueWizard;
-import de.topicmapslab.kuria.runtime.BindingContainer;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
-import de.topicmapslab.kuria.runtime.TextBinding;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+import de.topicmapslab.kuria.runtime.ITextBinding;
 import de.topicmapslab.kuria.runtime.util.TypeUtil;
 import de.topicmapslab.kuria.runtime.widget.ComboBinding;
+import de.topicmapslab.kuria.runtime.widget.IComboBinding;
 
 /**
  * @author Hannes Niederhausen
@@ -37,13 +38,13 @@ import de.topicmapslab.kuria.runtime.widget.ComboBinding;
  */
 public class ComboWidget extends LabeledWidget {
 
-	private BindingContainer bindingContainer;
+	private IBindingContainer bindingContainer;
 	private Button newButton;
 	private Combo combo;
 	
 	private List<Object>  comboValues;
 
-	public ComboWidget(PropertyBinding propertyBinding, BindingContainer bindingContainer) {
+	public ComboWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 		super(propertyBinding);
 		if (!(propertyBinding instanceof ComboBinding))
 			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
@@ -143,7 +144,7 @@ public class ComboWidget extends LabeledWidget {
 		if (getModel()==null)
 			return;
 		try {
-    		ComboBinding pb = getPropertyBinding();
+    		IComboBinding pb = getPropertyBinding();
 			fillCombo();
     		int index = indexOfComboElement(pb.getValue(getModel()));
     		if (index >= 0)
@@ -190,7 +191,7 @@ public class ComboWidget extends LabeledWidget {
 	    if (o instanceof String) {
 	    	combo.add((String) o);
 	    } else {
-	    	TextBinding textBinding = bindingContainer.getTextBinding(o.getClass());
+	    	ITextBinding textBinding = bindingContainer.getTextBinding(o.getClass());
 	    	if (textBinding != null) {
 	    		combo.add(textBinding.getText(o));
 	    	} else {
@@ -259,13 +260,13 @@ public class ComboWidget extends LabeledWidget {
 	    return val;
     }
 
-	private BindingContainer getBindingContainer() {
+	private IBindingContainer getBindingContainer() {
 	    return bindingContainer;
     }
 	
 	@Override
-	public ComboBinding getPropertyBinding() {
-		return (ComboBinding) super.getPropertyBinding();
+	public IComboBinding getPropertyBinding() {
+		return (IComboBinding) super.getPropertyBinding();
 	}
 	
 	@Override

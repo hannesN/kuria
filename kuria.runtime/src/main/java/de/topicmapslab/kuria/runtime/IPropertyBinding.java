@@ -59,6 +59,26 @@ public interface IPropertyBinding {
 			NoSuchMethodException;
 
 	/**
+	 * Returns the fieldname of this binding.
+	 * 
+	 * @return the current value of fieldname
+	 */
+	public String getFieldName();
+	
+	/**
+	 * Sets the value of the field in the given instance.
+	 * 
+	 * @param instance the instance which field value shoulb be changed
+	 * @param value the new value
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws IllegalArgumentException
+	 */
+	public void setValue(Object instance, Object value) throws IllegalAccessException, InvocationTargetException,
+	        NoSuchMethodException, IllegalArgumentException;
+	
+	/**
 	 * Checks if the type of this field is an array.
 	 * 
 	 * <p>This is a helper method to get information of the type.</p>

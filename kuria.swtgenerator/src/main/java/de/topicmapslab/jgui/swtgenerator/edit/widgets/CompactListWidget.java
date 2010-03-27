@@ -20,9 +20,9 @@ import org.eclipse.swt.widgets.Text;
 
 import de.topicmapslab.jgui.swtgenerator.edit.IContentProvider;
 import de.topicmapslab.jgui.swtgenerator.edit.dialog.SelectionDialog;
-import de.topicmapslab.kuria.runtime.BindingContainer;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
-import de.topicmapslab.kuria.runtime.TextBinding;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+import de.topicmapslab.kuria.runtime.ITextBinding;
 
 /**
  * @author Hannes Niederhausen
@@ -33,7 +33,7 @@ public class CompactListWidget extends ListWidget {
 	private Button selectionButton;
 	private Button newButton;
 
-	public CompactListWidget(PropertyBinding propertyBinding, BindingContainer bindingContainer) {
+	public CompactListWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 		super(propertyBinding, bindingContainer);
 	}
 
@@ -45,7 +45,7 @@ public class CompactListWidget extends ListWidget {
 		try {
 			StringBuilder builder = new StringBuilder();
 			for (Object o : getSelection()) {
-				TextBinding tb = getBindingContainer().getTextBinding(o.getClass());
+				ITextBinding tb = getBindingContainer().getTextBinding(o.getClass());
 				if (tb != null) {
 					builder.append(tb.getText(o));
 				} else {

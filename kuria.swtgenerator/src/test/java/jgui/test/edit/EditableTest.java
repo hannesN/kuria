@@ -8,10 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import jgui.test.model.Pet;
-import jgui.test.model.Person;
 import jgui.test.model.Address;
-
+import jgui.test.model.Person;
+import jgui.test.model.Pet;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -33,7 +32,7 @@ import de.topicmapslab.jgui.swtgenerator.edit.IContentProvider;
 import de.topicmapslab.jgui.swtgenerator.edit.IInputMaskListener;
 import de.topicmapslab.jgui.swtgenerator.edit.InputMask;
 import de.topicmapslab.kuria.annotation.AnnotationBindingFactory;
-import de.topicmapslab.kuria.runtime.BindingContainer;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 
 /**
  * @author niederhausen
@@ -92,7 +91,7 @@ public class EditableTest implements IInputMaskListener {
 		fac.addClass(Address.class);
 		fac.addClass(Pet.class);
 		
-		BindingContainer bc = fac.getBindingContainer();
+		IBindingContainer bc = fac.getBindingContainer();
 	
 		
 		WidgetGenerator gen = new WidgetGenerator(bc);

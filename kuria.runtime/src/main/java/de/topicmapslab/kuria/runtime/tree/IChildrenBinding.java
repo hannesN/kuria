@@ -1,6 +1,8 @@
 package de.topicmapslab.kuria.runtime.tree;
 
-public interface IChildrenBinding {
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+
+public interface IChildrenBinding extends IPropertyBinding {
 
 	/**
 	 * Returns the nodeTitle 

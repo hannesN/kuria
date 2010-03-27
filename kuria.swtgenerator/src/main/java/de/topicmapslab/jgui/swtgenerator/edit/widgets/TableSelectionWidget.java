@@ -29,8 +29,8 @@ import de.topicmapslab.jgui.swtgenerator.edit.dialog.NewInstanceWizard;
 import de.topicmapslab.jgui.swtgenerator.edit.dialog.NewPrimitiveValueWizard;
 import de.topicmapslab.jgui.swtgenerator.edit.dialog.SelectionDialog;
 import de.topicmapslab.jgui.swtgenerator.util.TextBindingLabelProvider;
-import de.topicmapslab.kuria.runtime.BindingContainer;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.util.TypeUtil;
 
 /**
@@ -46,7 +46,7 @@ public class TableSelectionWidget extends ListWidget {
 	private Button addButton;
 	private Button removeButton;
 
-	public TableSelectionWidget(PropertyBinding propertyBinding, BindingContainer bindingContainer) {
+	public TableSelectionWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 	    super(propertyBinding, bindingContainer);
     }
 

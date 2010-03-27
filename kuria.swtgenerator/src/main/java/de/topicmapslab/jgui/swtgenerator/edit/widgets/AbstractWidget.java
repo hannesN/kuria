@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.topicmapslab.jgui.swtgenerator.edit.IContentProvider;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 
 public abstract class AbstractWidget implements IInputMaskWidget {
 
@@ -20,14 +20,14 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 		}
 	};
 
-	protected final PropertyBinding propertyBinding;
+	protected final IPropertyBinding propertyBinding;
 	private Object model;
 	private IContentProvider provider;
 	private boolean dirty = false;
 
 	private List<IStateListener> listeners;
 
-	public AbstractWidget(PropertyBinding propertyBinding) {
+	public AbstractWidget(IPropertyBinding propertyBinding) {
 		super();
 		this.propertyBinding = propertyBinding;
 	}
@@ -35,7 +35,7 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 	/**
 	 * {@inheritDoc}
 	 */
-	public PropertyBinding getPropertyBinding() {
+	public IPropertyBinding getPropertyBinding() {
 		return propertyBinding;
 	}
 

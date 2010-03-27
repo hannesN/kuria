@@ -1,6 +1,8 @@
 package de.topicmapslab.kuria.runtime.widget;
 
-public interface ITextFieldBinding {
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+
+public interface ITextFieldBinding extends IPropertyBinding {
 
 	/**
 	 * Returns the number of rows.

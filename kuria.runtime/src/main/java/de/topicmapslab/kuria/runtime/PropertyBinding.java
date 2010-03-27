@@ -121,9 +121,8 @@ public abstract class PropertyBinding implements IPropertyBinding {
 	}
 
 	/**
-	 * Returns the fieldname of this binding.
 	 * 
-	 * @return the current value of fieldname
+	 *  {@inheritDoc}
 	 */
 	public String getFieldName() {
 		return fieldName;
@@ -154,14 +153,8 @@ public abstract class PropertyBinding implements IPropertyBinding {
 	}
 
 	/**
-	 * Sets the value of the field in the given instance.
 	 * 
-	 * @param instance the instance which field value shoulb be changed
-	 * @param value the new value
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchMethodException
-	 * @throws IllegalArgumentException
+	 *  {@inheritDoc}
 	 */
 	public void setValue(Object instance, Object value) throws IllegalAccessException, InvocationTargetException,
 	        NoSuchMethodException, IllegalArgumentException {

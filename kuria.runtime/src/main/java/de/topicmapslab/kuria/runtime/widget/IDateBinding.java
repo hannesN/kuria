@@ -1,6 +1,8 @@
 package de.topicmapslab.kuria.runtime.widget;
 
-public interface IDateBinding {
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+
+public interface IDateBinding extends IPropertyBinding {
 
 	/** 
 	 * Returns the format of the textual representation of the field.

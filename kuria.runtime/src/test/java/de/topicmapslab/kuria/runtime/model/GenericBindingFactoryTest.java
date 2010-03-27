@@ -10,11 +10,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.topicmapslab.kuria.runtime.BindingContainer;
 import de.topicmapslab.kuria.runtime.GenericBindingFactory;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
-import de.topicmapslab.kuria.runtime.model.Address;
-import de.topicmapslab.kuria.runtime.model.Person;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.widget.ICheckBinding;
 import de.topicmapslab.kuria.runtime.widget.IComboBinding;
 import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
@@ -44,14 +42,14 @@ public class GenericBindingFactoryTest {
 	@Test
 	public void testPersonBindings() {
 		try {
-			BindingContainer bc = fac.getBindingContainer();
+			IBindingContainer bc = fac.getBindingContainer();
 			
 			int textFieldCounter = 0;
 			int comboCounter = 0;
 			int groupCounter = 0;
 			int checkCounter = 0;
 			int listCounter = 0;
-			for (PropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
+			for (IPropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
 				if (pb instanceof ITextFieldBinding)
 					textFieldCounter++;
 				if (pb instanceof IComboBinding)
@@ -74,7 +72,7 @@ public class GenericBindingFactoryTest {
 			
 			assertEquals("Number of CheckBindings", 1, checkCounter);
 			
-			for (PropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
+			for (IPropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
 				if (pb instanceof IComboBinding) {
 					assertEquals("Check createNew", false, ((IComboBinding) pb).isShowNewButton());
 				}
@@ -94,7 +92,7 @@ public class GenericBindingFactoryTest {
 			
 			IEditableBinding eb = fac.getBindingContainer().getEditableBinding(a.getClass());
 			
-			for (PropertyBinding pb : eb.getPropertieBindings()) {
+			for (IPropertyBinding pb : eb.getPropertieBindings()) {
 				if (pb.getFieldName().equals("city"))
 					assertEquals(a.getCity(), pb.getValue(a));
 				if (pb.getFieldName().equals("number"))

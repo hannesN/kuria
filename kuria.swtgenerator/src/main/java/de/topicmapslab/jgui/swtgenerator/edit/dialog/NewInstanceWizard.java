@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import de.topicmapslab.jgui.swtgenerator.WidgetGenerator;
 import de.topicmapslab.jgui.swtgenerator.edit.InputMask;
-import de.topicmapslab.kuria.runtime.BindingContainer;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 
 /**
  * @author Hannes Niederhausen
@@ -24,10 +24,10 @@ public class NewInstanceWizard extends Wizard {
 	private NewInstanceWizardPage page;
 	
 	private final Class<?> modelType;
-	private final BindingContainer container;
+	private final IBindingContainer container;
 	private final Object model;
 	
-	public NewInstanceWizard(Class<?> modelType, BindingContainer container) throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	public NewInstanceWizard(Class<?> modelType, IBindingContainer container) throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		model = modelType.getConstructor().newInstance();
 		this.modelType = modelType;
 		this.container = container;

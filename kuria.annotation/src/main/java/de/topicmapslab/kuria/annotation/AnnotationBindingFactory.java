@@ -20,6 +20,7 @@ import de.topicmapslab.kuria.annotation.widgets.List;
 import de.topicmapslab.kuria.annotation.widgets.TextField;
 import de.topicmapslab.kuria.runtime.BindingContainer;
 import de.topicmapslab.kuria.runtime.GenericBindingFactory;
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IBindingFactory;
 import de.topicmapslab.kuria.runtime.PropertyBinding;
 import de.topicmapslab.kuria.runtime.TextBinding;
@@ -49,7 +50,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 
 	private BindingContainer bindingContainer;
 
-	public BindingContainer getBindingContainer() {
+	public IBindingContainer getBindingContainer() {
 		if (bindingContainer == null) {
 			init();
 		}

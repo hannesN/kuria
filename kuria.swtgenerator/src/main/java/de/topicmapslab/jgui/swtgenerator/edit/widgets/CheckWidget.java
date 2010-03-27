@@ -11,7 +11,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
-import de.topicmapslab.kuria.runtime.PropertyBinding;
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 
 /**
  * @author Hannes Niederhausen
@@ -21,7 +21,7 @@ public class CheckWidget extends AbstractWidget {
 
 	private Button button;
 
-	public CheckWidget(PropertyBinding propertyBinding) {
+	public CheckWidget(IPropertyBinding propertyBinding) {
 		super(propertyBinding);
 	}
 

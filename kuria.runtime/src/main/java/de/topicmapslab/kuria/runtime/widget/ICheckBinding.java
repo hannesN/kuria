@@ -1,5 +1,7 @@
 package de.topicmapslab.kuria.runtime.widget;
 
-public interface ICheckBinding {
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+
+public interface ICheckBinding extends IPropertyBinding {
 
 }

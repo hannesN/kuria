@@ -7,6 +7,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.PropertyBinding;
 
 /**
@@ -17,7 +18,7 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
  */
 public abstract class LabeledWidget extends AbstractWidget {
 
-	public LabeledWidget(PropertyBinding propertyBinding) {
+	public LabeledWidget(IPropertyBinding propertyBinding) {
 	    super(propertyBinding);
     }
 
