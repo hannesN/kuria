@@ -18,5 +18,5 @@ public interface IBindingFactory {
 	 * 
 	 * @return the created instance of {@link BindingContainer}
 	 */
-	public BindingContainer getBindingContainer();
+	public IBindingContainer getBindingContainer();
 }

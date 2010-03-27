@@ -12,6 +12,6 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class CheckBinding extends PropertyBinding {
+public class CheckBinding extends PropertyBinding implements ICheckBinding {
 
 }

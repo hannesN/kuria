@@ -15,12 +15,12 @@ import de.topicmapslab.kuria.runtime.GenericBindingFactory;
 import de.topicmapslab.kuria.runtime.PropertyBinding;
 import de.topicmapslab.kuria.runtime.model.Address;
 import de.topicmapslab.kuria.runtime.model.Person;
-import de.topicmapslab.kuria.runtime.widget.CheckBinding;
-import de.topicmapslab.kuria.runtime.widget.ComboBinding;
-import de.topicmapslab.kuria.runtime.widget.EditableBinding;
-import de.topicmapslab.kuria.runtime.widget.GroupBinding;
-import de.topicmapslab.kuria.runtime.widget.ListBinding;
-import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
+import de.topicmapslab.kuria.runtime.widget.ICheckBinding;
+import de.topicmapslab.kuria.runtime.widget.IComboBinding;
+import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
+import de.topicmapslab.kuria.runtime.widget.IGroupBinding;
+import de.topicmapslab.kuria.runtime.widget.IListBinding;
+import de.topicmapslab.kuria.runtime.widget.ITextFieldBinding;
 
 /**
  * @author bosso
@@ -52,15 +52,15 @@ public class GenericBindingFactoryTest {
 			int checkCounter = 0;
 			int listCounter = 0;
 			for (PropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
-				if (pb instanceof TextFieldBinding)
+				if (pb instanceof ITextFieldBinding)
 					textFieldCounter++;
-				if (pb instanceof ComboBinding)
+				if (pb instanceof IComboBinding)
 					comboCounter++;
-				if (pb instanceof GroupBinding)
+				if (pb instanceof IGroupBinding)
 					groupCounter++;
-				if (pb instanceof CheckBinding)
+				if (pb instanceof ICheckBinding)
 					checkCounter++;
-				if (pb instanceof ListBinding)
+				if (pb instanceof IListBinding)
 					listCounter++;
 			}
 			
@@ -75,8 +75,8 @@ public class GenericBindingFactoryTest {
 			assertEquals("Number of CheckBindings", 1, checkCounter);
 			
 			for (PropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
-				if (pb instanceof ComboBinding) {
-					assertEquals("Check createNew", false, ((ComboBinding) pb).isShowNewButton());
+				if (pb instanceof IComboBinding) {
+					assertEquals("Check createNew", false, ((IComboBinding) pb).isShowNewButton());
 				}
 			}
 			
@@ -92,7 +92,7 @@ public class GenericBindingFactoryTest {
 		try {
 			Address a = getAddress();
 			
-			EditableBinding eb = fac.getBindingContainer().getEditableBinding(a.getClass());
+			IEditableBinding eb = fac.getBindingContainer().getEditableBinding(a.getClass());
 			
 			for (PropertyBinding pb : eb.getPropertieBindings()) {
 				if (pb.getFieldName().equals("city"))

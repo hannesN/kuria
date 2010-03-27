@@ -21,7 +21,7 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class TextFieldBinding extends PropertyBinding {
+public class TextFieldBinding extends PropertyBinding implements ITextFieldBinding {
 
 	private String regExp;
 	private boolean password;
@@ -40,8 +40,7 @@ public class TextFieldBinding extends PropertyBinding {
     }
 	
 	/**
-	 * Returns the number of rows.
-	 * @return
+	 *  {@inheritDoc}
 	 */
 	public int getRows() {
 	    return rows;
@@ -57,8 +56,7 @@ public class TextFieldBinding extends PropertyBinding {
 	}
 	
 	/**
-	 * Returns the validation regular expression
-	 * @return the current expression or <code>null</code> if no validation is needed
+	 *  {@inheritDoc}
 	 */
 	public String getRegExp() {
 		return regExp;
@@ -73,8 +71,7 @@ public class TextFieldBinding extends PropertyBinding {
     }
 	
 	/**
-	 * Returns the value of the password flag
-	 * @return <code>true</code> if the text field should be a password field, <code>false</code> else
+	 *  {@inheritDoc}
 	 */
 	public boolean isPassword() {
 	    return password;
@@ -90,8 +87,7 @@ public class TextFieldBinding extends PropertyBinding {
     }
 	
 	/**
-	 * Returns the value of the flag
-	 * @return the vlue of the flag
+	 *  {@inheritDoc}
 	 */
 	public boolean isGrabVerticalSpace() {
 	    return grabVerticalSpace;

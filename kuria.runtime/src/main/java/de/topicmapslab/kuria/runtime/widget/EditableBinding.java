@@ -18,18 +18,14 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class EditableBinding {
+public class EditableBinding implements IEditableBinding {
 
 	private Class<?> objectType;
 	private List<PropertyBinding> propertieBindings;
 
 	
 	/**
-	 * Returns the {@link PropertyBinding}s of this binding.
-	 * <p>This list is unmodifiable. To add or remove a binding use the methods
-	 * {@link #addPropertyBinding(PropertyBinding)} and {@link #removePropertyBinding(PropertyBinding)}.
-	 * 
-	 * @return an unmodifiable list of the {@link PropertyBinding}s
+	 *  {@inheritDoc}
 	 */
 	public List<PropertyBinding> getPropertieBindings() {
 		if (propertieBindings == null) {
@@ -63,8 +59,7 @@ public class EditableBinding {
 	}
 	
 	/**
-	 * Returns the bound type.
-	 * @return the bound type
+	 *  {@inheritDoc}
 	 */
 	public Class<?> getObjectType() {
 		return objectType;

@@ -17,5 +17,5 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class GroupBinding extends PropertyBinding {
+public class GroupBinding extends PropertyBinding implements IGroupBinding {
 }

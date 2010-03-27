@@ -18,13 +18,12 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class DateBinding extends PropertyBinding {
+public class DateBinding extends PropertyBinding implements IDateBinding {
 
 	private String format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 	
-	/** 
-	 * Returns the format of the textual representation of the field.
-	 * @return the textual representation of the format
+	/**
+	 *  {@inheritDoc}
 	 */
 	public String getFormat() {
 	    return format;

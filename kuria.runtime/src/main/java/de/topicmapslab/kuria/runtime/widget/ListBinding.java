@@ -31,7 +31,7 @@ import de.topicmapslab.kuria.runtime.util.TypeUtil;
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class ListBinding extends PropertyBinding {
+public class ListBinding extends PropertyBinding implements IListBinding {
 
 	private ListStyle listStyle = ListStyle.COMPACT;
 	
@@ -39,8 +39,7 @@ public class ListBinding extends PropertyBinding {
 	
 	private boolean createNew = false;
 	/**
-	 * Returns the list style of this binding.
-	 * @return the list style of the {@link ListBinding}
+	 *  {@inheritDoc}
 	 */
 	public ListStyle getListStyle() {
 		return listStyle;
@@ -55,10 +54,7 @@ public class ListBinding extends PropertyBinding {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * 
-	 * <p>If the value is an array, and the type is an collection this method converts the values according to the
-	 * result of {@link #getCollectionImplementation()}.
+	 *  {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -127,9 +123,7 @@ public class ListBinding extends PropertyBinding {
 	}
 	
 	/**
-	 * Returns the kind of implementation used for the collection
-	 * or <code>null</code> if an array is used.
-	 * @return the class of the 
+	 *  {@inheritDoc}
 	 */
 	public Class<?> getCollectionImplementation() {
 	    return collectionImplementation;
@@ -144,8 +138,7 @@ public class ListBinding extends PropertyBinding {
     }
 	
 	/**
-	 * Returns the value of the create-new flag.
-	 * @return the value of the create-new flag.
+	 *  {@inheritDoc}
 	 */
 	public boolean isCreateNew() {
 	    return createNew;

@@ -16,13 +16,12 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public class ComboBinding extends PropertyBinding {
+public class ComboBinding extends PropertyBinding implements IComboBinding {
 
 	private boolean showNewButton = false;
 	
 	/**
-	 * Returns the value of showNewButton
-	 * @return <code>true</code> if a the "new-button" should be generated, else <code>false</code>
+	 *  {@inheritDoc}
 	 */
 	public boolean isShowNewButton() {
 	    return showNewButton;

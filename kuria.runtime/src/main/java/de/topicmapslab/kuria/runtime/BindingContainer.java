@@ -9,7 +9,7 @@ import java.util.Map;
 
 import de.topicmapslab.kuria.runtime.table.ITableBinding;
 import de.topicmapslab.kuria.runtime.tree.ITreeNodeBinding;
-import de.topicmapslab.kuria.runtime.widget.EditableBinding;
+import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
 
 /**
  * @author Hannes Niederhausen
@@ -17,21 +17,21 @@ import de.topicmapslab.kuria.runtime.widget.EditableBinding;
  */
 public class BindingContainer implements IBindingContainer {
 
-	private Map<Class<?>, TextBinding> textBindings;
+	private Map<Class<?>, ITextBinding> textBindings;
 	
 	private Map<Class<?>, ITableBinding> tableBindings;
 
 	private Map<Class<?>, ITreeNodeBinding> treeNodeBindings;
 
-	private Map<Class<?>, EditableBinding> editableBindings;
+	private Map<Class<?>, IEditableBinding> editableBindings;
 
-	public void setEditableBindings(Map<Class<?>, EditableBinding> editableBindings) {
+	public void setEditableBindings(Map<Class<?>, IEditableBinding> editableBindings) {
 		this.editableBindings = editableBindings;
 	}
 
-	public void putEditableBindings(Class<?> c, EditableBinding editableBinding) {
+	public void putEditableBindings(Class<?> c, IEditableBinding editableBinding) {
 		if (editableBindings == null) {
-			editableBindings = new HashMap<Class<?>, EditableBinding>();
+			editableBindings = new HashMap<Class<?>, IEditableBinding>();
 		}
 		editableBindings.put(c, editableBinding);
 	}
@@ -39,7 +39,7 @@ public class BindingContainer implements IBindingContainer {
 	/**
 	 *  {@inheritDoc}
 	 */
-	public EditableBinding getEditableBinding(Class<?> clazz) {
+	public IEditableBinding getEditableBinding(Class<?> clazz) {
 		if (editableBindings == null) {
 			return null;
 		}
@@ -49,7 +49,7 @@ public class BindingContainer implements IBindingContainer {
 	/**
 	 *  {@inheritDoc}
 	 */
-	public Map<Class<?>, EditableBinding> getEditableBindings() {
+	public Map<Class<?>, IEditableBinding> getEditableBindings() {
     	if (editableBindings==null)
     		return Collections.emptyMap();
     	return editableBindings;
@@ -116,14 +116,14 @@ public class BindingContainer implements IBindingContainer {
 	    return treeNodeBindings;
     }
 	
-	public void setTextBindings(Map<Class<?>, TextBinding> textBindings) {
+	public void setTextBindings(Map<Class<?>, ITextBinding> textBindings) {
 	    this.textBindings = textBindings;
     }
 	
 	/**
 	 *  {@inheritDoc}
 	 */
-	public Map<Class<?>, TextBinding> getTextBindings() {
+	public Map<Class<?>, ITextBinding> getTextBindings() {
 		if (textBindings==null)
 			return Collections.emptyMap();
 		
@@ -132,7 +132,7 @@ public class BindingContainer implements IBindingContainer {
 	
 	public void putTextBinding(Class<?> c, TextBinding textBinding) {
 		if (textBindings == null) {
-			textBindings = new HashMap<Class<?>, TextBinding>();
+			textBindings = new HashMap<Class<?>, ITextBinding>();
 		}
 		textBindings.put(c, textBinding);
 	}
@@ -140,7 +140,7 @@ public class BindingContainer implements IBindingContainer {
 	/**
 	 *  {@inheritDoc}
 	 */
-	public TextBinding getTextBinding(Class<?> c) {
+	public ITextBinding getTextBinding(Class<?> c) {
 		return getTextBindings().get(c);
 	}
 }
