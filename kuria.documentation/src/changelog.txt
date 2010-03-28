@@ -1,0 +1,55 @@
+Changelog
+=========
+
+= Version 1.0.1 =
+
+== Runtime ==
+* Generated interfaces for bindings, makes it possible to create new bindings for other model types than java beans
+* Added validation flags and accessors
+* 
+
+
+== Annotation ==
+* Added optional flag to widget annotations
+
+
+== SWT Generator ==
+* Uses valid flags of bindings to check if persist may be called or not
+ 
+
+= Version 1.0.0 =
+
+== Runtime ==
+* Binding classes for every annotation/widget
+* contains generic factory creating widget bindings for classes based on property type
+
+
+== Annotation ==
+* created set of annotations for the common widgets
+* annotation factory which falls back to generic factory
+
+== SWT Generator ==
+* generates SWT widgets based on bindings
+* provides new widget container called InputMask
+* State of model can be observed with state listeners
+* widget data is not automatically stored in domain model
+generate tree and table viewer (JFace)
+
+
+
+////////////////////////
+
+Template for new versions:
+
+= Version y.x.z =
+== Runtime ==
+
+== Annotation ==
+
+== SWT Generator ==
+
+////////////////////////
+
+
+
+ 
