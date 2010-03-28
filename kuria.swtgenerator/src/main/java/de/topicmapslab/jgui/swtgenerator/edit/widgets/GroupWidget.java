@@ -115,7 +115,9 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 
 	@Override
 	public boolean isValid() {
-		return inputMask.isValid();
+		if (!getPropertyBinding().isOptional())
+			return inputMask.isValid();
+		return true;
 	}
 	
 }
