@@ -152,6 +152,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		lb.setReadOnly(l.readOnly());
 		lb.setCreateNew(l.createNew());
 		lb.setListStyle(l.style());
+		lb.setOptional(l.optional());
 
 		return lb;
 	}
@@ -163,6 +164,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 			gb.setLabel(g.label());
 
 		gb.setReadOnly(g.readOnly());
+		gb.setOptional(g.optional());
 		return gb;
 	}
 
@@ -175,6 +177,8 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		cb.setReadOnly(c.readOnly());
 		cb.setShowNewButton(c.createNew());
 
+		cb.setOptional(c.optional());
+		
 		return cb;
 	}
 	
@@ -186,6 +190,8 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		db.setReadOnly(d.readOnly());
 		db.setFormat(d.format());
 		
+		db.setOptional(d.optional());
+		
 		return db;
 	}
 
@@ -194,6 +200,9 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		CheckBinding cb = new CheckBinding();
 		if (c.label().length() > 0)
 			cb.setLabel(c.label());
+		
+		cb.setOptional(c.optional());
+		
 		return cb;
 	}
 
@@ -209,6 +218,8 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		tfb.setRegExp(tf.regexp());
 		tfb.setPassword(tf.password());
 		tfb.setRows(tf.rows());
+		tfb.setOptional(tf.optional());
+		
 		return tfb;
 	}
 
