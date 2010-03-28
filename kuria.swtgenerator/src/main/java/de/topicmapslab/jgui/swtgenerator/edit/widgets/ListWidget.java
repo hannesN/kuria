@@ -108,19 +108,21 @@ public abstract class ListWidget extends LabeledWidget {
 	@SuppressWarnings("unchecked")
     protected void setSelection(Object[] selection) {
 		this.selection = selection;
-		updateView();
 		try {
 			if (selection==null)
 				return;
 			
-			
+			if (getSelection().length==0) {
+				setErrorMessage("No Item chosen");
+			} else {
+				setErrorMessage(null);
+			}
 			
 	        Object[] valueArray = getValueArray();
 	        if (selection.length != valueArray.length) {
 		        notifyStateListener(true);
 		        return;
 	        }
-	        updateView();
 	        List l = Arrays.asList(selection);
 	        for (Object o : valueArray) {
 	        	if (!l.contains(o)) {

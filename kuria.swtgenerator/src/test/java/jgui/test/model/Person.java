@@ -38,7 +38,7 @@ public class Person {
 	private String firstname;
 	
 	@Column
-	@TextField
+	@TextField(optional=true)
 	private String nickname;
 	
 	@Column
@@ -49,14 +49,15 @@ public class Person {
 	private Address address;
 	
 	@Children
-	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.COMPACT, createNew=true)
+	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.COMPACT, createNew=true, optional=true)
 	private List<Person> children;
 	
 	@Children
 	@Column
+	@Combo(createNew=false, optional=true)
 	private Pet favPet;
 	
-	@Combo(createNew=true)
+	@Combo(createNew=true, optional=true)
     private Person wife;
 
 	@Date

@@ -139,6 +139,9 @@ public class InputMask implements IStateListener {
         // checking validity
         IInputMaskWidget w = widgetMap.get(property);
         if (w.isValid()) {
+        	// TODO raus
+        	System.out.println(w.getClass().getName());
+        	System.out.println(getErrorMessagesMap());
         	putErrorMessage(w, null);
         } else {// TODO get error message from widget
         	putErrorMessage(w, "Invalid Value");
@@ -280,11 +283,12 @@ public class InputMask implements IStateListener {
 			errorMessages = new HashMap<IInputMaskWidget, String>();
 		}
 		
-		if ( (msg==null) && (errorMessages.containsKey(w)) ) {
-			errorMessages.remove(w);
+		if (msg==null) { 
+			if (errorMessages.containsKey(w)) {
+				errorMessages.remove(w);
+			}
 			return;
 		} 
-		
 		errorMessages.put(w, msg);
 	}
 

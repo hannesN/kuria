@@ -27,7 +27,7 @@ import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
 public class TextFieldWidget extends LabeledWidget {
 
 	private Text textField;
-
+	
 	public TextFieldWidget(IPropertyBinding propertyBinding) {
 		super(propertyBinding);
 		if (!(propertyBinding instanceof TextFieldBinding))
@@ -85,34 +85,6 @@ public class TextFieldWidget extends LabeledWidget {
 		return super.isValid();
 	}
 
-	private void addModifyListener() {
-		textField.addModifyListener(new ModifyListener() {
-
-			public void modifyText(ModifyEvent arg0) {
-				if (getModel() != null) {
-					try {
-						String text = textField.getText();
-
-						boolean dirty = true;
-						String tmp = "";
-						Object val = getPropertyBinding().getValue(getModel());
-						if (val != null)
-							tmp = val.toString();
-
-						if (text.equals(tmp)) {
-							dirty = false;
-						}
-						notifyStateListener(dirty);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-
-				}
-			}
-		});
-
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -133,25 +105,6 @@ public class TextFieldWidget extends LabeledWidget {
 			}
 		}
 		textField.setText(result);
-	}
-
-	/**
-	 * Adds a verify listener according to the type of the bound field.
-	 */
-	private void addVerifyListener() {
-		if (getPropertyBinding().getType() instanceof Class<?>) {
-			Class<?> type = (Class<?>) getPropertyBinding().getType();
-			if ((type.equals(Integer.class)) || (type.equals(int.class))) {
-				textField.addVerifyListener(Validators.INT_VERIFIER);
-				return;
-			}
-
-			if ((type.equals(Float.class)) || (type.equals(float.class)) || (type.equals(Double.class))
-			        || (type.equals(double.class))) {
-				textField.addVerifyListener(Validators.DECIMAL_VERIFIER);
-				return;
-			}
-		}
 	}
 
 	/**
@@ -203,6 +156,60 @@ public class TextFieldWidget extends LabeledWidget {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * Adds a verify listener according to the type of the bound field.
+	 */
+	private void addVerifyListener() {
+		if (getPropertyBinding().getType() instanceof Class<?>) {
+			Class<?> type = (Class<?>) getPropertyBinding().getType();
+			if ((type.equals(Integer.class)) || (type.equals(int.class))) {
+				textField.addVerifyListener(Validators.INT_VERIFIER);
+				return;
+			}
+	
+			if ((type.equals(Float.class)) || (type.equals(float.class)) || (type.equals(Double.class))
+			        || (type.equals(double.class))) {
+				textField.addVerifyListener(Validators.DECIMAL_VERIFIER);
+				return;
+			}
+		}
+	}
+	
+	private void addModifyListener() {
+		textField.addModifyListener(new ModifyListener() {
+	
+			public void modifyText(ModifyEvent arg0) {
+				if (getModel() != null) {
+					try {
+						String text = textField.getText();
+	
+						boolean dirty = true;
+						String tmp = "";
+						Object val = getPropertyBinding().getValue(getModel());
+						if (val != null)
+							tmp = val.toString();
+	
+						if (text.equals(tmp)) {
+							dirty = false;
+						}
+						
+						if (text.length()==0) {
+							setErrorMessage("No text entered");
+						} else {
+							setErrorMessage(null);
+						}
+						
+						notifyStateListener(dirty);
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+	
+				}
+			}
+		});
+	
 	}
 
 }

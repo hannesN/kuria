@@ -203,8 +203,9 @@ public class EditableTest implements IInputMaskListener {
 
 	public void dirtyChanged() {
 	    System.out.println("Dirty Changed: "+inputMask.isDirty());
-	    System.out.println("Valid Changed: "+inputMask.isValid());
-	    button.setEnabled(inputMask.isValid());
+	    boolean valid = inputMask.isValid();
+		System.out.println("Valid: "+valid);
+	    button.setEnabled(valid);
     }
 
 	public void newModelElement(Object newElement) {

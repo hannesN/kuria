@@ -45,6 +45,7 @@ public class TableSelectionWidget extends ListWidget {
 	private Button newButton;
 	private Button addButton;
 	private Button removeButton;
+	private String errorMessage;
 
 	public TableSelectionWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 	    super(propertyBinding, bindingContainer);
@@ -175,6 +176,7 @@ public class TableSelectionWidget extends ListWidget {
 	            	addToSelection(wzrd.getResult());
 	            	notifyNewModelListener(wzrd.getResult());
 	            }
+	            updateView();
 	            return;
 	        }
 	        if (getBindingContainer().getEditableBinding((Class<?>) type)!=null) {
@@ -186,12 +188,16 @@ public class TableSelectionWidget extends ListWidget {
 	            	notifyNewModelListener(wzrd.getModel());
 	            }
 	        }
+	        updateView();
 	    } catch (Exception e) {
 	    	throw new RuntimeException(e);
 	    }
     }
 	
-
+	public String getErrorMessage() {
+		// TODO Implement Error Message 
+		return this.errorMessage;
+	}
 	
 
 }

@@ -24,6 +24,7 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 	private Object model;
 	private IContentProvider provider;
 	private boolean dirty = false;
+	private String errorMessage;
 
 	private List<IStateListener> listeners;
 
@@ -102,6 +103,18 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 	public boolean isOptional() {
 	    return propertyBinding.isOptional();
     }
+	
+	/**
+	 * 
+	 *  {@inheritDoc}
+	 */
+	public String getErrorMessage() {
+		return this.errorMessage;
+	}
+	
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 	
 	protected void notifyStateListener(boolean isDirty) {
 		dirty = isDirty;

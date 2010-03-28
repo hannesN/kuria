@@ -101,4 +101,12 @@ public interface IInputMaskWidget {
 	 * @return <code>true</code> if the value is valid, <code>false</code> else
 	 */
 	public boolean isValid();
+	
+	/**
+	 * In case the value of the widget is incalid an error message is returned.
+	 * Else the return is <code>null</code>
+	 * 
+	 * @return <code>null</code> or an error message
+	 */
+	public String getErrorMessage();
 }

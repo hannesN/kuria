@@ -71,14 +71,17 @@ public class ComboWidget extends LabeledWidget {
 	                Object val = getPropertyBinding().getValue(getModel());
 	                
 	                int idx = combo.getSelectionIndex();
-	                if ((idx==-1) && (val==null))
+	                if ((idx==-1) && (val==null)) {
+	                	setErrorMessage("No Value selected");
 	                	notifyStateListener(false);
-	                else {
+	                } else {
+	                	setErrorMessage(null);
 	                	if (val!=null)
 	                		notifyStateListener(!val.equals(getCurrentSelection(idx)));
 	                	else
 	                		notifyStateListener(true);
 	                }
+	                
                 } catch (Exception e) {
                 	throw new RuntimeException(e);
                 }

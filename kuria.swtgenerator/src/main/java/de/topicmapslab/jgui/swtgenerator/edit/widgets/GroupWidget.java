@@ -106,6 +106,11 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 	}
 
 	public void dirtyChanged() {
+		if (inputMask.isValid()) {
+			setErrorMessage(null);
+		} else {
+			setErrorMessage("Not all needed items filled out");
+		}
 	   notifyStateListener(inputMask.isDirty()); 
     }
 
