@@ -49,7 +49,7 @@ public class Person {
 	private Address address;
 	
 	@Children
-	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.COMPACT, createNew=true, optional=true)
+	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.COMPACT, createNew=true)
 	private List<Person> children;
 	
 	@Children
