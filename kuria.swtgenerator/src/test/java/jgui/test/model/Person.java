@@ -214,7 +214,7 @@ public class Person {
 	    this.birthdate = birthdate;
     }
 	
-	@Children(title="other")
+	@Children(title="other", image="nothere.gif")
 	public Set<Address> getOtherAddresses() {
 		return Collections.emptySet();
 	}

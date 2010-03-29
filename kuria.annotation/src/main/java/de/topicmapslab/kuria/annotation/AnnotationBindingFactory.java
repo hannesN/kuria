@@ -275,7 +275,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 					if (children.image().length() > 0)
 						cb.setNodeImage(children.image());
 				}
-//				 find name
+				// find name
 				StringBuilder sb = new StringBuilder();
 				char character = Character.toLowerCase(m.getName().charAt(3));
 				sb.append(character);
