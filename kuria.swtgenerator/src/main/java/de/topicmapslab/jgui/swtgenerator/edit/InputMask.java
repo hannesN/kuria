@@ -287,7 +287,8 @@ public class InputMask implements IStateListener {
 			}
 			return;
 		} 
-		errorMessages.put(w, msg);
+		String m = w.getPropertyBinding().getLabel() + ": " + msg;
+		errorMessages.put(w, m);
 	}
 
 	private void putToWidgetMap(IPropertyBinding binding, IInputMaskWidget widget) {
