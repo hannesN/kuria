@@ -11,7 +11,8 @@ import java.lang.annotation.Target;
 /**
  * <p>This annotation is used in an class annotated with {@link TreeNode}.
  * It indicates that the annotated field represents a set of nodes which 
- * are the children in a TreeViewer.</p>
+ * are the children in a TreeViewer. It is also possible to annotate a 
+ * method which returns a colelction of children.</p>
  * 
  * <p>You can use it more than one times in a class. The children collections 
  * will be merged.</p> 
@@ -30,7 +31,7 @@ import java.lang.annotation.Target;
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface Children {
 
 	/**

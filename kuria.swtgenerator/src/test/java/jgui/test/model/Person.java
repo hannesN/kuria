@@ -4,6 +4,7 @@
 package jgui.test.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +12,7 @@ import de.topicmapslab.kuria.annotation.Text;
 import de.topicmapslab.kuria.annotation.table.Column;
 import de.topicmapslab.kuria.annotation.table.TableElement;
 import de.topicmapslab.kuria.annotation.tree.Children;
+import de.topicmapslab.kuria.annotation.tree.TreeNode;
 import de.topicmapslab.kuria.annotation.widgets.Combo;
 import de.topicmapslab.kuria.annotation.widgets.Date;
 import de.topicmapslab.kuria.annotation.widgets.Editable;
@@ -25,6 +27,7 @@ import de.topicmapslab.kuria.runtime.widget.ListStyle;
  */
 @Editable
 @TableElement
+@TreeNode
 public class Person {
 
 	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.TABLE, createNew=true)
@@ -210,4 +213,9 @@ public class Person {
 	public void setBirthdate(java.util.Date birthdate) {
 	    this.birthdate = birthdate;
     }
+	
+	@Children(title="other")
+	public Set<Address> getOtherAddresses() {
+		return Collections.emptySet();
+	}
 }

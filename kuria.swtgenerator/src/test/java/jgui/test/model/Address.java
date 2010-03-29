@@ -3,6 +3,7 @@ package jgui.test.model;
 import de.topicmapslab.kuria.annotation.Text;
 import de.topicmapslab.kuria.annotation.table.Column;
 import de.topicmapslab.kuria.annotation.table.TableElement;
+import de.topicmapslab.kuria.annotation.tree.TreeNode;
 import de.topicmapslab.kuria.annotation.widgets.Check;
 import de.topicmapslab.kuria.annotation.widgets.Editable;
 
@@ -11,6 +12,7 @@ import de.topicmapslab.kuria.annotation.widgets.Editable;
  */
 @Editable
 @TableElement
+@TreeNode
 public class Address {
 
 	@Column

@@ -4,6 +4,7 @@
 package de.topicmapslab.kuria.annotation.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -130,4 +131,9 @@ public class Person {
 	public Date getBirthdate() {
 	    return birthdate;
     }
+	
+	@Children
+	public Set<Address> otherAddresses() {
+		return Collections.emptySet();
+	}
 }

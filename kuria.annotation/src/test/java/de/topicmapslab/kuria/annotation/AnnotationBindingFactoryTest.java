@@ -10,6 +10,7 @@ import de.topicmapslab.kuria.annotation.data.Address;
 import de.topicmapslab.kuria.annotation.data.Person;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
+import de.topicmapslab.kuria.runtime.tree.IChildrenBinding;
 import de.topicmapslab.kuria.runtime.tree.ITreeNodeBinding;
 import de.topicmapslab.kuria.runtime.widget.CheckBinding;
 import de.topicmapslab.kuria.runtime.widget.ComboBinding;
@@ -58,6 +59,12 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 			Assert.assertNotNull(tnb);
 
 			Assert.assertNotNull("Children not null: " + tnb.getChildren());
+			
+			Assert.assertEquals("Children: ", 2, tnb.getChildren().size());
+			
+			for (IChildrenBinding c : tnb.getChildren()) {
+				System.out.println(c.getType());
+			}
 
 			int textFieldCounter = 0;
 			int comboCounter = 0;

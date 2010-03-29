@@ -265,6 +265,28 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 				b.addChild(cb);
 			}
 		}
+		
+		for (Method m : c.getDeclaredMethods()) {
+			Children children = m.getAnnotation(Children.class);
+			if (children != null) {
+				ChildrenBinding cb = new ChildrenBinding();
+				if (children.title().length() > 0) {
+					cb.setNodeTitle(children.title());
+					if (children.image().length() > 0)
+						cb.setNodeImage(children.image());
+				}
+//				 find name
+				StringBuilder sb = new StringBuilder();
+				char character = Character.toLowerCase(m.getName().charAt(3));
+				sb.append(character);
+				sb.append(m.getName().substring(4));
+
+				cb.setFieldName(sb.toString());
+				cb.setType(m.getGenericReturnType());
+				
+				b.addChild(cb);
+			}
+		}
 		return b;
 	}
 }
