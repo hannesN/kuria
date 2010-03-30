@@ -1,10 +1,18 @@
 Preface
 =======
 
-_Kuria_ provides an easy way to create input masks based on an domain model.
+Writing User interfaces is a time consuming and repeating task. Most input masks for a model have the same layout
+which consists of a label, which indicates the editable property and a widget to edit the value of the property.
 
-_Kuria_ is divided in three parts: runtime, annotation and generators.
+Most properties use a text field for editing. If the property of any type of number, the input mask might only 
+accept digits. This behaviour has to be added to any text field of  property.
 
-== Runtime ==
+Another feature of input masks is the validation of the data. Even simple validation like checking if a value was 
+entered needs additional code, which repeats for every widget which is used.
 
-The runtime library  
+_Kuria_ provides an automatic way of creating UI widgets based on a given domain model.
+_Kuria is split in three parts:
+
+* *kuria.runtime* specifies some binding interfaces and classes to communication between the widget and a domain model property
+* *kuria.generator* provides classes to generate the ui widgets. right now only SWT is supported
+* *kuria.annotation* provides a set of annottion which can be used to configure the domain model properties fir the generator

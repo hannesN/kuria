@@ -1,0 +1,76 @@
+== Kuria Runtime ==
+
+The runtime library specifies the classes which are used to bind the widget with the edited model, 
+hence these classes are called bindings.
+
+Bindings have two tasks:
+* providing some configurations for the widget
+* provide access to the property (read/write)
+
+The following chapters will explain the different bindings and their properties.
+For every binding an interface and an example implementations for java beans exists.
+
+// TODO factory/bindingcontainer
+
+
+=== Tablebindings ===
+
+Tablebindings can be found in the package: *de.topicmapslab.kuria.runtime.table*.
+
+.*ITableBinding*
+The *ITableBinding* interface specifies a container which contains a list of *IColumnBinding* . The binding 
+also contains the class which is bound.
+
+.*IColumnBinding*
+The *IColumnBinding* interface connects the property of the class with a column of a table. The column binding provides a title
+of the column, which can be used as column header. It also provides a apth to an image, which will be shown
+left to the value of the property. In addition it provides access to the value of the property.
+
+=== Treebindings ===
+
+Treebindings can be found in the package: *de.topicmapslab.kuria.runtime.tree*.
+
+.*ITreeNodeBinding*
+The *ITreeNodeBinding* interface indicates that the represented object may be used as node in a tree. The
+list of *IChildrenBinding* it provides contains bindings for the children of the node.
+
+.*IChildrenBinding*
+The *IChildrenBinding* interface is used to indicate which properties of an element which may be used as child nodes.
+Every type of child has to have an *ITreeNodeBinding*.
+
+
+=== InputMask ===
+
+For every type of widget exists a corresponding binding. Every binding is inherits from 
+*de.topicmapslab.kuria.runtime.IPropertyBinding*. 
+
+.*IPropertyBinding*
+The *IPropertyBinding* interface provides access to the bound property. 
+In addition it provides a label for the widget and the following flags:
+
+* read only - indicates the porperty must not be modified
+* optional - indicates the property is optional and their is not needed to be set
+* isArray - indicates the property is an array
+* is Collection - inidicates the property is a java.util.Collection or of a subclass
+
+
+.*IEditableBinding*
+The *IEditableBinding* interface...  
+
+.*ICheckBinding*
+The *ICheckBinding* interface...
+
+.*IComboBinding*  
+The *ICheckBinding* interface...
+
+.*IDateBinding*  
+The *IDateBinding* interface...
+
+.*IGroupBinding*
+The *IGroupBinding* interface...  
+
+.*IListBinding*
+The *IListBinding* interface...  
+
+.*ITextFieldBinding*
+The *ITextFieldBinding* interface...

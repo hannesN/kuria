@@ -1,0 +1,10 @@
+Glossary
+========
+[glossary]
+
+Binding::
+	A binding connects the ediablt property of the domain model with the UI element. It provides access to the properties
+	and the configuration for the UI element. 
+
+Widget::
+	A widget is visual element in user interfaces. Widgets are e.g. Buttons, Labels and text field . 
