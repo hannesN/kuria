@@ -58,6 +58,7 @@ public class DateWidget extends LabeledWidget {
                 }
 			}
 		});
+	    createDecoration(dateTimeWidget);
     }
 
 	public void persist() {

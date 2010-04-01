@@ -44,6 +44,7 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 		gd.horizontalSpan = ((GridLayout) parent.getLayout()).numColumns;
 		g.setLayoutData(gd);
 
+		createDecoration(g);
 		inputMask.setContentProvider(getContentProvider());
 		inputMask.addInputMaskListeners(this);
 	}

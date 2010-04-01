@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Control;
+
 import de.topicmapslab.jgui.swtgenerator.edit.IContentProvider;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 
@@ -25,6 +31,7 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 	private IContentProvider provider;
 	private boolean dirty = false;
 	private String errorMessage;
+	private ControlDecoration textFieldDecoration;
 
 	private List<IStateListener> listeners;
 
@@ -114,6 +121,16 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 	
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+		updateDecoration();
+	}
+	
+	protected void createDecoration(Control control) {
+		GridData gd = (GridData) control.getLayoutData();
+		if (gd==null)
+			throw new RuntimeException("No GridData Set!!");
+		gd.horizontalIndent = 5;
+		textFieldDecoration = new ControlDecoration(control, SWT.LEFT|SWT.TOP);
+		textFieldDecoration.setMarginWidth(2);
 	}
 	
 	protected void notifyStateListener(boolean isDirty) {
@@ -135,6 +152,19 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 	 */
 	public boolean isValid() {
 	    return true;
+	}
+	
+	/**
+	 * Updates the decoration of the widget
+	 */
+	protected void updateDecoration() {
+		if (getErrorMessage()==null) {
+			textFieldDecoration.hide();
+		} else {
+			textFieldDecoration.setDescriptionText(getErrorMessage());
+			textFieldDecoration.setImage(FieldDecorationRegistry.getDefault().getFieldDecoration(FieldDecorationRegistry.DEC_ERROR).getImage());
+			textFieldDecoration.show();
+		}
 	}
 	
 }

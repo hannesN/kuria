@@ -107,6 +107,7 @@ public class TableSelectionWidget extends ListWidget {
 		removeButton.setText("Remove");
 		removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
+		createDecoration(viewer.getTable());
 		hookButtonListener();
 	}
 

@@ -73,6 +73,9 @@ public class TextFieldWidget extends LabeledWidget {
 			gd.grabExcessVerticalSpace = false;
 		}
 		textField.setLayoutData(gd);
+		
+		createDecoration(textField);
+		
 		addVerifyListener();
 		addModifyListener();
 	}
@@ -157,7 +160,7 @@ public class TextFieldWidget extends LabeledWidget {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 	/**
 	 * Adds a verify listener according to the type of the bound field.
 	 */

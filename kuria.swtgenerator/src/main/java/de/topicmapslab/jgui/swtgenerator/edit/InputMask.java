@@ -141,7 +141,6 @@ public class InputMask implements IStateListener {
         if (w.isValid()) {
         	putErrorMessage(w, null);
         } else {
-        	// TODO get error message from widget
         	putErrorMessage(w, w.getErrorMessage());
         }
         notifyDirtyChanged();
@@ -180,7 +179,9 @@ public class InputMask implements IStateListener {
 	}
 	
 	public Collection<String> getErrorMessages() {
-		return getErrorMessagesMap().values();
+		List<String> msgs = new ArrayList<String>(getErrorMessagesMap().values());
+		Collections.sort(msgs);
+		return msgs;
 	}
 
 	private void clearAndDisable() {

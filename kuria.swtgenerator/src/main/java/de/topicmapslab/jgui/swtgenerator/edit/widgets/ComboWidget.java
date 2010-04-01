@@ -68,20 +68,7 @@ public class ComboWidget extends LabeledWidget {
 				if (getModel()==null)
 					return;
 				try {
-	                Object val = getPropertyBinding().getValue(getModel());
-	                
-	                int idx = combo.getSelectionIndex();
-	                if ((idx==-1) && (val==null)) {
-	                	setErrorMessage("No Value selected");
-	                	notifyStateListener(false);
-	                } else {
-	                	setErrorMessage(null);
-	                	if (val!=null)
-	                		notifyStateListener(!val.equals(getCurrentSelection(idx)));
-	                	else
-	                		notifyStateListener(true);
-	                }
-	                
+	                validate();
                 } catch (Exception e) {
                 	throw new RuntimeException(e);
                 }
@@ -101,43 +88,9 @@ public class ComboWidget extends LabeledWidget {
 		}
 
 		combo.setLayoutData(gd);
-
+		createDecoration(combo);
+		validate();
 	}
-
-	private void hookButtonListener() {
-	    newButton.addSelectionListener(new SelectionAdapter() {
-	    	@Override
-	    	public void widgetSelected(SelectionEvent arg0) {
-	    		try {
-	    			Shell shell = ((Control) arg0.widget).getShell();
-	    			Type type = getPropertyBinding().getType();
-	    	        if ((String.class.equals(type)) || (TypeUtil.isPrimitive(type))) {
-	    	            NewPrimitiveValueWizard wzrd = new NewPrimitiveValueWizard((Class<?>) type);
-	    	            WizardDialog dlg = new WizardDialog(shell, wzrd);
-	    	            wzrd.setWindowTitle("New "+getPropertyBinding().getLabel()+"...");
-	    	            if (dlg.open()==Dialog.OK) {
-	    	            	addToComboObjects(wzrd.getResult());
-	    	            	notifyNewModelListener(wzrd.getResult());
-	    	            }
-	    	            return;
-	    	        }
-	    	        
-	    	        if (getBindingContainer().getEditableBinding((Class<?>) type)!=null) {
-	    	        	NewInstanceWizard wzrd = new NewInstanceWizard((Class<?>) type, getBindingContainer());
-	    	        	WizardDialog dlg = new WizardDialog(shell, wzrd);
-	    	            wzrd.setWindowTitle("New "+getPropertyBinding().getLabel()+"...");
-	    	            if (dlg.open()==Dialog.OK) {
-	    	            	addToComboObjects(wzrd.getModel());
-	    	            	notifyNewModelListener(wzrd.getModel());
-	    	            }
-	    	        }
-	    			
-	    		} catch (Exception e) {
-	    			throw new RuntimeException(e);
-	    		}
-	    	}
-	    });
-    }
 
 	/**
 	 * {@inheritDoc}
@@ -150,8 +103,10 @@ public class ComboWidget extends LabeledWidget {
     		IComboBinding pb = getPropertyBinding();
 			fillCombo();
     		int index = indexOfComboElement(pb.getValue(getModel()));
-    		if (index >= 0)
+    		if (index >= 0) {
     			combo.select(index);
+    		}
+    		validate();
 		} catch (Exception e) {
 			
 		}
@@ -163,24 +118,38 @@ public class ComboWidget extends LabeledWidget {
 	    comboValues = null;
 	}
 	
-	private void addToComboObjects(Object o) {
-		try {
-	        if (comboValues == null)
-		    comboValues = new ArrayList<Object>();
-	        comboValues.add(o);
-	        addComboItem(o);
-	        combo.select(comboValues.indexOf(o));
-        } catch (Exception e) {
-	        throw new RuntimeException(e);
-        }
-	}
-	
 	public List<Object> getComboValues() {
 		if (comboValues==null)
 			return Collections.emptyList();
 		return comboValues;
     }
 		
+	@Override
+    public IComboBinding getPropertyBinding() {
+    	return (IComboBinding) super.getPropertyBinding();
+    }
+
+	@Override
+    public boolean isValid() {
+    	if (!isOptional())
+    		return combo.getSelectionIndex()>-1;
+    		
+        return super.isValid();
+    }
+
+	private void addToComboObjects(Object o) {
+    	try {
+            if (comboValues == null)
+    	    comboValues = new ArrayList<Object>();
+            comboValues.add(o);
+            addComboItem(o);
+            combo.select(comboValues.indexOf(o));
+            validate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 	private void fillCombo() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 		if (!getContentProvider().hasContent(getPropertyBinding().getFieldName(), getModel()))
 			return;
@@ -189,6 +158,69 @@ public class ComboWidget extends LabeledWidget {
 			addComboItem(o);
 		}
 	}
+
+	private void validate() {
+		if (!(getPropertyBinding().isOptional()||getPropertyBinding().isReadOnly())) {
+			if (combo.getSelectionIndex()==-1) {
+				setErrorMessage("No Value selected");
+			} else {
+				setErrorMessage(null);
+			}			
+		}
+			
+		try {
+			if (getModel()==null)
+				return;
+			
+	        Object val = getPropertyBinding().getValue(getModel());
+	        int idx = combo.getSelectionIndex();
+	        if ((idx == -1) && (val == null)) {
+		        notifyStateListener(false);
+	        } else {
+		        if (val != null)
+			        notifyStateListener(!val.equals(getCurrentSelection(idx)));
+		        else
+			        notifyStateListener(true);
+	        }
+        } catch (Exception e) {
+        	throw new RuntimeException(e);
+        }
+    }
+
+	private void hookButtonListener() {
+        newButton.addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent arg0) {
+        		try {
+        			Shell shell = ((Control) arg0.widget).getShell();
+        			Type type = getPropertyBinding().getType();
+        	        if ((String.class.equals(type)) || (TypeUtil.isPrimitive(type))) {
+        	            NewPrimitiveValueWizard wzrd = new NewPrimitiveValueWizard((Class<?>) type);
+        	            WizardDialog dlg = new WizardDialog(shell, wzrd);
+        	            wzrd.setWindowTitle("New "+getPropertyBinding().getLabel()+"...");
+        	            if (dlg.open()==Dialog.OK) {
+        	            	addToComboObjects(wzrd.getResult());
+        	            	notifyNewModelListener(wzrd.getResult());
+        	            }
+        	            return;
+        	        }
+        	        
+        	        if (getBindingContainer().getEditableBinding((Class<?>) type)!=null) {
+        	        	NewInstanceWizard wzrd = new NewInstanceWizard((Class<?>) type, getBindingContainer());
+        	        	WizardDialog dlg = new WizardDialog(shell, wzrd);
+        	            wzrd.setWindowTitle("New "+getPropertyBinding().getLabel()+"...");
+        	            if (dlg.open()==Dialog.OK) {
+        	            	addToComboObjects(wzrd.getModel());
+        	            	notifyNewModelListener(wzrd.getModel());
+        	            }
+        	        }
+        			
+        		} catch (Exception e) {
+        			throw new RuntimeException(e);
+        		}
+        	}
+        });
+    }
 
 	private void addComboItem(Object o) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 	    if (o instanceof String) {
@@ -266,17 +298,4 @@ public class ComboWidget extends LabeledWidget {
 	private IBindingContainer getBindingContainer() {
 	    return bindingContainer;
     }
-	
-	@Override
-	public IComboBinding getPropertyBinding() {
-		return (IComboBinding) super.getPropertyBinding();
-	}
-	
-	@Override
-	public boolean isValid() {
-		if (!isOptional())
-			return combo.getSelectionIndex()>-1;
-			
-	    return super.isValid();
-	}
 }

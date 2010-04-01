@@ -83,6 +83,7 @@ public class CompactListWidget extends ListWidget {
 			newButton = new Button(bBar, SWT.NONE);
 			newButton.setText("New...");
 		}
+		createDecoration(textField);
 		hookButtonListener();
 	}
 
