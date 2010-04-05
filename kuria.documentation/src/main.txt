@@ -14,5 +14,4 @@ include::swt-generator.txt[]
 
 include::glossary.txt[]
 
-
 include::changelog.txt[]

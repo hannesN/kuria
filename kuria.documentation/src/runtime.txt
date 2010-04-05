@@ -44,18 +44,19 @@ Every type of child has to have an *ITreeNodeBinding*.
 For every type of widget exists a corresponding binding. Every binding is inherits from 
 *de.topicmapslab.kuria.runtime.IPropertyBinding*. 
 
+
 .*IEditableBinding*
-The *IEditableBinding* interface is used to bind a property container, usually a class with the kuria widget generators. It containts the bindings for
-every property of the container.
+The *IEditableBinding* interface is used to bind a property container, usually a class with the kuria widget generators. 
+It contains the bindings for every property of the container.
 
 .*IPropertyBinding*
 The *IPropertyBinding* interface provides access to the bound property. 
 In addition it provides a label for the widget and the following flags:
 
-* read only - indicates the porperty must not be modified
+* read only - indicates the property must not be modified
 * optional - indicates the property is optional and their is not needed to be set
 * isArray - indicates the property is an array
-* is Collection - inidicates the property is a java.util.Collection or of a subclass
+* is Collection - indicates the property is a java.util.Collection or of a subclass
 
 The *IPropertyBinding* provides methods to access and modify the value of the property for a specific property container.
 
@@ -70,13 +71,20 @@ The *ICheckBinding* interface is used to set a property based on given choice op
 How the choices are provided is left to the widget implementation.
 
 .*IDateBinding*  
-The *IDateBinding* interface is used to specify the use of a widget for Dates. It is used for the Date datatype.
+The *IDateBinding* interface is used to specify the use of a widget for Dates. It is used for the datatype _Date_.
 
 .*IGroupBinding*
-The *IGroupBinding* interface...
+The *IGroupBinding* interface is used to embed another InputMask into the current one. This can be used if a property's type is
+another property container of the domain model.
 
 .*IListBinding*
 The *IListBinding* interface...  
 
 .*ITextFieldBinding*
-The *ITextFieldBinding* interface...
+The *ITextFieldBinding* interface indicates that the properties value is shown in a text field. 
+It has the following properties:
+
+* row - The number of rows in the text field. If it is greater than 1 the text field is a multiline text field with the given rows.
+* grabVerticalSpace - If this is _true_ the text field will vertically expand if their is enough place it in the input mask
+* isPassword - Indicates if the text field should be a text field for passwords, which does not show the content of the text field.
+* regExp - The regular expression is an additional way to validate the content. If you use it you need to set the regular expression like it is explained in http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/Pattern.html 

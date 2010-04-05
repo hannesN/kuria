@@ -44,7 +44,6 @@
   <xsl:param name="position" select="''"/>
   <xsl:param name="gentext-key" select="''"/>
   <xsl:param name="hyphenate.verbatim" select="1"/>
-  <xsl:param name="hyphenate.verbatim" select="0"/>
   <xsl:param name="hyphenate.verbatim.characters">
     = .
   </xsl:param>
