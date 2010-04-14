@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>de.topicmapslab</groupId>
 		<artifactId>kuria</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.0</version>
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>de.topicmapslab.kuria</groupId>
 			<artifactId>kuria-runtime</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -90,7 +90,7 @@
 		<dependency>
 			<groupId>de.topicmapslab.kuria</groupId>
 			<artifactId>kuria-annotation</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.0</version>
 			<scope>test</scope>
 		</dependency>
 

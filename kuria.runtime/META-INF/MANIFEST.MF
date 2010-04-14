@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Kuria Runtime
 Bundle-SymbolicName: de.topicmapslab.kuria-runtime;singleton:=true
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.0
 Export-Package: de.topicmapslab.kuria.runtime,
  de.topicmapslab.kuria.runtime.model,
  de.topicmapslab.kuria.runtime.table,
