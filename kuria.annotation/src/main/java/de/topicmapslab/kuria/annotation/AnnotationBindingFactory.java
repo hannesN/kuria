@@ -172,6 +172,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		fb.setReadOnly(file.readOnly());
 		fb.setOptional(file.optional());
 		fb.setFileExtensions(file.fileExtensions());
+		fb.setLoad(file.load());
 		
 		return fb;
     }

@@ -34,6 +34,7 @@ import de.topicmapslab.jgui.swtgenerator.edit.widgets.ComboWidget;
 import de.topicmapslab.jgui.swtgenerator.edit.widgets.CompactListWidget;
 import de.topicmapslab.jgui.swtgenerator.edit.widgets.DateWidget;
 import de.topicmapslab.jgui.swtgenerator.edit.widgets.DirectoryWidget;
+import de.topicmapslab.jgui.swtgenerator.edit.widgets.FileWidget;
 import de.topicmapslab.jgui.swtgenerator.edit.widgets.GroupWidget;
 import de.topicmapslab.jgui.swtgenerator.edit.widgets.IInputMaskWidget;
 import de.topicmapslab.jgui.swtgenerator.edit.widgets.IStateListener;
@@ -46,6 +47,7 @@ import de.topicmapslab.kuria.runtime.widget.IComboBinding;
 import de.topicmapslab.kuria.runtime.widget.IDateBinding;
 import de.topicmapslab.kuria.runtime.widget.IDirectoryBinding;
 import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
+import de.topicmapslab.kuria.runtime.widget.IFileBinding;
 import de.topicmapslab.kuria.runtime.widget.IGroupBinding;
 import de.topicmapslab.kuria.runtime.widget.IListBinding;
 import de.topicmapslab.kuria.runtime.widget.ITextFieldBinding;
@@ -229,6 +231,8 @@ public class InputMask implements IStateListener {
 				createDate(composite, (IDateBinding) pb);
 			} else if (pb instanceof IDirectoryBinding) {
 				createDirectory(composite, (IDirectoryBinding) pb);
+			} else if (pb instanceof IFileBinding) {
+				createFile(composite, (IFileBinding) pb);
 			}
 
 		}
@@ -267,6 +271,12 @@ public class InputMask implements IStateListener {
 	
 	private void createDirectory(Composite parent, final IDirectoryBinding pb) {
 		DirectoryWidget w = new DirectoryWidget(pb);
+		w.createControl(parent);
+		putToWidgetMap(pb, w);
+	}
+	
+	private void createFile(Composite parent, final IFileBinding pb) {
+		FileWidget w = new FileWidget(pb);
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}

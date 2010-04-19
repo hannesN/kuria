@@ -16,7 +16,9 @@
 package de.topicmapslab.kuria.annotation;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -117,12 +119,20 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 			assertEquals("Number of DateBindings", 1, dateCounter);
 			assertEquals("Number of ListBindings", 2, listCounter);
 			assertEquals("Number of DirectoryBindings", 1, dirCounter);
-			assertEquals("Number of FileBindings", 1, fileCounter);
+			assertEquals("Number of FileBindings", 2, fileCounter);
 			assertEquals("Number of TextfieldBindings:", 3, textFieldCounter);
 
 			for (IPropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
 				if (pb instanceof ComboBinding) {
 					assertEquals("Check createNew", false, ((ComboBinding) pb).isShowNewButton());
+				}
+				
+				if (pb instanceof FileBinding) {
+					if (pb.getFieldName().equals("image")) {
+						assertTrue(((FileBinding) pb).isLoad());
+					} else {
+						assertFalse(((FileBinding) pb).isLoad());
+					}
 				}
 			}
 

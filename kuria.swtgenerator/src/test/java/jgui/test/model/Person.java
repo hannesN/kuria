@@ -32,6 +32,7 @@ import de.topicmapslab.kuria.annotation.widgets.Combo;
 import de.topicmapslab.kuria.annotation.widgets.Date;
 import de.topicmapslab.kuria.annotation.widgets.Directory;
 import de.topicmapslab.kuria.annotation.widgets.Editable;
+import de.topicmapslab.kuria.annotation.widgets.File;
 import de.topicmapslab.kuria.annotation.widgets.Group;
 import de.topicmapslab.kuria.annotation.widgets.Hidden;
 import de.topicmapslab.kuria.annotation.widgets.TextField;
@@ -68,7 +69,7 @@ public class Person {
 	private Address address;
 	
 	@Children
-	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.COMPACT, createNew=true)
+	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.COMPACT, createNew=true, optional=true)
 	private List<Person> children;
 	
 	@Children
@@ -86,11 +87,11 @@ public class Person {
 	@Hidden
 	private boolean dumb;
 
-	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.TABLE, createNew=true)
+	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.TABLE, createNew=true, optional=true)
 	@Hidden
 	private Set<Pet> pets;
 	
-	@TextField(rows=10, grabVerticalSpace=true)
+	@TextField(rows=10)
 	@Hidden
 	private String description;
 	
@@ -99,14 +100,31 @@ public class Person {
 	private double hourlyWage;
 
 	
-	@Directory
+	@Directory(optional=true)
 	private String homeDirectory;
+	
+	@File(fileExtensions="*.jpg;*.png", load=true)
+	private String imagePath;
 	
 	/**
      * @param homeDirectory the homeDirectory to set
      */
     public void setHomeDirectory(String homeDirectory) {
 	    this.homeDirectory = homeDirectory;
+    }
+    
+    /**
+     * @return the imagePath
+     */
+    public String getImagePath() {
+	    return imagePath;
+    }
+    
+    /**
+     * @param imagePath the imagePath to set
+     */
+    public void setImagePath(String imagePath) {
+	    this.imagePath = imagePath;
     }
     
     /**

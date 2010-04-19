@@ -43,7 +43,7 @@ import de.topicmapslab.kuria.annotation.widgets.TextField;
 @TableElement
 public class Person {
 	private Set<String> identifiers;
-	
+
 	@TextField
 	private String lastname;
 
@@ -61,15 +61,18 @@ public class Person {
 	private Person wife;
 
 	private Date birthdate;
-	
+
 	private boolean dumb;
-	
+
 	@Directory
 	private String homeDirectory;
-	
-	@File(fileExtensions={"*.png;*.jpg", "*.png", "*.jpg"})
+
+	@File(fileExtensions = { "*.png;*.jpg", "*.png", "*.jpg" }, load = true)
 	private String image;
-	
+
+	@File(fileExtensions = { "*.png;*.jpg", "*.png", "*.jpg" }, load = false)
+	private String icon;
+
 	@Text
 	public String getName() {
 		return lastname + ", " + firstname;
@@ -137,56 +140,64 @@ public class Person {
 	public void setDumb(boolean dumb) {
 		this.dumb = dumb;
 	}
-	
+
 	public void setIdentifiers(Set<String> identifiers) {
-	    this.identifiers = identifiers;
-    }
-	
+		this.identifiers = identifiers;
+	}
+
 	public Set<String> getIdentifiers() {
-	    return identifiers;
-    }
-	
+		return identifiers;
+	}
+
 	public void setBirthdate(Date birthdate) {
-	    this.birthdate = birthdate;
-    }
-	
+		this.birthdate = birthdate;
+	}
+
 	public Date getBirthdate() {
-	    return birthdate;
-    }
-	
-	
+		return birthdate;
+	}
+
 	@Children
 	public Set<Address> otherAddresses() {
 		return Collections.emptySet();
 	}
 
 	/**
-     * @return the homeDIrectory
-     */
-    public String getHomeDirectory() {
-    	return homeDirectory;
-    }
+	 * @return the homeDIrectory
+	 */
+	public String getHomeDirectory() {
+		return homeDirectory;
+	}
 
 	/**
-     * @param homeDIrectory the homeDIrectory to set
-     */
-    public void setHomeDirectory(String homeDIrectory) {
-    	this.homeDirectory = homeDIrectory;
-    }
+	 * @param homeDirectory
+	 *            the homeDIrectory to set
+	 */
+	public void setHomeDirectory(String homeDIrectory) {
+		this.homeDirectory = homeDIrectory;
+	}
 
 	/**
-     * @return the image
-     */
-    public String getImage() {
-    	return image;
-    }
+	 * @return the image
+	 */
+	public String getImage() {
+		return image;
+	}
 
 	/**
-     * @param image the image to set
-     */
-    public void setImage(String image) {
-    	this.image = image;
-    }
-	
-	
+	 * @param image
+	 *            the image to set
+	 */
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
 }
