@@ -25,7 +25,9 @@ import de.topicmapslab.kuria.annotation.tree.TreeNode;
 import de.topicmapslab.kuria.annotation.widgets.Check;
 import de.topicmapslab.kuria.annotation.widgets.Combo;
 import de.topicmapslab.kuria.annotation.widgets.Date;
+import de.topicmapslab.kuria.annotation.widgets.Directory;
 import de.topicmapslab.kuria.annotation.widgets.Editable;
+import de.topicmapslab.kuria.annotation.widgets.File;
 import de.topicmapslab.kuria.annotation.widgets.Group;
 import de.topicmapslab.kuria.annotation.widgets.Hidden;
 import de.topicmapslab.kuria.annotation.widgets.List;
@@ -43,7 +45,9 @@ import de.topicmapslab.kuria.runtime.tree.TreeNodeBinding;
 import de.topicmapslab.kuria.runtime.widget.CheckBinding;
 import de.topicmapslab.kuria.runtime.widget.ComboBinding;
 import de.topicmapslab.kuria.runtime.widget.DateBinding;
+import de.topicmapslab.kuria.runtime.widget.DirectoryBinding;
 import de.topicmapslab.kuria.runtime.widget.EditableBinding;
+import de.topicmapslab.kuria.runtime.widget.FileBinding;
 import de.topicmapslab.kuria.runtime.widget.GroupBinding;
 import de.topicmapslab.kuria.runtime.widget.ListBinding;
 import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
@@ -148,6 +152,10 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 			pb = createListBinding(f);
 		} else if (f.getAnnotation(Date.class) != null) {
 			pb = createDateBinding(f);
+		} else if (f.getAnnotation(Directory.class) != null) {
+			pb = createDirectoryBinding(f);
+		} else if (f.getAnnotation(File.class) != null) {
+			pb = createFileBinding(f);
 		} else {// TODO other types
 			pb = findBinding(f);
 		}
@@ -155,6 +163,29 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		pb.setType(f.getGenericType());
 		return pb;
 	}
+
+	private PropertyBinding createFileBinding(Field f) {
+		File file = f.getAnnotation(File.class);
+		FileBinding fb = new FileBinding();
+		if (file.label().length() > 0)
+			fb.setLabel(file.label());
+		fb.setReadOnly(file.readOnly());
+		fb.setOptional(file.optional());
+		fb.setFileExtensions(file.fileExtensions());
+		
+		return fb;
+    }
+
+	private PropertyBinding createDirectoryBinding(Field f) {
+		Directory d = f.getAnnotation(Directory.class);
+		DirectoryBinding db = new DirectoryBinding();
+		if (d.label().length() > 0)
+			db.setLabel(d.label());
+		db.setReadOnly(d.readOnly());
+		db.setOptional(d.optional());
+	    
+		return db;
+    }
 
 	private PropertyBinding createListBinding(Field f) {
 		List l = f.getAnnotation(List.class);

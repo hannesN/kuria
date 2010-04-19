@@ -28,7 +28,9 @@ import de.topicmapslab.kuria.annotation.Text;
 import de.topicmapslab.kuria.annotation.table.TableElement;
 import de.topicmapslab.kuria.annotation.tree.Children;
 import de.topicmapslab.kuria.annotation.tree.TreeNode;
+import de.topicmapslab.kuria.annotation.widgets.Directory;
 import de.topicmapslab.kuria.annotation.widgets.Editable;
+import de.topicmapslab.kuria.annotation.widgets.File;
 import de.topicmapslab.kuria.annotation.widgets.Group;
 import de.topicmapslab.kuria.annotation.widgets.TextField;
 
@@ -60,8 +62,13 @@ public class Person {
 
 	private Date birthdate;
 	
-	
 	private boolean dumb;
+	
+	@Directory
+	private String homeDirectory;
+	
+	@File(fileExtensions={"*.png;*.jpg", "*.png", "*.jpg"})
+	private String image;
 	
 	@Text
 	public String getName() {
@@ -147,8 +154,39 @@ public class Person {
 	    return birthdate;
     }
 	
+	
 	@Children
 	public Set<Address> otherAddresses() {
 		return Collections.emptySet();
 	}
+
+	/**
+     * @return the homeDIrectory
+     */
+    public String getHomeDirectory() {
+    	return homeDirectory;
+    }
+
+	/**
+     * @param homeDIrectory the homeDIrectory to set
+     */
+    public void setHomeDirectory(String homeDIrectory) {
+    	this.homeDirectory = homeDIrectory;
+    }
+
+	/**
+     * @return the image
+     */
+    public String getImage() {
+    	return image;
+    }
+
+	/**
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+    	this.image = image;
+    }
+	
+	
 }

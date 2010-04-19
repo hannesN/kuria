@@ -30,6 +30,8 @@ import de.topicmapslab.kuria.runtime.tree.ITreeNodeBinding;
 import de.topicmapslab.kuria.runtime.widget.CheckBinding;
 import de.topicmapslab.kuria.runtime.widget.ComboBinding;
 import de.topicmapslab.kuria.runtime.widget.DateBinding;
+import de.topicmapslab.kuria.runtime.widget.DirectoryBinding;
+import de.topicmapslab.kuria.runtime.widget.FileBinding;
 import de.topicmapslab.kuria.runtime.widget.GroupBinding;
 import de.topicmapslab.kuria.runtime.widget.ListBinding;
 import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
@@ -87,6 +89,8 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 			int checkCounter = 0;
 			int listCounter = 0;
 			int dateCounter = 0;
+			int fileCounter = 0;
+			int dirCounter = 0;
 			for (IPropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
 				if (pb instanceof TextFieldBinding)
 					textFieldCounter++;
@@ -100,14 +104,21 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 					listCounter++;
 				if (pb instanceof DateBinding)
 					dateCounter++;
+				if (pb instanceof DirectoryBinding)
+					dirCounter++;
+				if (pb instanceof FileBinding)
+					fileCounter++;
 			}
 
-			assertEquals("Number of TextfieldBindings:", 3, textFieldCounter);
+			
 			assertEquals("Number of ComboBindings", 1, comboCounter);
 			assertEquals("Number of GroupBindings", 1, groupCounter);
 			assertEquals("Number of CheckBindings", 1, checkCounter);
 			assertEquals("Number of DateBindings", 1, dateCounter);
 			assertEquals("Number of ListBindings", 2, listCounter);
+			assertEquals("Number of DirectoryBindings", 1, dirCounter);
+			assertEquals("Number of FileBindings", 1, fileCounter);
+			assertEquals("Number of TextfieldBindings:", 3, textFieldCounter);
 
 			for (IPropertyBinding pb : bc.getEditableBinding(Person.class).getPropertieBindings()) {
 				if (pb instanceof ComboBinding) {
