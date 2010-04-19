@@ -38,7 +38,7 @@ public abstract class LabeledWidget extends AbstractWidget {
     }
 
 	/**
-	 * Cretaes a label using the label value of the {@link PropertyBinding}.
+	 * Creates a label using the label value of the {@link PropertyBinding}.
 	 * @param parent the parent widget of the label
 	 * @return the newly created label. The text of the label is the label value of the binding + ":"
 	 */

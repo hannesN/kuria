@@ -15,7 +15,9 @@
  ******************************************************************************/
 package de.topicmapslab.kuria.runtime.widget;
 
-public interface IFileBinding {
+import de.topicmapslab.kuria.runtime.IPropertyBinding;
+
+public interface IFileBinding extends IPropertyBinding{
 
 	/**
 	 * Returns the supported file extensions. These extensions have the form:
@@ -25,5 +27,15 @@ public interface IFileBinding {
 	 *  @return array of supported file extensions
 	 */
 	public abstract String[] getFileExtensions();
+	
+	/**
+	 * Returns the value of the load flag.
+	 * 
+	 * If the load flag is <code>true</code> the file needs to exist in the file system. If <code>false</code>
+	 * the file will be created on demand which can be used in a save dialog.
+	 * 
+	 * @return <code>true</code> if the file is loaded, <code>false</code> else
+	 */
+	public abstract boolean isLoad();
 
 }

@@ -31,6 +31,8 @@ public class FileBinding extends PropertyBinding implements IFileBinding {
 
 	private String[] fileExtensions;
 	
+	private boolean load;
+	
 	/**
 	 * The supported file extensions. These extensions must have the form:
 	 * <b>"*.extension"</b>. For every entry in the array the file dialog provides 
@@ -47,8 +49,22 @@ public class FileBinding extends PropertyBinding implements IFileBinding {
 	 * {@inheritDoc}
 	 */
 	public String[] getFileExtensions() {
-	    return fileExtensions;
+	    return this.fileExtensions;
     }
 	
+	/**
+	 * Sets the load flag, which indicates the kind of file dialog.
+	 * @param load 
+	 */
+	public void setLoad(boolean load) {
+	    this.load = load;
+    }
 	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	public boolean isLoad() {
+	    return load;
+    }
 }

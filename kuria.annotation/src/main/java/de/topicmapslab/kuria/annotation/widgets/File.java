@@ -49,4 +49,11 @@ public @interface File {
 	 *  <b>"*.ext1;*.ext2"</b> as entry.
 	 */
 	String[] fileExtensions() default "*.*";
+	
+	/**
+	 * Specifies if the file in the property is used to save or to load a file.
+	 * 
+	 * If a file is loaded the file must exists, else it can be created.
+	 */
+	boolean load() default false;
 }

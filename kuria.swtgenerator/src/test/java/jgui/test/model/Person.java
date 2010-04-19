@@ -30,6 +30,7 @@ import de.topicmapslab.kuria.annotation.tree.Children;
 import de.topicmapslab.kuria.annotation.tree.TreeNode;
 import de.topicmapslab.kuria.annotation.widgets.Combo;
 import de.topicmapslab.kuria.annotation.widgets.Date;
+import de.topicmapslab.kuria.annotation.widgets.Directory;
 import de.topicmapslab.kuria.annotation.widgets.Editable;
 import de.topicmapslab.kuria.annotation.widgets.Group;
 import de.topicmapslab.kuria.annotation.widgets.Hidden;
@@ -97,6 +98,24 @@ public class Person {
 	@Hidden
 	private double hourlyWage;
 
+	
+	@Directory
+	private String homeDirectory;
+	
+	/**
+     * @param homeDirectory the homeDirectory to set
+     */
+    public void setHomeDirectory(String homeDirectory) {
+	    this.homeDirectory = homeDirectory;
+    }
+    
+    /**
+     * @return the homeDirectory
+     */
+    public String getHomeDirectory() {
+	    return homeDirectory;
+    }
+	
 	@Text
 	public String getName() {
     	return lastname+", "+firstname;
