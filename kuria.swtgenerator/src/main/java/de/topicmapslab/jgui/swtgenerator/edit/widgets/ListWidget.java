@@ -124,31 +124,34 @@ public abstract class ListWidget extends LabeledWidget {
     protected void setSelection(Object[] selection) {
 		this.selection = selection;
 		try {
-			if (selection==null)
+			if (selection == null)
 				return;
-			
-			if (getSelection().length==0) {
-				setErrorMessage("No Item chosen");
+
+			if (!isOptional()) {
+				if (getSelection().length == 0) {
+					setErrorMessage("No Item chosen");
+				} else {
+					setErrorMessage(null);
+				}
 			} else {
 				setErrorMessage(null);
 			}
-			
-	        Object[] valueArray = getValueArray();
-	        if (selection.length != valueArray.length) {
-		        notifyStateListener(true);
-		        return;
-	        }
-	        List l = Arrays.asList(selection);
-	        for (Object o : valueArray) {
-	        	if (!l.contains(o)) {
-			        notifyStateListener(true);
-			        return;
-		        }
-	        }
-	        notifyStateListener(false);
-        } catch (Exception e) {
-        	throw new RuntimeException(e);
-        }
+			Object[] valueArray = getValueArray();
+			if (selection.length != valueArray.length) {
+				notifyStateListener(true);
+				return;
+			}
+			List l = Arrays.asList(selection);
+			for (Object o : valueArray) {
+				if (!l.contains(o)) {
+					notifyStateListener(true);
+					return;
+				}
+			}
+			notifyStateListener(false);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	protected Object[] getSelection() {
