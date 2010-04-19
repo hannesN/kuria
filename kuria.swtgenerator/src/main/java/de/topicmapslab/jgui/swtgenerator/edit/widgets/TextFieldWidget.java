@@ -213,7 +213,7 @@ public class TextFieldWidget extends LabeledWidget {
 							dirty = false;
 						}
 						
-						if (text.length()==0) {
+						if ((text.length()==0) && (!getPropertyBinding().isOptional())) {
 							setErrorMessage("No text entered");
 						} else {
 							setErrorMessage(null);
