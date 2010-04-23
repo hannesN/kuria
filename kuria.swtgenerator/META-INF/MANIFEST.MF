@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Kuria Annotations
 Bundle-SymbolicName: de.topicmapslab.kuria-swtgenerator;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.SNAPSHOT
 Export-Package: de.topicmapslab.jgui.swtgenerator,
  de.topicmapslab.jgui.swtgenerator.edit,
  de.topicmapslab.jgui.swtgenerator.edit.dialog,

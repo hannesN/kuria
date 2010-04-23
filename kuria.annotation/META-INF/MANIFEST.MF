@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Kuria Annotations
 Bundle-SymbolicName: de.topicmapslab.kuria-annotation;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.SNAPSHOT
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: 
  de.topicmapslab.kuria.annotation,
