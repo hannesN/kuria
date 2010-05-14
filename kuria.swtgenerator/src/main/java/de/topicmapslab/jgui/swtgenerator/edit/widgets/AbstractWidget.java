@@ -67,6 +67,7 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 	 */
 	public void setModel(Object model) {
 		this.model = model;
+		setErrorMessage(null);
 		refresh();
 	}
 
