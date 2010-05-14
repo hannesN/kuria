@@ -23,13 +23,18 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 
 import de.topicmapslab.jgui.swtgenerator.AbstractSWTGenerator;
+import de.topicmapslab.jgui.swtgenerator.IContextMenuListener;
 import de.topicmapslab.jgui.swtgenerator.util.ImageRegistry;
 import de.topicmapslab.jgui.swtgenerator.util.TextBindingLabelProvider;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
@@ -48,6 +53,10 @@ public class TreeGenerator extends AbstractSWTGenerator {
 	}
 
 	public TreeViewer generateTree(Composite parent, boolean showRoot) {
+		return generateTree(parent, showRoot, null);
+	}
+	
+	public TreeViewer generateTree(Composite parent, boolean showRoot, final IContextMenuListener listener) {
 		TreeViewer viewer = new TreeViewer(parent) {
 			@Override
 			public void refresh() {
@@ -84,6 +93,18 @@ public class TreeGenerator extends AbstractSWTGenerator {
 			}
 		});
 
+		if (listener!=null) {
+			MenuManager menuMgr = new MenuManager("#PopupMenu");
+			menuMgr.setRemoveAllWhenShown(true);
+			menuMgr.addMenuListener(new IMenuListener() {
+				public void menuAboutToShow(IMenuManager manager) {
+					listener.createMenu(manager);
+				}
+			});
+			Menu menu = menuMgr.createContextMenu(viewer.getControl());
+			viewer.getControl().setMenu(menu);
+		}
+		
 		return viewer;
 	}
 

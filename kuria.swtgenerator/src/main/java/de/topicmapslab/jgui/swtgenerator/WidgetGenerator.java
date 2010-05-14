@@ -48,8 +48,16 @@ public class WidgetGenerator {
 		return treeGenerator.generateTree(parent, showRoot);
 	}
 	
+	public TreeViewer generateTree(Composite parent, boolean showRoot, IContextMenuListener contextMenuListener) {
+		return treeGenerator.generateTree(parent, showRoot, contextMenuListener);
+	}
+	
 	public TableViewer generateTable(Class<?> clazz, Composite parent) {
 		return tableGenerator.generateTable(parent, clazz);
+	}
+	
+	public TableViewer generateTable(Class<?> clazz, Composite parent, IContextMenuListener contextMenuListener) {
+		return tableGenerator.generateTable(parent, clazz, contextMenuListener);
 	}
 	
 	public InputMask generateEditable(Class<?> clazz, Composite parent) {

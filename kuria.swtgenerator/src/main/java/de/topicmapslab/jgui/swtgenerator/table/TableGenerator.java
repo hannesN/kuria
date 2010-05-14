@@ -18,6 +18,9 @@
  */
 package de.topicmapslab.jgui.swtgenerator.table;
 
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -28,10 +31,12 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import de.topicmapslab.jgui.swtgenerator.AbstractSWTGenerator;
+import de.topicmapslab.jgui.swtgenerator.IContextMenuListener;
 import de.topicmapslab.jgui.swtgenerator.util.ImageRegistry;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.ITextBinding;
@@ -49,6 +54,9 @@ public class TableGenerator extends AbstractSWTGenerator {
 	}
 
 	public TableViewer generateTable(Composite parent, Class<?> clazz) {
+		return generateTable(parent, clazz, null);
+	}	
+	public TableViewer generateTable(Composite parent, Class<?> clazz, final IContextMenuListener listener) {
 		ITableBinding tb = bindingContainer.getTableBinding(clazz);
 		if (tb==null)
 			throw new IllegalArgumentException();
@@ -62,6 +70,18 @@ public class TableGenerator extends AbstractSWTGenerator {
 		viewer.setLabelProvider(new LabelProvider());
 
 		generateColumns(clazz, viewer.getTable());
+		
+		if (listener!=null) {
+			MenuManager menuMgr = new MenuManager("#PopupMenu");
+			menuMgr.setRemoveAllWhenShown(true);
+			menuMgr.addMenuListener(new IMenuListener() {
+				public void menuAboutToShow(IMenuManager manager) {
+					listener.createMenu(manager);
+				}
+			});
+			Menu menu = menuMgr.createContextMenu(viewer.getControl());
+			viewer.getControl().setMenu(menu);
+		}
 		
 		return viewer;
 	}
