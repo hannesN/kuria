@@ -32,7 +32,7 @@ import de.topicmapslab.kuria.runtime.widget.ListStyle;
  * @version 1.0.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface List {
 	/** Label used for the widget */
 	String label() default "";

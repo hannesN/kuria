@@ -30,6 +30,6 @@ import java.lang.annotation.Target;
  * @version 1.0.0
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface Hidden {
 }
