@@ -136,7 +136,7 @@ public class GenericBindingFactory implements IBindingFactory {
 		EditableBinding eb = new EditableBinding();
 
 		for (Field f : c.getDeclaredFields()) {
-			PropertyBinding pb = findBinding(f);
+			PropertyBinding pb = findBinding(f.getType());
 			pb.setFieldName(f.getName());
 			pb.setType(f.getGenericType());
 			eb.addPropertyBinding(pb);
@@ -145,52 +145,52 @@ public class GenericBindingFactory implements IBindingFactory {
 		return eb;
 	}
 
-	protected PropertyBinding findBinding(Field f) {
-		if (TypeUtil.isBoolean(f.getType())) {
-			return createGenericCheckBinding(f);
+	protected PropertyBinding findBinding(Type type) {
+		if (TypeUtil.isBoolean(type)) {
+			return createGenericCheckBinding();
 		}
 		
-		if (TypeUtil.isDate(f.getType())) {
-			return createGenericDateBinding(f);
+		if (TypeUtil.isDate(type)) {
+			return createGenericDateBinding();
 		}
 
-		if (TypeUtil.isSet(f.getType())) {
-			return createGenericListBinding(f);
+		if (TypeUtil.isSet(type)) {
+			return createGenericListBinding();
 		}
 
-		if (TypeUtil.isList(f.getType())) {
-			return createGenericListBinding(f);
+		if (TypeUtil.isList(type)) {
+			return createGenericListBinding();
 		}
 
-		if (TypeUtil.isMap(f.getType())) {
+		if (TypeUtil.isMap(type)) {
 			// TODO property binding
-			return createGenericTextFieldBinding(f);
+			return createGenericTextFieldBinding(type);
 		}
 
-		if ((!TypeUtil.isPrimitive(f.getType())) && (!String.class.equals(f.getType()))) {
-			return createGenericComboBinding(f);
+		if ((!TypeUtil.isPrimitive(type)) && (!String.class.equals(type))) {
+			return createGenericComboBinding();
 		}
 
-		return createGenericTextFieldBinding(f);
+		return createGenericTextFieldBinding(type);
 	}
 
-	private PropertyBinding createGenericListBinding(Field f) {
+	private PropertyBinding createGenericListBinding() {
 		ListBinding lb = new ListBinding();
 		lb.setReadOnly(false);
 		return lb;
 	}
 
-	private TextFieldBinding createGenericTextFieldBinding(Field f) {
+	private TextFieldBinding createGenericTextFieldBinding(Type type) {
 		TextFieldBinding tfb = new TextFieldBinding();
 
 		tfb.setReadOnly(false);
 		tfb.setPassword(false);
-		tfb.setType(f.getGenericType());
+		tfb.setType(type);
 
 		String regExp = ".*";
-		if (f.getType() == Integer.class) {
+		if (type == Integer.class) {
 			regExp = "\\d*";
-		} else if (f.getType() == Float.class) {
+		} else if (type == Float.class) {
 			regExp = "\\d*(\\.\\d)*";
 		}
 
@@ -198,19 +198,19 @@ public class GenericBindingFactory implements IBindingFactory {
 		return tfb;
 	}
 
-	private PropertyBinding createGenericCheckBinding(Field f) {
+	private PropertyBinding createGenericCheckBinding() {
 		CheckBinding cb = new CheckBinding();
 		cb.setReadOnly(false);
 		return cb;
 	}
 
-	private PropertyBinding createGenericComboBinding(Field f) {
+	private PropertyBinding createGenericComboBinding() {
 		ComboBinding cb = new ComboBinding();
 		cb.setReadOnly(false);
 		return cb;
 	}
 	
-	private PropertyBinding createGenericDateBinding(Field f) {
+	private PropertyBinding createGenericDateBinding() {
 		DateBinding db = new DateBinding();
 		db.setReadOnly(false);
 		return db;

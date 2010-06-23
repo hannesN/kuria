@@ -20,11 +20,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import javax.swing.text.WrappedPlainView;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 import de.topicmapslab.kuria.annotation.data.Address;
 import de.topicmapslab.kuria.annotation.data.Person;
+import de.topicmapslab.kuria.annotation.data.WrappedPerson;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.tree.IChildrenBinding;
@@ -44,9 +47,9 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 	public void testGetBindingContainer() {
 		IBindingContainer bc = fac.getBindingContainer();
 		try {
-			assertEquals("Check table bindings", 2, bc.getTableBindings().values().size());
-			assertEquals("Check editable bindings", 2, bc.getEditableBindings().values().size());
-			assertEquals("Check tree bindings", 1, bc.getTreeNodeBindings().values().size());
+			assertEquals("Check table bindings", 3, bc.getTableBindings().values().size());
+			assertEquals("Check editable bindings", 3, bc.getEditableBindings().values().size());
+			assertEquals("Check tree bindings", 2, bc.getTreeNodeBindings().values().size());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -141,6 +144,46 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 			Assert.fail(e.getMessage());
 		}
 	}
+	
+	@Test
+	public void testWrappedPersonBindings() {
+		try {
+			IBindingContainer bc = fac.getBindingContainer();
+			Address address = getAddress();
+
+			WrappedPerson p = new WrappedPerson();
+			p.setLastname("Meyer");
+			p.setFirstname("Hans");
+			p.setAddress(address);
+
+			Person p2 = new Person();
+			p2.setLastname("Meyer");
+			p2.setFirstname("Hans junior");
+			p2.setAddress(address);
+
+			p.addChild(p2);
+
+			assertNotNull(bc.getTextBinding(WrappedPerson.class));
+			assertEquals("Meyer, Hans", bc.getTextBinding(WrappedPerson.class).getText(p));
+
+			ITreeNodeBinding tnb = bc.getTreeNodeBinding(p.getClass());
+			Assert.assertNotNull(tnb);
+
+			Assert.assertNotNull("Children not null: " + tnb.getChildren());
+			
+			Assert.assertEquals("Children: ", 1, tnb.getChildren().size());
+			
+			for (IChildrenBinding c : tnb.getChildren()) {
+				System.out.println(c.getType());
+			}
+
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+	}
 
 	@Test
 	public void testAddressBindings() {
@@ -171,4 +214,59 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 		return a;
 	}
 
+	
+	@Test
+	public void countWrappedPersonBindings() {
+		IBindingContainer bc = fac.getBindingContainer();
+		int textFieldCounter = 0;
+		int comboCounter = 0;
+		int groupCounter = 0;
+		int checkCounter = 0;
+		int listCounter = 0;
+		int dateCounter = 0;
+		int fileCounter = 0;
+		int dirCounter = 0;
+		for (IPropertyBinding pb : bc.getEditableBinding(WrappedPerson.class).getPropertieBindings()) {
+			if (pb instanceof TextFieldBinding)
+				textFieldCounter++;
+			if (pb instanceof ComboBinding)
+				comboCounter++;
+			if (pb instanceof GroupBinding)
+				groupCounter++;
+			if (pb instanceof CheckBinding)
+				checkCounter++;
+			if (pb instanceof ListBinding)
+				listCounter++;
+			if (pb instanceof DateBinding)
+				dateCounter++;
+			if (pb instanceof DirectoryBinding)
+				dirCounter++;
+			if (pb instanceof FileBinding)
+				fileCounter++;
+		}
+
+		
+		assertEquals("Number of ComboBindings", 1, comboCounter);
+		assertEquals("Number of GroupBindings", 1, groupCounter);
+		assertEquals("Number of CheckBindings", 1, checkCounter);
+		assertEquals("Number of DateBindings", 1, dateCounter);
+		assertEquals("Number of ListBindings", 2, listCounter);
+		assertEquals("Number of DirectoryBindings", 1, dirCounter);
+		assertEquals("Number of FileBindings", 2, fileCounter);
+		assertEquals("Number of TextfieldBindings:", 3, textFieldCounter);
+
+		for (IPropertyBinding pb : bc.getEditableBinding(WrappedPerson.class).getPropertieBindings()) {
+			if (pb instanceof ComboBinding) {
+				assertEquals("Check createNew", false, ((ComboBinding) pb).isShowNewButton());
+			}
+			
+			if (pb instanceof FileBinding) {
+				if (pb.getFieldName().equals("image")) {
+					assertTrue(((FileBinding) pb).isLoad());
+				} else {
+					assertFalse(((FileBinding) pb).isLoad());
+				}
+			}
+		}
+	}
 }

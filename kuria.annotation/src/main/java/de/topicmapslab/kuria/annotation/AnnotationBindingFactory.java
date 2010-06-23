@@ -15,8 +15,11 @@
  ******************************************************************************/
 package de.topicmapslab.kuria.annotation;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import de.topicmapslab.kuria.annotation.table.Column;
 import de.topicmapslab.kuria.annotation.table.TableElement;
@@ -102,13 +105,43 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 	private EditableBinding createEditableBinding(Class<?> c) {
 		EditableBinding eb = new EditableBinding();
 
+		// caching name so we don't create multiple bindings for the same field 
+		ArrayList<String> usedNames = new ArrayList<String>();
+		
 		for (Field f : c.getDeclaredFields()) {
 			if (f.getAnnotation(Hidden.class) == null) {
-				PropertyBinding pb = createPropertyBinding(f);
-				pb.setFieldName(f.getName());
-				pb.setType(f.getGenericType());
+				PropertyBinding pb = createPropertyBinding(f, f.getName(), f.getGenericType());
+				usedNames.add(f.getName());
 				eb.addPropertyBinding(pb);
 			}
+		}
+		
+		for (Method m : c.getDeclaredMethods()) {
+			String methodName = m.getName();
+			String fieldname = null;
+			if (methodName.startsWith("get")) {
+				fieldname = Character.toLowerCase(methodName.charAt(3)) + methodName.substring(4);
+			} else	if (methodName.startsWith("is")) {
+				fieldname = Character.toLowerCase(methodName.charAt(2)) + methodName.substring(3);
+			} 
+				
+			if ((fieldname==null) || (usedNames.contains(fieldname)) || (m.getAnnotations().length == 0))
+				continue;
+
+			PropertyBinding pb = createPropertyBinding(m, fieldname, m.getGenericReturnType());
+			if (pb == null)
+				continue;
+			try {
+				c.getDeclaredMethod("s" + methodName.substring(1));
+			} catch (SecurityException e) {
+				// TODO log
+			} catch (NoSuchMethodException e) {
+				pb.setReadOnly(true);
+			}
+
+			usedNames.add(fieldname);
+			eb.addPropertyBinding(pb);
+			
 		}
 
 		return eb;
@@ -138,34 +171,35 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		return new TextBinding();
 	}
 
-	private PropertyBinding createPropertyBinding(Field f) {
+	private PropertyBinding createPropertyBinding(AnnotatedElement f, String name, Type type) {
 		PropertyBinding pb = null;
 		if (f.getAnnotation(TextField.class) != null) {
-			pb = createTextFieldBinding(f);
+			pb = createTextFieldBinding(f.getAnnotation(TextField.class));
 		} else if (f.getAnnotation(Check.class) != null) {
-			pb = createCheckBinding(f);
+			pb = createCheckBinding(f.getAnnotation(Check.class));
 		} else if (f.getAnnotation(Combo.class) != null) {
-			pb = createComboBinding(f);
+			pb = createComboBinding(f.getAnnotation(Combo.class));
 		} else if (f.getAnnotation(Group.class) != null) {
-			pb = createGroupBinding(f);
+			pb = createGroupBinding(f.getAnnotation(Group.class));
 		} else if (f.getAnnotation(List.class) != null) {
-			pb = createListBinding(f);
+			pb = createListBinding(f.getAnnotation(List.class));
 		} else if (f.getAnnotation(Date.class) != null) {
-			pb = createDateBinding(f);
+			pb = createDateBinding(f.getAnnotation(Date.class));
 		} else if (f.getAnnotation(Directory.class) != null) {
-			pb = createDirectoryBinding(f);
+			pb = createDirectoryBinding(f.getAnnotation(Directory.class));
 		} else if (f.getAnnotation(File.class) != null) {
-			pb = createFileBinding(f);
-		} else {// TODO other types
-			pb = findBinding(f);
+			pb = createFileBinding(f.getAnnotation(File.class));
+		} else if (f instanceof Field){// TODO other types
+			pb = findBinding(type);
+		} else {
+			return null;
 		}
-		pb.setFieldName(f.getName());
-		pb.setType(f.getGenericType());
+		pb.setFieldName(name);
+		pb.setType(type);
 		return pb;
 	}
 
-	private PropertyBinding createFileBinding(Field f) {
-		File file = f.getAnnotation(File.class);
+	private PropertyBinding createFileBinding(File file) {
 		FileBinding fb = new FileBinding();
 		if (file.label().length() > 0)
 			fb.setLabel(file.label());
@@ -177,92 +211,85 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		return fb;
     }
 
-	private PropertyBinding createDirectoryBinding(Field f) {
-		Directory d = f.getAnnotation(Directory.class);
+	private PropertyBinding createDirectoryBinding(Directory directory) {
 		DirectoryBinding db = new DirectoryBinding();
-		if (d.label().length() > 0)
-			db.setLabel(d.label());
-		db.setReadOnly(d.readOnly());
-		db.setOptional(d.optional());
+		if (directory.label().length() > 0)
+			db.setLabel(directory.label());
+		db.setReadOnly(directory.readOnly());
+		db.setOptional(directory.optional());
 	    
 		return db;
     }
 
-	private PropertyBinding createListBinding(Field f) {
-		List l = f.getAnnotation(List.class);
+	private PropertyBinding createListBinding(List list) {
 		ListBinding lb = new ListBinding();
-		if (l.label().length() > 0)
-			lb.setLabel(l.label());
-		lb.setReadOnly(l.readOnly());
-		lb.setCreateNew(l.createNew());
-		lb.setListStyle(l.style());
-		lb.setOptional(l.optional());
+		if (list.label().length() > 0)
+			lb.setLabel(list.label());
+		lb.setReadOnly(list.readOnly());
+		lb.setCreateNew(list.createNew());
+		lb.setListStyle(list.style());
+		lb.setOptional(list.optional());
 
 		return lb;
 	}
 
-	private PropertyBinding createGroupBinding(Field f) {
-		Group g = f.getAnnotation(Group.class);
+	private PropertyBinding createGroupBinding(Group group) {
 		GroupBinding gb = new GroupBinding();
-		if (g.label().length() > 0)
-			gb.setLabel(g.label());
+		if (group.label().length() > 0)
+			gb.setLabel(group.label());
 
-		gb.setReadOnly(g.readOnly());
-		gb.setOptional(g.optional());
+		gb.setReadOnly(group.readOnly());
+		gb.setOptional(group.optional());
 		return gb;
 	}
 
-	private PropertyBinding createComboBinding(Field f) {
-		Combo c = f.getAnnotation(Combo.class);
+	private PropertyBinding createComboBinding(Combo combo) {
 		ComboBinding cb = new ComboBinding();
-		if (c.label().length() > 0)
-			cb.setLabel(c.label());
+		if (combo.label().length() > 0)
+			cb.setLabel(combo.label());
 
-		cb.setReadOnly(c.readOnly());
-		cb.setShowNewButton(c.createNew());
+		cb.setReadOnly(combo.readOnly());
+		cb.setShowNewButton(combo.createNew());
 
-		cb.setOptional(c.optional());
+		cb.setOptional(combo.optional());
 		
 		return cb;
 	}
 	
-	private PropertyBinding createDateBinding(Field f) {
-		Date d = f.getAnnotation(Date.class);
+	private PropertyBinding createDateBinding(Date date) {
 		DateBinding db = new DateBinding();
-		if (d.label().length()>0)
-			db.setLabel(d.label());
-		db.setReadOnly(d.readOnly());
-		db.setFormat(d.format());
+		if (date.label().length()>0)
+			db.setLabel(date.label());
+		db.setReadOnly(date.readOnly());
+		db.setFormat(date.format());
 		
-		db.setOptional(d.optional());
+		db.setOptional(date.optional());
 		
 		return db;
 	}
 
-	private PropertyBinding createCheckBinding(Field f) {
-		Check c = f.getAnnotation(Check.class);
+	private PropertyBinding createCheckBinding(Check check) {
 		CheckBinding cb = new CheckBinding();
-		if (c.label().length() > 0)
-			cb.setLabel(c.label());
+		if (check.label().length() > 0)
+			cb.setLabel(check.label());
 		
-		cb.setOptional(c.optional());
+		cb.setOptional(check.optional());
 		
 		return cb;
 	}
 
-	private PropertyBinding createTextFieldBinding(Field f) {
-		TextField tf = f.getAnnotation(TextField.class);
+	private PropertyBinding createTextFieldBinding(TextField textfield) {
 		TextFieldBinding tfb = new TextFieldBinding();
-		tfb.setReadOnly(tf.readOnly());
+		tfb.setReadOnly(textfield.readOnly());
 
-		if (tf.label().length() > 0)
-			tfb.setLabel(tf.label());
+		if (textfield.label().length() > 0)
+			tfb.setLabel(textfield.label());
 
-		tfb.setGrabVerticalSpace(tf.grabVerticalSpace());
-		tfb.setRegExp(tf.regexp());
-		tfb.setPassword(tf.password());
-		tfb.setRows(tf.rows());
-		tfb.setOptional(tf.optional());
+		tfb.setGrabVerticalSpace(textfield.grabVerticalSpace());
+		tfb.setRegExp(textfield.regexp());
+		tfb.setPassword(textfield.password());
+		tfb.setRows(textfield.rows());
+		tfb.setOptional(textfield.optional());
 		
 		return tfb;
 	}

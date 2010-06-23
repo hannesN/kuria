@@ -21,6 +21,7 @@ import org.junit.BeforeClass;
 import de.topicmapslab.kuria.annotation.AnnotationBindingFactory;
 import de.topicmapslab.kuria.annotation.data.Address;
 import de.topicmapslab.kuria.annotation.data.Person;
+import de.topicmapslab.kuria.annotation.data.WrappedPerson;
 
 
 public abstract class AbstractBindingTest {
@@ -36,6 +37,7 @@ public abstract class AbstractBindingTest {
     	fac = new AnnotationBindingFactory();
     	fac.addClass(Person.class);
     	fac.addClass(Address.class);
+    	fac.addClass(WrappedPerson.class);
     }
 
 	@AfterClass
