@@ -3,13 +3,13 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Kuria Annotations
 Bundle-SymbolicName: de.topicmapslab.kuria-swtgenerator;singleton:=true
 Bundle-Version: 1.0.0.SNAPSHOT
-Export-Package: de.topicmapslab.jgui.swtgenerator,
- de.topicmapslab.jgui.swtgenerator.edit,
- de.topicmapslab.jgui.swtgenerator.edit.dialog,
- de.topicmapslab.jgui.swtgenerator.edit.widgets,
- de.topicmapslab.jgui.swtgenerator.table,
- de.topicmapslab.jgui.swtgenerator.tree,
- de.topicmapslab.jgui.swtgenerator.util
+Export-Package: de.topicmapslab.kuria.swtgenerator,
+ de.topicmapslab.kuria.swtgenerator.edit,
+ de.topicmapslab.kuria.swtgenerator.edit.dialog,
+ de.topicmapslab.kuria.swtgenerator.edit.widgets,
+ de.topicmapslab.kuria.swtgenerator.table,
+ de.topicmapslab.kuria.swtgenerator.tree,
+ de.topicmapslab.kuria.swtgenerator.util
 Require-Bundle: de.topicmapslab.kuria-annotation;bundle-version="1.0.0",
  de.topicmapslab.kuria-runtime;bundle-version="1.0.0",
  org.eclipse.swt;bundle-version="[3.5.0,4.0.0)",
