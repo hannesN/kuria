@@ -26,8 +26,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
@@ -62,7 +66,7 @@ import de.topicmapslab.kuria.swtgenerator.edit.widgets.TextFieldWidget;
  */
 public class InputMask implements IStateListener {
 
-	private Composite composite;
+	private ScrolledComposite composite;
 
 	private final Class<?> clazz;
 
@@ -79,14 +83,16 @@ public class InputMask implements IStateListener {
 	private IContentProvider contentProvider;
 	
 	private Map<IInputMaskWidget, String> errorMessages;
+
+	private Composite container;
 	
-	public InputMask(Composite parent, Class<?> clazz, IBindingContainer container) {
+	public InputMask(Composite parent, int style, Class<?> clazz, IBindingContainer container) {
 		super();
 		this.clazz = clazz;
 		this.bindingContainer = container;
 		if (container.getEditableBinding(clazz) == null)
 			throw new IllegalArgumentException("Class " + clazz.getName() + " has no EdiatableBinding");
-		createControl(parent);
+		createControl(parent, style);
 	}
 
 	public Object getModel() {
@@ -127,6 +133,15 @@ public class InputMask implements IStateListener {
 	public Composite getComposite() {
 		return composite;
 	}
+	
+	/**
+	 * Returns the container to add more widgets
+	 * 
+     * @return the container
+     */
+    public Composite getContainer() {
+	    return container;
+    }
 
 	public void persist() {
 		for (IInputMaskWidget w : getWidgetMap().values()) {
@@ -210,31 +225,42 @@ public class InputMask implements IStateListener {
 		}
 	}
 
-	private void createControl(Composite parent) {
-		composite = new Composite(parent, SWT.NONE);
-		composite.setLayout(new GridLayout(3, false));
-
+	private void createControl(Composite parent, int style) {
+		composite = new ScrolledComposite(parent, SWT.V_SCROLL|SWT.H_SCROLL);
+		container = new Composite(composite, SWT.NONE);
+		container.setLayout(new GridLayout(3, false));
+		composite.setContent(container);
+		composite.setExpandHorizontal(true);
+		composite.setExpandVertical(true);
+		
+		
+		composite.addListener(SWT.Resize, new Listener() {
+			
+			public void handleEvent(Event event) {
+				computeSize();
+			}
+		});
+		
 		IEditableBinding eb = bindingContainer.getEditableBinding(clazz);
 
 		for (IPropertyBinding pb : eb.getPropertieBindings()) {
 			if (pb instanceof ITextFieldBinding) {
-				createTextField(composite, (ITextFieldBinding) pb);
+				createTextField(container, (ITextFieldBinding) pb);
 			} else if (pb instanceof IComboBinding) {
-				createCombo(composite, (IComboBinding) pb);
+				createCombo(container, (IComboBinding) pb);
 			} else if (pb instanceof IGroupBinding) {
-				createGroup(composite, (IGroupBinding) pb);
+				createGroup(container, (IGroupBinding) pb);
 			} else if (pb instanceof ICheckBinding) {
-				createCheck(composite, (ICheckBinding) pb);
+				createCheck(container, (ICheckBinding) pb);
 			} else if (pb instanceof IListBinding) {
-				createList(composite, (IListBinding) pb);
+				createList(container, (IListBinding) pb);
 			} else if (pb instanceof IDateBinding) {
-				createDate(composite, (IDateBinding) pb);
+				createDate(container, (IDateBinding) pb);
 			} else if (pb instanceof IDirectoryBinding) {
-				createDirectory(composite, (IDirectoryBinding) pb);
+				createDirectory(container, (IDirectoryBinding) pb);
 			} else if (pb instanceof IFileBinding) {
-				createFile(composite, (IFileBinding) pb);
+				createFile(container, (IFileBinding) pb);
 			}
-
 		}
 		
 		for (IInputMaskWidget w : widgetMap.values()) {
@@ -243,6 +269,14 @@ public class InputMask implements IStateListener {
 		dirtyMap = new HashMap<IPropertyBinding, Boolean>();
 		clearAndDisable();
 	}
+
+	/**
+     * 
+     */
+    private void computeSize() {
+	    Point size = container.computeSize(-1, -1);
+	    composite.setMinSize(size);
+    }
 
 	private void createList(Composite parent, final IListBinding pb) {
 		IInputMaskWidget w;

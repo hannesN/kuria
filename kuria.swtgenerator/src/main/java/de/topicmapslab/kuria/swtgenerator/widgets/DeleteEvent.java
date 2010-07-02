@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+package de.topicmapslab.kuria.swtgenerator.widgets;
+
+import java.util.Collection;
+
 /**
+ * Event which indicates that a complex widget wants to delete 
  * 
- */
-package de.topicmapslab.kuria.swtgenerator.edit;
-
-import org.eclipse.swt.widgets.Composite;
-
-import de.topicmapslab.kuria.runtime.IBindingContainer;
-import de.topicmapslab.kuria.swtgenerator.AbstractSWTGenerator;
-
-/**
+ * 
  * @author Hannes Niederhausen
- *
+ * @version 1.0.0
  */
-public class EditableGenerator extends AbstractSWTGenerator {
+public class DeleteEvent<T> {
 
-	public EditableGenerator(IBindingContainer bindingContainer) {
-	    super(bindingContainer);
+	public final Collection<T> modelElements;
+	
+	public boolean commit = true;
+
+	/**
+     * @param modelElements
+     */
+    public DeleteEvent(Collection<T> modelElements) {
+	    super();
+	    this.modelElements = modelElements;
     }
-
-	public InputMask generateInputMask(Class<?> clazz, Composite parent, int style) {
-	    return new InputMask(parent, style, clazz, bindingContainer);
-    }
-
+	
 }

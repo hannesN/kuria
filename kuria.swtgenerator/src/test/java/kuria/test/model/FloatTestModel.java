@@ -13,28 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-/**
- * 
- */
-package de.topicmapslab.kuria.swtgenerator.edit;
+package kuria.test.model;
 
-import org.eclipse.swt.widgets.Composite;
-
-import de.topicmapslab.kuria.runtime.IBindingContainer;
-import de.topicmapslab.kuria.swtgenerator.AbstractSWTGenerator;
+import de.topicmapslab.kuria.annotation.widgets.Editable;
 
 /**
- * @author Hannes Niederhausen
+ * @author niederhausen
  *
  */
-public class EditableGenerator extends AbstractSWTGenerator {
+@Editable
+public class FloatTestModel {
 
-	public EditableGenerator(IBindingContainer bindingContainer) {
-	    super(bindingContainer);
+	private Float testAttr;
+	
+	/**
+     * 
+     */
+    public FloatTestModel() {
+    	testAttr = new Float(0);
     }
-
-	public InputMask generateInputMask(Class<?> clazz, Composite parent, int style) {
-	    return new InputMask(parent, style, clazz, bindingContainer);
+	
+	/**
+     * @param testAttr the testAttr to set
+     */
+    public void setTestAttr(Float testAttr) {
+	    this.testAttr = testAttr;
     }
-
+    
+    /**
+     * @return the testAttr
+     */
+    public Float getTestAttr() {
+	    return testAttr;
+    }
 }

@@ -20,8 +20,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import javax.swing.text.WrappedPlainView;
-
 import org.junit.Assert;
 import org.junit.Test;
 

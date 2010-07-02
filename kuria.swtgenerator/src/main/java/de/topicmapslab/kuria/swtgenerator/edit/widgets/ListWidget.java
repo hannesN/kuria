@@ -120,7 +120,6 @@ public abstract class ListWidget extends LabeledWidget {
 	 */
 	protected abstract void updateView();
 	
-	@SuppressWarnings("unchecked")
     protected void setSelection(Object[] selection) {
 		this.selection = selection;
 		try {
@@ -141,7 +140,7 @@ public abstract class ListWidget extends LabeledWidget {
 				notifyStateListener(true);
 				return;
 			}
-			List l = Arrays.asList(selection);
+			List<?> l = Arrays.asList(selection);
 			for (Object o : valueArray) {
 				if (!l.contains(o)) {
 					notifyStateListener(true);

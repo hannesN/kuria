@@ -20,6 +20,7 @@ package de.topicmapslab.kuria.swtgenerator;
 
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import de.topicmapslab.kuria.runtime.IBindingContainer;
@@ -61,6 +62,10 @@ public class WidgetGenerator {
 	}
 	
 	public InputMask generateEditable(Class<?> clazz, Composite parent) {
-		return editableGenerator.generateInputMask(clazz, parent);
+		return generateEditable(clazz, parent, SWT.NONE);
+	}
+	
+	public InputMask generateEditable(Class<?> clazz, Composite parent, int style) {
+		return editableGenerator.generateInputMask(clazz, parent, style);
 	}
 }

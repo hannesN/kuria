@@ -168,7 +168,7 @@ public class TableSelectionWidget extends ListWidget {
 				if (sel.isEmpty())
 					setSelection(new Object[0]);
 				else {
-					List<Object> list = new ArrayList(Arrays.asList(getSelection()));
+					List<Object> list = new ArrayList<Object>(Arrays.asList(getSelection()));
 					Iterator<Object> it = sel.iterator();
 					while (it.hasNext()) {
 						Object o = it.next();

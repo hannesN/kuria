@@ -126,7 +126,6 @@ public class TreeGenerator extends AbstractSWTGenerator {
 			}
 		}
 
-		@SuppressWarnings("unchecked")
 		public Object[] getChildren(Object arg0) {
 			List<Object> children = null;
 
@@ -148,7 +147,7 @@ public class TreeGenerator extends AbstractSWTGenerator {
 					if (TypeUtil.isArray(arg0.getClass()))
 						children = Arrays.asList((Object[]) arg0);
 					else
-						children = new ArrayList<Object>((Collection) arg0);
+						children = new ArrayList<Object>((Collection<?>) arg0);
 				}
 			}
 			if (children != null)
