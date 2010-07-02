@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>de.topicmapslab</groupId>
 		<artifactId>kuria</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>..</relativePath>
 	</parent>
 

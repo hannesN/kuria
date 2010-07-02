@@ -1,13 +1,28 @@
 == SWT Generator ==
 
 === Introduction ===
-TODO write me
+The SWT Generator is used to generate widgets based in the bindings. These widgets are generated with the Standard Widget Toolkit (SWT) and
+a wrapper library called JFace. Both libraries are part of the Eclipse Project. See http://eclipse.org/swt/ for more information. 
+
+To use the generated widgets a parent widget is needed. This could be a *Shell*, which is the class representing a window or a *Composite*.
+
+To generate one of the three main widgets instantiate the class *WidgetGenerator* and call the generation methods.
 
 === Tables ===
-TODO write me
+A TableBinding is realized using the class *TableViewer*. See http://www.jdocs.com/eclipse/3.2/org/eclipse/jface/viewers/TableViewer.html for
+more information. The table viewer uses the ColumnBinding and generates the needed content providers.
+
+The input of the *TableViewer*, set with the method *setInput* must be a Collection of the annotated model class.
+
+To generate a *TableViewer* call the method *generateTable*. The method exists with two or three parameters:
+
+ * *Class<?> clazz* the class object which binding is used
+ * *Composite parent* the parent widget, which should be a composite or shell
+ * *IContextMenuListener contextMenuListener* a listener which generates actions for a context menu for the table 
+
 
 === Tree ===
-TODO write me
+
 
 === InputMask ===
 TODO write me

@@ -11,8 +11,9 @@ Another feature of input masks is the validation of the data. Even simple valida
 entered needs additional code, which repeats for every widget which is used.
 
 _Kuria_ provides an automatic way of creating UI widgets based on a given domain model.
-_Kuria is split in three parts:
+
+The _Kuria_ project is split in three parts:
 
 * *kuria.runtime* specifies some binding interfaces and classes to communication between the widget and a domain model property
-* *kuria.generator* provides classes to generate the ui widgets. right now only SWT is supported
-* *kuria.annotation* provides a set of annottion which can be used to configure the domain model properties fir the generator
+* *kuria.generator* provides classes to generate the UI widgets. right now only SWT is supported
+* *kuria.annotation* provides a set of annotation which can be used to configure the domain model properties fir the generator

@@ -16,9 +16,28 @@
 package de.topicmapslab.kuria.runtime.widget;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 
+/**
+ * A {@link IListBinding} is used to bind properties which are collections.
+ * <p>
+ * The binding has a style which tells the UI generator how to visualize the collection.
+ * These styles are explained in {@link ListStyle}.
+ * </p>
+ * <p>
+ * If a collection is used, mostly the interfaces of the collection is used. To create a new value in the 
+ * UI it is necessary to tell the binding which implementation should be used. If non is set {@link HashSet} is
+ * used for {@link Set}s and {@link ArrayList} is used for a {@link List} type. 
+ * </p>
+ * 
+ * @author Hannes Niederhausen
+ * @version 1.0.0
+ */
 public interface IListBinding extends IPropertyBinding {
 
 	/**
