@@ -9,7 +9,7 @@ To use the generated widgets a parent widget is needed. This could be a *Shell*,
 To generate one of the three main widgets instantiate the class *WidgetGenerator* and call the generation methods.
 
 === Tables ===
-A TableBinding is realized using the class *TableViewer*. See http://www.jdocs.com/eclipse/3.2/org/eclipse/jface/viewers/TableViewer.html for
+A *TableBinding* is realized using the class *TableViewer*. See http://www.jdocs.com/eclipse/3.2/org/eclipse/jface/viewers/TableViewer.html for
 more information. The table viewer uses the ColumnBinding and generates the needed content providers.
 
 The input of the *TableViewer*, set with the method *setInput* must be a Collection of the annotated model class.
@@ -23,6 +23,36 @@ To generate a *TableViewer* call the method *generateTable*. The method exists w
 
 === Tree ===
 
+The *TreeBinding* is used to generate an instance of *TreeViewer*. Similar to the *TableViewer* the *TreeViewer* uses 
+a *ContentProvider* and a *LabelProvider* which use the binding information. 
+
+The input of the *TreeViewer* is the root node of the tree.
+
+To generate a *TreeViewer* call the method *generateTree*. Again the method exists with two or three parameters:
+ * *Composite parent* the parent widget, which should be a composite or shell
+ * *boolean showRoot* indicates if the root node should be visible or not
+ * *IContextMenuListener contextMenuListener* a listener which generates actions for a context menu for the selected tree nodes.
 
 === InputMask ===
-TODO write me
+
+The class *InputMask* represents a form for a specific class with an *EditableBinding*. The *InputMask* is a container which
+contains the specific widgets for the bindings. In addition the *InputMask* validates the input and persist the data into the given model
+instance.
+
+To generate an input mask for a model type, use the method *generateEditable*. The method has the following parameters:
+ * *Class<?> clazz* the class object which binding is used
+ * *Composite parent* the parent widget, which should be a composite or shell
+
+=== Complex Widgets ===
+
+In addition to the input mask and viewers, _Kuria_ provides some complex widge6ts based on the basic ones. 
+These widgets and their use are explained in the following sections.
+
+==== Master Detail Widget ====
+
+TODO
+
+=== Listeners used by the generator ===
+
+Kuria provides a few new listener interfaces, which can be used to react on changes. 
+

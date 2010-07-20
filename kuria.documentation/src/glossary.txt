@@ -6,5 +6,8 @@ Binding::
 	A binding connects the ediablt property of the domain model with the UI element. It provides access to the properties
 	and the configuration for the UI element. 
 
+Node::
+	A node is an element of a tree. Every node may have children which are nodes itself. A tree starts with a root node, which is a node without a parent node.
+
 Widget::
 	A widget is visual element in user interfaces. Widgets are e.g. Buttons, Labels and text field . 
