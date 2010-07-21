@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 
 /**
  * <p>Annotation which indicates hat the property is set via a combo box.
- * The Combobox must be filled with an array of objects of the propertys type.</p>
+ * The combo box must be filled with an array of objects of the property's type.</p>
  * 
  * <p> The text of the entry in the combo box is retrieved via the property annotated with
  * {@link Text}.</p>
@@ -42,8 +42,8 @@ public @interface Combo {
 	/** Indicates if widget is editable */
 	boolean readOnly() default false;
 	
-	/** Inidcates if a button next to the button is shown. This button opens a 
-	 * dialog which let you create a new instance of te type of the annotated field */
+	/** Indicates if a button next to the button is shown. This button opens a 
+	 * dialog which let you create a new instance of the type of the annotated field */
 	boolean createNew() default false;
 	
 	/** Indicates if the field is optional and the edit mask may persist without it */

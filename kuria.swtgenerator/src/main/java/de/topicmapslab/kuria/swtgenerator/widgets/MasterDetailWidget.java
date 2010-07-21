@@ -46,8 +46,6 @@ import de.topicmapslab.kuria.swtgenerator.edit.InputMask;
  * 
  * It is also possible to remove instances from the widget.
  * 
- * 
- * 
  * @author Hannes Niederhausen
  * @version 1.0.0
  */

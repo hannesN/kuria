@@ -32,6 +32,11 @@ To generate a *TreeViewer* call the method *generateTree*. Again the method exis
  * *Composite parent* the parent widget, which should be a composite or shell
  * *boolean showRoot* indicates if the root node should be visible or not
  * *IContextMenuListener contextMenuListener* a listener which generates actions for a context menu for the selected tree nodes.
+ 
+NOTE: If you want to set another layout data to the widget you need to set it to the parent of the table widget. This is necessary, 
+because the table is layouted using a *TableColumnLayout* which needs to be set into a parent of the table.
+
+
 
 === InputMask ===
 
@@ -50,9 +55,55 @@ These widgets and their use are explained in the following sections.
 
 ==== Master Detail Widget ====
 
-TODO
+The *MastetDetailWidget* combines a *TableViewer* for an object with an *InputMask*. The table is used to display a list of model instances. By 
+selecting one instance the input mask is filled with the instances values. The modification can be canceled or persisted in the widget.
+
+Additionally the widget provides buttons to create new model instances or remove existing ones.
+
+The input of the widget is a list of instances which can be modified.
+
+The *MasterDetailsWidget* uses its own widget generator, so you just instantiate it. The constructor has the following parameters:
+
+ * *Composite parent* the parent widget
+ * *int style* this is a SWT flag for the style 
+ * *IBindingContainer bindingContainer* the binding container containing the bindings for the type of the model instance and all classes used in the class
+ * *Class<T> clazz* the class which is annotated and the type of the model instances
+ * *boolean horizontal* a flag whether the table is layouted on the left side or on top of the input mask this parameter is optional. The default is *false*.
 
 === Listeners used by the generator ===
 
-Kuria provides a few new listener interfaces, which can be used to react on changes. 
+_Kuria_ provides a few new listener interfaces, which can be used to react on changes. 
 
+==== IModelListener ====
+
+Some applications need to persist their model on their own, for instance when using a undo/redo history. _Kuria_ provides a listener interface which
+is called when model changes happen. The *IModelListener* uses *PerstenzEvent*s which have a flag (*commit*) to indicate whether _Kuria_ should persist the new 
+values into the model or not. The latter is should be used if the values are set in another part of the application.
+
+See the javadoc for more information.
+
+==== IContextMenuListener ====
+
+An instance of a listener is invoked if a context menu is created for a {@link TableViewer} or {@link TreeViewer}.
+The listener has one method: *createMenu(IMenuManager manager)*.
+
+The implementation of the should get the selection of the viewer and add the provided actions to the manager.
+
+==== IInputMaskListener ====
+
+With the *IInputMaskListener* it is possible to react on changes in the input mask. The methods are:
+
+ * *dirtyChanged* Is called when the dirty state of the input masks changes. The dirty state indicates if the values of the edited model were changed.
+ * *newModelElement(Object newElement)* Some widgets provide a way to create a new model element and set it as value for a property. Examples are lists 
+ or combo boxes. If a new element was created this method is called, so the application can persist the new created model instance on its own way.
+
+==== IContentProvider ====
+
+Every input mask may have a selection list or combo box. These widgets need a list of values to choose from, which _Kuria_ cannot know. To
+set these selectable values, the input masks uses implementations of IContentProvider. Every input masks has one provider, so if more than one
+field needs provided elements, the provider must choose which elements to return based on the field name and the model instance. 
+
+The methods are:
+
+ * *Object[] getElements(String fieldname, Object model)* Returns the possible values for the field name.
+ * *boolean hasContent(String fieldname, Object model)* Checks if the provider provides content for the given field and instance. 

@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The date annottion indicates, that the property should be editited by an calender.
+ * The date annotation indicates, that the property should be edited by an calender.
  * 
  * @author Hannes Niederhausen
  * @version 1.0.0

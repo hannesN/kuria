@@ -19,8 +19,8 @@
 package de.topicmapslab.kuria.swtgenerator.edit;
 
 /**
- * Content provider for generated Comboboxes. Every {@link ComboBinding} has a field name
- * where the value is stored. This field name is used as key
+ * Content provider for generated combo boxes. Every {@link ComboBinding} has a field name
+ * where the value is stored. This field name is used as key.
  * 
  * @author Hannes Niederhausen
  * @version 1.0.0
@@ -44,7 +44,7 @@ public interface IContentProvider {
 	 * If the result is <code>true</code> 
 	 * </p>
 	 * 
-	 * @param fieldname the fieldname to check
+	 * @param fieldname the field name to check
 	 * @param model the model instance to edit
 	 * @return <code>true</code> if {@link #getElements(String, Object)} returns a content for the field, <code>false</code> else
 	 */

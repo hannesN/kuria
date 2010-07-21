@@ -1,14 +1,132 @@
 == Kuria Annotations ==
 
-
 === Introduction ===
-TODO write me
+
+The _Kuria_ annotation module provides a set of Java 5 annotations for domain models. In addition the module contains a binding factory 
+which creates bindings for every class which is annotated. Most of the annotations are similar to the bindings.
 
 === Tables ===
-TODO write me
+
+_Kuria_ has two annotations for the table bindings. The first one is *@TableElement* which is used at types. The binding factory creates a 
+table binding for the type.
+
+The other annotation is *@Column*. Every property of the annotated type which should be rendered inside a table column must have this annotation.
+Other properties are ignored.
 
 === Tree ===
-TODO write me
+
+To generate a TreeNodeBinding a class must be annotated with *@TreeNode*. This annotation has the following parameters:
+
+ * *String image* the path of the image to use for nodes of this type. The image must be inside the classpath.
+ 
+To specify the attributes representing the children, the annotation *@Children* is used. The annotation may be used on attributes 
+or accessor methods. The properties of this annotation are used to specify a mediator node, which may used to categorize multiple children.
+The properties are:
+
+ * *String title* the text for the mediator node
+ * *String image* the image of the mediator node 
+
+If the parameters are not set no mediator node is created.
+
+NOTE: If a mediator node is needed the text is mandatory, the image optional.
 
 === InputMask ===
-TODO write me
+
+To create an input mask for a model, it is necessary to create an *EditableBinding*. The *AnnotationBindingFactory* creates this binding based on the
+*@Editable* annotation. If the model has an annotation, for every attribute a default property binding is generated. If an attribute should not be 
+shown in the input mask it must be annotated with *@Hidden*.
+
+The following annotations provide more configurations:
+
+.@TextField
+Indicates that a property is modifiable in a text field. Only attributes of primitive data types and String should be annotated with *@TextField*.
+
+The Parameters are:
+
+ * *String label* the label for the text field if not set the name of the property is used
+ * *boolean readOnly* Flag to set the text field is only read only. Default: false
+ * *boolean password* Flag if the text field is a password field. A password field does not show its content. Default: false;
+ * *String regexp* A java regular expression for validation on the text field. Default: "\\.*";
+ * *int rows* Number of rows of the text field. For multiline text field set this parameter to a value greater than 1. Default 1;
+ * *boolean grabVerticalSpace* Flag to indicate if the input mask is smaller than the parent composite the text field should expand. 
+ This is only useful with multiline text fields. Default: false
+ * *boolean optional* Flag which indicates that the property is optional. Default: false;
+
+.@Check
+This annotation indicates that a boolean property should be modified using a check box.
+
+The Parameters are:
+
+ * *String label* the label for the text field if not set the name of the property is used
+ * *boolean readOnly* Flag to set the text field is only read only. Default: false
+ * *boolean optional* Flag which indicates that the property is optional. Default: false;
+
+.@Combo
+This annotation indicates hat the property is set via a combo box.
+The combo box must be filled with an array of objects of the property's type.
+
+The Parameters are:
+
+ * *String label* the label for the text field if not set the name of the property is used
+ * *boolean readOnly* Flag to set the text field is only read only. Default: false
+ * *boolean optional* Flag which indicates that the property is optional. Default: false;
+ * *boolean createNew* Indicates if a button next to the button is shown. This button opens a 
+	 dialog which let you create a new instance of the type of the annotated field.
+	
+.@Date
+The date annotation indicates, that the property should be edited by an calender.
+
+The Parameters are:
+
+ * *String label* the label for the text field if not set the name of the property is used
+ * *boolean readOnly* Flag to set the text field is only read only. Default: false
+ * *boolean optional* Flag which indicates that the property is optional. Default: false;
+ * *String format* /** The String format, see SimpleDateFormat */ Default: "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+ 
+.@Directory
+This annotation indicates that the field is a absolute path to a directory.
+
+The Parameters are:
+
+ * *String label* the label for the text field if not set the name of the property is used
+ * *boolean readOnly* Flag to set the text field is only read only. Default: false
+ * *boolean optional* Flag which indicates that the property is optional. Default: false;
+ 
+.@File
+This annotation indicates that the field is a absolute path to a file.
+
+The Parameters are:
+
+ * *String label* the label for the text field if not set the name of the property is used
+ * *boolean readOnly* Flag to set the text field is only read only. Default: false
+ * *boolean optional* Flag which indicates that the property is optional. Default: false;
+ * *String[] fileExtensions* The supported file extensions. These extensions must have the form:
+	 _\*.extension_. For every entry in the array the file dialog provides a selection in the combo box. 
+	 If you want to filter more than one extension at once use:
+	 _"\*.ext1;*.ext2"_
+	 
+.@Group
+This annotation is used to embed an input mask for the property. This is used if the type of the property is another
+complex type. A *EditableBinding* for the type must exists.
+
+The Parameters are:
+
+ * *String label* the label for the text field if not set the name of the property is used
+ * *boolean readOnly* Flag to set the text field is only read only. Default: false
+ * *boolean optional* Flag which indicates that the property is optional. Default: false;
+ 
+.@List
+This annotation indicates hat the property is set via a list.
+The list can be a compact one, which means the whole widget is one row in the input mask, 
+or a  table with buttons to remove or add new elements. Like *@Combo* the list provides a *createNew*
+parameter which allows the new creation of selections. Is this flag *false* only a set of selection options
+provided by the application is selectable.
+
+The Parameters are:
+
+ * *String label* the label for the text field if not set the name of the property is used
+ * *boolean readOnly* Flag to set the text field is only read only. Default: false
+ * *boolean optional* Flag which indicates that the property is optional. Default: false;
+ * *ListStyle style* style of the list. Its either ListStyle.TABLE or ListStyle.COMPACT. Default: ListStyle.COMPACT
+ * *boolean createNew* Indicates if a button next to the button is shown. This button opens a 
+	 dialog which let you create a new instance of the type of the annotated field.

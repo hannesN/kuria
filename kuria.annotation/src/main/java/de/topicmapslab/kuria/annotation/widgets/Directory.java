@@ -21,7 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The file annotation indicates that the field is a absolute path to a directory.
+ * The directory annotation indicates that the field is a absolute path to a directory.
  * 
  *  
  * @author Hannes Niederhausen

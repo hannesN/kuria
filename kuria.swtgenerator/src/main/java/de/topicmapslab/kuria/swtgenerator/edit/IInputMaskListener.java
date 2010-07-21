@@ -19,13 +19,24 @@
 package de.topicmapslab.kuria.swtgenerator.edit;
 
 /**
+ * Implementations may be used to listen to the state of an {@link InputMask}.
+ * 
  * 
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
 public interface IInputMaskListener {
 
+	/**
+	 * Is called when the dirty state of the input masks changes. The dirty state indicates if the values of the edited model were changed.
+	 */
 	public void dirtyChanged();
 	
+	/**
+	 * Some widgets provide a way to create a new model element and set it as value for a property. Examples are lists or combo boxes.
+	 * If a new element was created this method is called, so the application can persist the new created model instance on its own way.
+	 * 
+	 * @param newElement the newly created instance
+	 */
 	public void newModelElement(Object newElement);	
 }
