@@ -107,3 +107,16 @@ The methods are:
 
  * *Object[] getElements(String fieldname, Object model)* Returns the possible values for the field name.
  * *boolean hasContent(String fieldname, Object model)* Checks if the provider provides content for the given field and instance. 
+ 
+==== IImageCallback ====
+_Kuria_ tries to load images from the classpath using the path of the binding.
+It may happen that the image is an external image and _Kuria_ cannot find it. Is this the case 
+the application may register an implementation of this interface and load the image on its own.
+
+* *Image loadImage(String path)* This method is called if loading the image of the given path failed. The implementation may use different 
+approaches to load the image.
+
+A callback implementation can be registered in an instance of WidgetGenerator.
+
+NOTE: The callback is added to an internal image registry. The image registry is a singleton and every callback must be removed explicitly when it
+should not be used anymore. 

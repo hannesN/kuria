@@ -19,8 +19,10 @@
 package de.topicmapslab.kuria.swtgenerator.util;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.swt.graphics.Image;
@@ -35,6 +37,7 @@ public class ImageRegistry {
 	private static Map<String, Image> imageMap;
 	private static Image defaultImage;
 	
+	private static List<IImageCallback> callbackList;
 	
 	public static Image getImage(String path) {
 		Image img = getImageMap().get(path);
@@ -65,11 +68,21 @@ public class ImageRegistry {
 			newpath="/"+path;
 		else
 			newpath = path;
-        	
-		InputStream is = path.getClass().getResourceAsStream(newpath);		
-		if (is==null)
-			return null;
-		Image img = new Image(Display.getCurrent(), is);
+        
+		Image img = null;
+		
+		InputStream is = path.getClass().getResourceAsStream(newpath);
+		
+		if (is!=null) {
+			img = new Image(Display.getCurrent(), is);
+		}
+
+		// no classpath entry - try callbacks
+		for (IImageCallback imgCallback : getCallbackList()) {
+			img = imgCallback.loadImage(path);
+			if (img!=null)
+				break;
+		}
 	    
 	    if (img!=null)
 	    	putImage(path, img);
@@ -90,4 +103,29 @@ public class ImageRegistry {
 		return imageMap;
     }
 	
+    private static List<IImageCallback> getCallbackList() {
+    	if (callbackList==null)
+    		return Collections.emptyList();
+    	return callbackList;
+    }
+    
+    /**
+     * @param callbackList the callbackList to set
+     */
+    public static void addImageCallback(IImageCallback callback) {
+	    if (callbackList==null)
+	    	callbackList = new ArrayList<IImageCallback>();
+	    callbackList.add(callback);
+    }
+    
+    /**
+     * @param callbackList the callbackList to set
+     */
+    public static void removeImageCallback(IImageCallback callback) {
+	    if (callbackList!=null) {
+	    	callbackList.add(callback);
+	    	if (callbackList.size()==0)
+	    		callbackList = null;
+	    }
+    }
 }
