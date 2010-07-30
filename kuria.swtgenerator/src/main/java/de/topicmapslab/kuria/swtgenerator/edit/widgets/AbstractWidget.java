@@ -174,6 +174,8 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 	 * Updates the decoration of the widget
 	 */
 	protected void updateDecoration() {
+		if (textFieldDecoration==null)
+			return;
 		if (getErrorMessage()==null) {
 			textFieldDecoration.hide();
 		} else {
