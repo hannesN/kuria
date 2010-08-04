@@ -49,8 +49,7 @@ public class TypeUtilTest {
 
 	private Set<Integer> set1;
 	private HashSet<Integer> set2;
-	@SuppressWarnings("unchecked")
-    private HashSet set3;
+    private HashSet<?> set3;
 	@Test
 	public void testIsBoolean() {
 

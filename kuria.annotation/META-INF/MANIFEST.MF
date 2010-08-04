@@ -1,14 +1,17 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Kuria Annotations
-Bundle-SymbolicName: de.topicmapslab.kuria-annotation;singleton:=true
-Bundle-Version: 1.0.0.SNAPSHOT
+Bundle-SymbolicName: de.topicmapslab.kuria.annotation;singleton:=true
+Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: 
  de.topicmapslab.kuria.annotation,
- de.topicmapslab.kuria.annotation.data,
  de.topicmapslab.kuria.annotation.table,
  de.topicmapslab.kuria.annotation.tree,
- de.topicmapslab.kuria.annotation.widgets;uses:="de.topicmapslab.kuria.runtime.widget"
-Require-Bundle: de.topicmapslab.kuria-runtime;bundle-version="1.0.0"
-Import-Package: org.junit;version="4.5.0";resolution:=optional
+ de.topicmapslab.kuria.annotation.widgets
+Import-Package: de.topicmapslab.kuria.runtime,
+ de.topicmapslab.kuria.runtime.table,
+ de.topicmapslab.kuria.runtime.tree,
+ de.topicmapslab.kuria.runtime.util,
+ de.topicmapslab.kuria.runtime.widget,
+ org.junit;version="4.5.0";resolution:=optional

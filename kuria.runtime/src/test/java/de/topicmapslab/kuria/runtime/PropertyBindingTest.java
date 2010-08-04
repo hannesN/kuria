@@ -30,8 +30,7 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
 @SuppressWarnings("unused")
 public class PropertyBindingTest {
 
-	@SuppressWarnings("unchecked")
-    private Set set;
+    private Set<?> set;
 	private static Field setField;
 	
     private List<String> list;

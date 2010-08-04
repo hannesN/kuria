@@ -1,19 +1,15 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Kuria Runtime
-Bundle-SymbolicName: de.topicmapslab.kuria-runtime;singleton:=true
-Bundle-Version: 1.0.0.SNAPSHOT
+Bundle-SymbolicName: de.topicmapslab.kuria.runtime;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-ClassPath: .
 Export-Package: de.topicmapslab.kuria.runtime,
- de.topicmapslab.kuria.runtime.model,
  de.topicmapslab.kuria.runtime.table,
  de.topicmapslab.kuria.runtime.tree;uses:="de.topicmapslab.jgui.runtime",
  de.topicmapslab.kuria.runtime.util,
  de.topicmapslab.kuria.runtime.widget
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-ClassPath: lib/commons-beanutils-1.8.2.jar,
- lib/commons-logging-1.1.1.jar,
- lib/slf4j-api-1.5.8.jar,
- .
 Import-Package: org.apache.commons.beanutils,
  org.apache.commons.collections,
  org.junit;version="4.5.0";resolution:=optional

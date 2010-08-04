@@ -6,6 +6,8 @@ include::preface.txt[]
 Using Kuria
 ===========
 
+include::maven.txt[]
+
 include::runtime.txt[]
 
 include::annotations.txt[]

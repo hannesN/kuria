@@ -13,11 +13,21 @@ table binding for the type.
 The other annotation is *@Column*. Every property of the annotated type which should be rendered inside a table column must have this annotation.
 Other properties are ignored.
 
+*@Column* has the following parameter:
+
+ * *String image* the path of the image to use for nodes of this type. The image must be inside the classpath.
+ * *String imageMethod* instead of specifying a static image it is possible to tell _Kuria_ which method returns the image path. This parameter contains the
+ name of this method
+ * *String textMethod* instead of using the default text it is possible to set similar to the imageMethod a method which creates the text for the table cell. 
+
+
 === Tree ===
 
 To generate a TreeNodeBinding a class must be annotated with *@TreeNode*. This annotation has the following parameters:
 
  * *String image* the path of the image to use for nodes of this type. The image must be inside the classpath.
+ * *String imageMethod* instead of specifying a static image it is possible to tell _Kuria_ which method returns the image path. This parameter contains the
+ name of this method
  
 To specify the attributes representing the children, the annotation *@Children* is used. The annotation may be used on attributes 
 or accessor methods. The properties of this annotation are used to specify a mediator node, which may used to categorize multiple children.

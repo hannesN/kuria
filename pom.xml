@@ -83,14 +83,6 @@
 			<id>tmlab</id>
 			<url>http://maven.topicmapslab.de/public</url>
 		</repository>
-		<repository>
-			<id>tmapi</id>
-			<url>http://www.tmapi.org/maven-repository/</url>
-		</repository>
-		<repository>
-			<id>ontopia</id>
-			<url>http://ontopia.googlecode.com/svn/maven-repository</url>
-		</repository>
 	</repositories>
 	<distributionManagement>
 		<repository>
