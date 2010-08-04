@@ -45,4 +45,7 @@ public @interface TreeNode {
 	 * path to the image of the node 
 	 */
 	String image() default "";
+	
+	/** the name of the method which provides a path to an image */
+	String imageMethod() default "";
 }

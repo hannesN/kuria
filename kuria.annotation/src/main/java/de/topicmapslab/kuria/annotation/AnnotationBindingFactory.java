@@ -304,6 +304,12 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 				if (col.image().length() > 0) {
 					cb.setColumnImage(col.image());
 				}
+				if (col.imageMethod().length() > 0) {
+					cb.setColumnImageMethod(col.imageMethod());
+				}
+				if (col.textMethod().length() > 0) {
+					cb.setColumnTextMethod(col.textMethod());
+				}
 				if (col.title().length() > 0) {
 					cb.setColumnTitle(col.title());
 				}
@@ -321,6 +327,8 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 
 		if (a.image().length() > 0)
 			b.setImage(a.image());
+		if (a.imageMethod().length() > 0)
+			b.setImageMethod(a.imageMethod());
 
 		for (Field f : c.getDeclaredFields()) {
 			Children children = f.getAnnotation(Children.class);

@@ -45,11 +45,24 @@ public class ColumnBinding implements IColumnBinding {
 
 	/** the column image */
 	private String columnImage;
+	
+	/** the column image method name */
+	private String columnImageMethod;
+	
+	/** the column text method name */
+	private String columnTextMethod;
 
 	/**
 	 *  {@inheritDoc}
 	 */
-	public String getColumnImage() {
+	public String getColumnImage(Object instance) {
+		try {
+	        if (columnImageMethod != null) {
+		        return (String) instance.getClass().getDeclaredMethod(columnImageMethod).invoke(instance);
+	        }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
 		return columnImage;
 	}
 
@@ -99,5 +112,51 @@ public class ColumnBinding implements IColumnBinding {
 	        NoSuchMethodException {
 		PropertyUtils.setProperty(instance, fieldName, value);
 	}
-
+	
+	/**
+	 *  {@inheritDoc}
+	 */
+	public String getColumnImageMethod() {
+	    return columnImageMethod;
+	}
+	
+	/**
+	 *  {@inheritDoc}
+	 */
+	public String getColumnTextMethod() {
+	    return columnTextMethod;
+    }
+	
+	/**
+	 *  {@inheritDoc}
+	 */
+	public String getColumnText(Object instance) {
+		try {
+	        if (columnTextMethod != null) {
+		        return (String) instance.getClass().getDeclaredMethod(columnTextMethod).invoke(instance);
+	        }
+	        return null;
+        } catch (Exception e) {
+        	throw new RuntimeException(e);
+        }
+		
+	}
+	
+	/**
+	 * Sets the column image method name
+	 * @param columnImageMethod
+	 */
+	public void setColumnImageMethod(String columnImageMethod) {
+	    this.columnImageMethod = columnImageMethod;
+    }
+	
+	/**
+	 * Sets the column image method name
+	 * 
+	 * @param columnTextMethod
+	 */
+	public void setColumnTextMethod(String columnTextMethod) {
+	    this.columnTextMethod = columnTextMethod;
+    }
+	
 }

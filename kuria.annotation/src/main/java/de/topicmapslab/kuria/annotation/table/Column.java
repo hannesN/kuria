@@ -46,4 +46,9 @@ public @interface Column {
 	/** The column number. Use this to set an order for the columns. If not used the order of fields is used. */
 	int col() default -1;
 	
+	/** the name of the method which provides a path to an image */
+	String imageMethod() default "";
+	
+	/** the name of the method which generates the text for the column */
+	String textMethod() default "";
 }

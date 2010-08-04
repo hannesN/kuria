@@ -86,8 +86,8 @@ public class TreeGenerator extends AbstractSWTGenerator {
 
 					ITreeNodeBinding tnb = bindingContainer.getTreeNodeBinding(element.getClass());
 
-					if ((tnb != null) && (tnb.getImage() != null))
-						return ImageRegistry.getImage(tnb.getImage());
+					if ((tnb != null) && (tnb.getImage(element) != null))
+						return ImageRegistry.getImage(tnb.getImage(element));
 				}
 				return null;
 			}

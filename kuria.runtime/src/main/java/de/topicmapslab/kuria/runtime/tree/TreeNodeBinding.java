@@ -48,6 +48,9 @@ public class TreeNodeBinding implements ITreeNodeBinding {
 	/** the list of children bindings */
 	private List<IChildrenBinding> children;
 
+	/** the image method */
+	private String imageMethod;
+	
 	/**
 	 *  {@inheritDoc}
 	 */
@@ -68,7 +71,14 @@ public class TreeNodeBinding implements ITreeNodeBinding {
 	/**
 	 *  {@inheritDoc}
 	 */
-	public String getImage() {
+	public String getImage(Object instance) {
+		try {
+	        if (imageMethod != null) {
+		        return (String) instance.getClass().getDeclaredMethod(imageMethod).invoke(instance);
+	        }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
 		return image;
 	}
 
@@ -97,5 +107,20 @@ public class TreeNodeBinding implements ITreeNodeBinding {
 			children.remove(cb);
 		}
 	}
+	
+	/**
+	 *  {@inheritDoc}
+	 */
+	public String getImageMethod() {
+	    return imageMethod;
+    }
+	
+	/**
+	 * Sets the image method name
+	 * @param imageMethod the name of the image method
+	 */
+	public void setImageMethod(String imageMethod) {
+	    this.imageMethod = imageMethod;
+    }
 
 }

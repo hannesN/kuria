@@ -108,8 +108,8 @@ public class TableGenerator extends AbstractSWTGenerator {
 				throw new IllegalArgumentException("Element is " + element.getClass().getName());
 
 			IColumnBinding cb = tb.getColumnBindings().get(columnIndex);
-			if (cb.getColumnImage()!=null)
-				return ImageRegistry.getImage(cb.getColumnImage());
+			if (cb.getColumnImage(element)!=null)
+				return ImageRegistry.getImage(cb.getColumnImage(element));
 			
 			return null;
 		}
@@ -122,6 +122,11 @@ public class TableGenerator extends AbstractSWTGenerator {
 			IColumnBinding cb = tb.getColumnBindings().get(columnIndex);
 
 			try {
+				
+				String tmp = cb.getColumnText(element);
+				if (tmp!=null)
+					return tmp;
+				
 				Object o = cb.getValue(element);
 				if (o instanceof String)
 					return (String) o;

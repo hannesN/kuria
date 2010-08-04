@@ -18,14 +18,41 @@ package de.topicmapslab.kuria.runtime.table;
 import java.lang.reflect.InvocationTargetException;
 
 public interface IColumnBinding {
-
+	
 	/**
-	 * Returns a path to an image which is rendered in every cell of the column.
+	 * To provide a dynamic way of setting the image, it is possible to implement a method which returns the imagepath.
+	 * The name of the method is returned by this method or <code>null</code> if method exists.
 	 * 
+	 * @return the name of the method to retrieve a column image or <code>null</code>
+	 */
+	public abstract String getColumnImageMethod();
+	
+	/**
+	 * To provide a dynamic way of setting the text of the column, it is possible to implement a method which returns the text for the column.
+	 * The name of the method is returned by this method or <code>null</code> if method exists.
+	 * 
+	 * @return the name of the method which returns the text or <code>null</code>
+	 */
+	public abstract String getColumnTextMethod();
+	
+	/**
+	 * Returns a path to an image which is rendered in the cell of the column.
+	 * 
+	 * @param the instance which will be rendered into the column
 	 * @return path to an image file or <code>null</code> if no image exists
 	 */
-	public abstract String getColumnImage();
+	public abstract String getColumnImage(Object instance);
+	
+	/**
+	 * Returns the text which is rendered in the cell of the column.
+	 * 
+	 * @param the instance which will be rendered into the column
+	 * @return path to an image file or <code>null</code> if no textMethod exists
+	 */
+	public abstract String getColumnText(Object instance);
 
+	
+	
 	/**
 	 * Returns the title of the column.
 	 * <p>

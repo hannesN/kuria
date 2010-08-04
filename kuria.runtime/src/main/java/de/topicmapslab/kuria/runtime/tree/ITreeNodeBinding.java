@@ -27,9 +27,19 @@ public interface ITreeNodeBinding {
 	public abstract List<IChildrenBinding> getChildren();
 
 	/**
-	 * Returns the path of the image
+	 * Returns the path of the image for the given instance
+	 * 
+	 * @param instance the instance which image path should be returned
 	 * @return the path of the image or <code>null</code> if non is set.
 	 */
-	public abstract String getImage();
-
+	public String getImage(Object instance);
+	
+	/**
+	 * To provide a dynamic way of setting the image, it is possible to implement a method which returns the imagepath.
+	 * The name of the method is returned by this method or <code>null</code> if method exists.
+	 * 
+	 * @return the name of the method to retrieve a column image or <code>null</code>
+	 */
+	public abstract String getImageMethod();
+	
 }

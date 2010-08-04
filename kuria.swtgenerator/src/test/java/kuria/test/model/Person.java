@@ -44,7 +44,7 @@ import de.topicmapslab.kuria.runtime.widget.ListStyle;
  */
 @Editable
 @TableElement
-@TreeNode
+@TreeNode(imageMethod="getImageForPet")
 public class Person {
 
 	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.TABLE, createNew=true)
@@ -54,18 +54,20 @@ public class Person {
 	private String lastname;
 	
 	@TextField
-	@Column(image="tiger.png")
+	@Column(imageMethod="getImageForPet")
 	private String firstname;
+
 	
 	@Column
 	@TextField(optional=true)
 	private String nickname;
 	
-	@Column
+	@Column(textMethod="getAgeText")
 	private int age;
 
 	@Group
 	@Hidden
+	@Column
 	private Address address;
 	
 	@Children
@@ -269,5 +271,13 @@ public class Person {
 	@Children(title="other", image="nothere.gif")
 	public Set<Address> getOtherAddresses() {
 		return Collections.emptySet();
+	}
+	
+	public String getAgeText() {
+		return Integer.toString(getAge()) + " Jahre";
+	}
+	
+	public String getImageForPet() {
+		return "tiger.png";
 	}
 }
