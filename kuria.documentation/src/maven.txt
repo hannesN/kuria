@@ -1,0 +1,27 @@
+== Maven ==
+
+_Kuria_ consists of three modules which can be found in our maven repository. 
+At the moment there is only one generator module using SWT.
+
+To use _Kuria_ add the following lines to you pom.xml to add the Topic maps Lab repository:
+
+[literal]
+<repository>
+	<id>tmlab</id>
+	<url>http://maven.topicmapslab.de/public</url>
+</repository>
+
+
+After that add the _Kuria SWTGenerator_ to you dependencies like:
+
+[literal]
+<dependency>
+	<groupId>de.topicmapslab.kuria</groupId>
+	<artifactId>kuria-swtgenerator</artifactId>
+	<version>1.0.0</version>
+	<scope>compile</scope>
+</dependency>
+
+The other modules are dependencies of the _SWTgenerator_ and will be added automatically.
+
+NOTE: SWT is a platform dependant library which needs 
