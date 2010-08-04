@@ -24,4 +24,23 @@ After that add the _Kuria SWTGenerator_ to you dependencies like:
 
 The other modules are dependencies of the _SWTgenerator_ and will be added automatically.
 
-NOTE: SWT is a platform dependant library which needs 
+NOTE: SWT is a platform dependent library which needs
+
+== Eclipse ==
+
+It is possible to install _Kuria_ into an eclipse installation. Add the following url into the update manager:
+
+  http://kuria.googlecode.com/hg/update/
+  
+After installing the feature you can use _Kuria_ in your Eclipse plug-in.
+
+_Kuria_ does not use a *FormToolkit*. If you want to adapt an *InputMask* use the following code:
+[literal]
+private void adapt(FormToolkit toolkit, Control control) {
+	toolkit.adapt(control, true, true);
+	if (control instanceof Composite) {
+		for (Control c : ((Composite) control).getChildren()) {
+			adapt(toolkit, c);
+		}
+	}
+} 

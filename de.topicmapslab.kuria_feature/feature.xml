@@ -2,13 +2,14 @@
 <feature
       id="de.topicmapslab.kuria_feature"
       label="Kuria"
-      version="1.0.0.qualifier">
+      version="1.0.0">
 
    <description url="http://code.google.com/p/kuria">
-      This feature contains the kuria lbiraries and its commons-beanutils dependencies.
+      This feature contains the kuria libraries and its commons-beanutils
+dependencies.
    </description>
 
-   <copyright>
+   <copyright url="http://topicmapslab.de">
       (C) 2010 Hannes Niederhausen, Topic Maps Lab
    </copyright>
 
