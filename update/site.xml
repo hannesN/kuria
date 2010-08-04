@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/de.topicmapslab.kuria_feature_1.0.0.201008041306.jar" id="de.topicmapslab.kuria_feature" version="1.0.0.201008041306">
+      <category name="kuria"/>
+   </feature>
+   <category-def name="kuria" label="Kuria"/>
+</site>
