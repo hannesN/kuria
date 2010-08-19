@@ -23,20 +23,20 @@ import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
 
 public interface IBindingContainer {
 
-	public abstract IEditableBinding getEditableBinding(Class<?> clazz);
+	public abstract IEditableBinding getEditableBinding(Object clazz);
 
-	public abstract Map<Class<?>, IEditableBinding> getEditableBindings();
+	public abstract Map<Object, IEditableBinding> getEditableBindings();
 
-	public abstract ITableBinding getTableBinding(Class<?> clazz);
+	public abstract ITableBinding getTableBinding(Object clazz);
 
-	public abstract Map<Class<?>, ITableBinding> getTableBindings();
+	public abstract Map<Object, ITableBinding> getTableBindings();
 
-	public abstract ITreeNodeBinding getTreeNodeBinding(Class<?> clazz);
+	public abstract ITreeNodeBinding getTreeNodeBinding(Object clazz);
 
-	public abstract Map<Class<?>, ITreeNodeBinding> getTreeNodeBindings();
+	public abstract Map<Object, ITreeNodeBinding> getTreeNodeBindings();
 
-	public abstract Map<Class<?>, ITextBinding> getTextBindings();
+	public abstract Map<Object, ITextBinding> getTextBindings();
 
-	public abstract ITextBinding getTextBinding(Class<?> c);
+	public abstract ITextBinding getTextBinding(Object c);
 
 }

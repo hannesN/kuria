@@ -2,7 +2,7 @@
 <feature
       id="de.topicmapslab.kuria_feature"
       label="Kuria"
-      version="1.0.0">
+      version="1.0.1.SNAPSHOT">
 
    <description url="http://code.google.com/p/kuria">
       This feature contains the kuria libraries and its commons-beanutils

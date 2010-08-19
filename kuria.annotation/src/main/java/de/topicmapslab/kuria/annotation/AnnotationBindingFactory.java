@@ -109,7 +109,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		ArrayList<String> usedNames = new ArrayList<String>();
 		
 		for (Field f : c.getDeclaredFields()) {
-			if (f.getAnnotation(Hidden.class) == null) {
+			if ((hasAccessor(f, c)) && (f.getAnnotation(Hidden.class) == null)) {
 				PropertyBinding pb = createPropertyBinding(f, f.getName(), f.getGenericType());
 				usedNames.add(f.getName());
 				eb.addPropertyBinding(pb);
@@ -190,7 +190,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		} else if (f.getAnnotation(File.class) != null) {
 			pb = createFileBinding(f.getAnnotation(File.class));
 		} else if (f instanceof Field){// TODO other types
-			pb = findBinding(type);
+			pb = findBinding((Field) f);
 		} else {
 			return null;
 		}

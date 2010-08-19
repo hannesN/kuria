@@ -29,21 +29,21 @@ import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
  */
 public class BindingContainer implements IBindingContainer {
 
-	private Map<Class<?>, ITextBinding> textBindings;
+	private Map<Object, ITextBinding> textBindings;
 	
-	private Map<Class<?>, ITableBinding> tableBindings;
+	private Map<Object, ITableBinding> tableBindings;
 
-	private Map<Class<?>, ITreeNodeBinding> treeNodeBindings;
+	private Map<Object, ITreeNodeBinding> treeNodeBindings;
 
-	private Map<Class<?>, IEditableBinding> editableBindings;
+	private Map<Object, IEditableBinding> editableBindings;
 
-	public void setEditableBindings(Map<Class<?>, IEditableBinding> editableBindings) {
+	public void setEditableBindings(Map<Object, IEditableBinding> editableBindings) {
 		this.editableBindings = editableBindings;
 	}
 
-	public void putEditableBindings(Class<?> c, IEditableBinding editableBinding) {
+	public void putEditableBindings(Object c, IEditableBinding editableBinding) {
 		if (editableBindings == null) {
-			editableBindings = new HashMap<Class<?>, IEditableBinding>();
+			editableBindings = new HashMap<Object, IEditableBinding>();
 		}
 		editableBindings.put(c, editableBinding);
 	}
@@ -51,7 +51,7 @@ public class BindingContainer implements IBindingContainer {
 	/**
 	 *  {@inheritDoc}
 	 */
-	public IEditableBinding getEditableBinding(Class<?> clazz) {
+	public IEditableBinding getEditableBinding(Object clazz) {
 		if (editableBindings == null) {
 			return null;
 		}
@@ -61,19 +61,19 @@ public class BindingContainer implements IBindingContainer {
 	/**
 	 *  {@inheritDoc}
 	 */
-	public Map<Class<?>, IEditableBinding> getEditableBindings() {
+	public Map<Object, IEditableBinding> getEditableBindings() {
     	if (editableBindings==null)
     		return Collections.emptyMap();
     	return editableBindings;
     }
 
-	public void setTableBindings(Map<Class<?>, ITableBinding> tableBindings) {
+	public void setTableBindings(Map<Object, ITableBinding> tableBindings) {
 		this.tableBindings = tableBindings;
 	}
 
-	public void putTableBindings(Class<?> c, ITableBinding tableBinding) {
+	public void putTableBindings(Object c, ITableBinding tableBinding) {
 		if (tableBindings == null) {
-			tableBindings = new HashMap<Class<?>, ITableBinding>();
+			tableBindings = new HashMap<Object, ITableBinding>();
 		}
 		tableBindings.put(c, tableBinding);
 	}
@@ -81,7 +81,7 @@ public class BindingContainer implements IBindingContainer {
 	/**
 	 *  {@inheritDoc}
 	 */
-	public ITableBinding getTableBinding(Class<?> clazz) {
+	public ITableBinding getTableBinding(Object clazz) {
     	if (tableBindings == null) {
     		return null;
     	}
@@ -92,19 +92,19 @@ public class BindingContainer implements IBindingContainer {
 	 * 
 	 *  {@inheritDoc}
 	 */
-	public Map<Class<?>, ITableBinding> getTableBindings() {
+	public Map<Object, ITableBinding> getTableBindings() {
     	if (tableBindings==null)
     		return Collections.emptyMap();
     	return tableBindings;
     }
 
-	public void setTreeNodeBindings(Map<Class<?>, ITreeNodeBinding> treeNodeBindings) {
+	public void setTreeNodeBindings(Map<Object, ITreeNodeBinding> treeNodeBindings) {
 		this.treeNodeBindings = treeNodeBindings;
 	}
 
-	public void putTreeNodeBindings(Class<?> c, ITreeNodeBinding treeNodeBinding) {
+	public void putTreeNodeBindings(Object c, ITreeNodeBinding treeNodeBinding) {
 		if (treeNodeBindings == null) {
-			treeNodeBindings = new HashMap<Class<?>, ITreeNodeBinding>();
+			treeNodeBindings = new HashMap<Object, ITreeNodeBinding>();
 		}
 		treeNodeBindings.put(c, treeNodeBinding);
 	}
@@ -112,7 +112,7 @@ public class BindingContainer implements IBindingContainer {
 	/**
 	 *  {@inheritDoc}
 	 */
-	public ITreeNodeBinding getTreeNodeBinding(Class<?> clazz) {
+	public ITreeNodeBinding getTreeNodeBinding(Object clazz) {
 		if (treeNodeBindings == null) {
 			return null;
 		}
@@ -122,29 +122,29 @@ public class BindingContainer implements IBindingContainer {
 	/**
 	 *  {@inheritDoc}
 	 */
-	public Map<Class<?>, ITreeNodeBinding> getTreeNodeBindings() {
+	public Map<Object, ITreeNodeBinding> getTreeNodeBindings() {
 		if (treeNodeBindings==null)
 			return Collections.emptyMap();
 	    return treeNodeBindings;
     }
 	
-	public void setTextBindings(Map<Class<?>, ITextBinding> textBindings) {
+	public void setTextBindings(Map<Object, ITextBinding> textBindings) {
 	    this.textBindings = textBindings;
     }
 	
 	/**
 	 *  {@inheritDoc}
 	 */
-	public Map<Class<?>, ITextBinding> getTextBindings() {
+	public Map<Object, ITextBinding> getTextBindings() {
 		if (textBindings==null)
 			return Collections.emptyMap();
 		
 		return textBindings;
     }
 	
-	public void putTextBinding(Class<?> c, TextBinding textBinding) {
+	public void putTextBinding(Object c, TextBinding textBinding) {
 		if (textBindings == null) {
-			textBindings = new HashMap<Class<?>, ITextBinding>();
+			textBindings = new HashMap<Object, ITextBinding>();
 		}
 		textBindings.put(c, textBinding);
 	}
@@ -152,7 +152,7 @@ public class BindingContainer implements IBindingContainer {
 	/**
 	 *  {@inheritDoc}
 	 */
-	public ITextBinding getTextBinding(Class<?> c) {
+	public ITextBinding getTextBinding(Object c) {
 		return getTextBindings().get(c);
 	}
 }

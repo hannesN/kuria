@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>de.topicmapslab</groupId>
 		<artifactId>kuria</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.topicmapslab.kuria</groupId>
 	<artifactId>kuria-annotation</artifactId>
-	<version>${project.parent.version}</version>
+	<version>${parent.version}</version>
 	<name>Kuria Annotation Library</name>
 	<description>Kuria Annotation Library</description>
 	

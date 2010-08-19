@@ -44,7 +44,9 @@ public class TableBinding implements ITableBinding {
 	private List<IColumnBinding> columnBindings;
 
 	/**
-	 *  {@inheritDoc}
+	 * Returns the class bound by this binding.
+	 * 
+	 * @return the bound class
 	 */
 	public Class<?> getClazz() {
 		return clazz;

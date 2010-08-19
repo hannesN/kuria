@@ -98,6 +98,51 @@ public class GenericBindingFactory implements IBindingFactory {
     	throw new UnsupportedOperationException("Not implemented yet");
     }
 
+	protected PropertyBinding findBinding(Field f) {
+    	Type type = f.getType();
+    	
+    	if (TypeUtil.isBoolean(type)) {
+    		return createGenericCheckBinding();
+    	}
+    	
+    	if (TypeUtil.isDate(type)) {
+    		return createGenericDateBinding();
+    	}
+    
+    	if (TypeUtil.isSet(type)) {
+    		return createGenericListBinding();
+    	}
+    
+    	if (TypeUtil.isList(type)) {
+    		return createGenericListBinding();
+    	}
+    
+    	if (TypeUtil.isMap(type)) {
+    		// TODO property binding
+    		return createGenericTextFieldBinding(type);
+    	}
+    
+    	if ((!TypeUtil.isPrimitive(type)) && (!String.class.equals(type))) {
+    		return createGenericComboBinding();
+    	}
+    
+    	return createGenericTextFieldBinding(type);
+    }
+
+	protected boolean hasAccessor(Field f, Class<?> clazz) {
+    	String prefix = TypeUtil.isBoolean(f.getType()) ? "is" : "get";
+    	String accessorName = prefix + Character.toUpperCase(f.getName().charAt(0))
+    		        + f.getName().substring(1);
+    
+    	try {
+            clazz.getMethod(accessorName);
+        } catch (Exception e) {
+        	return false;
+        }
+    
+    	return true;
+    }
+
 	private void init() {
 		bindingContainer = new BindingContainer();
 		for (Class<?> c : getClasses()) {
@@ -136,42 +181,15 @@ public class GenericBindingFactory implements IBindingFactory {
 		EditableBinding eb = new EditableBinding();
 
 		for (Field f : c.getDeclaredFields()) {
-			PropertyBinding pb = findBinding(f.getType());
-			pb.setFieldName(f.getName());
-			pb.setType(f.getGenericType());
-			eb.addPropertyBinding(pb);
+			if (hasAccessor(f, c)) {
+				PropertyBinding pb = findBinding(f);
+				pb.setFieldName(f.getName());
+				pb.setType(f.getGenericType());
+				eb.addPropertyBinding(pb);
+			}
 		}
 
 		return eb;
-	}
-
-	protected PropertyBinding findBinding(Type type) {
-		if (TypeUtil.isBoolean(type)) {
-			return createGenericCheckBinding();
-		}
-		
-		if (TypeUtil.isDate(type)) {
-			return createGenericDateBinding();
-		}
-
-		if (TypeUtil.isSet(type)) {
-			return createGenericListBinding();
-		}
-
-		if (TypeUtil.isList(type)) {
-			return createGenericListBinding();
-		}
-
-		if (TypeUtil.isMap(type)) {
-			// TODO property binding
-			return createGenericTextFieldBinding(type);
-		}
-
-		if ((!TypeUtil.isPrimitive(type)) && (!String.class.equals(type))) {
-			return createGenericComboBinding();
-		}
-
-		return createGenericTextFieldBinding(type);
 	}
 
 	private PropertyBinding createGenericListBinding() {

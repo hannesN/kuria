@@ -30,10 +30,6 @@ public interface IEditableBinding {
 	 */
 	public abstract List<IPropertyBinding> getPropertieBindings();
 
-	/**
-	 * Returns the bound type.
-	 * @return the bound type
-	 */
-	public abstract Class<?> getObjectType();
+	
 
 }

@@ -45,6 +45,8 @@ public class Person {
 
 	private boolean dumb;
 	
+	private String nothing;
+	
 	public String getName() {
 		return lastname + ", " + firstname;
 	}

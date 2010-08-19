@@ -75,7 +75,8 @@ public class EditableBinding implements IEditableBinding {
 	}
 	
 	/**
-	 *  {@inheritDoc}
+	 * Returns the bound type.
+	 * @return the bound type
 	 */
 	public Class<?> getObjectType() {
 		return objectType;

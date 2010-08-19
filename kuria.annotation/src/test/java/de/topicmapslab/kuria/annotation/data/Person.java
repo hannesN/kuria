@@ -64,6 +64,8 @@ public class Person {
 
 	private boolean dumb;
 
+	private String nothing;
+	
 	@Directory
 	private String homeDirectory;
 

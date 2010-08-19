@@ -20,13 +20,6 @@ import java.util.List;
 public interface ITableBinding {
 
 	/**
-	 * Returns the class bound by this binding.
-	 * 
-	 * @return the bound class
-	 */
-	public abstract Class<?> getClazz();
-
-	/**
 	 * Returns a list which contains the {@link IColumnBinding} of this
 	 * {@link TableBinding}.
 	 * <p>

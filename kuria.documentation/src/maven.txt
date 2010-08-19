@@ -24,7 +24,16 @@ After that add the _Kuria SWTGenerator_ to you dependencies like:
 
 The other modules are dependencies of the _SWTgenerator_ and will be added automatically.
 
-NOTE: SWT is a platform dependent library which needs
+SWT is a platform dependent library which needs implementations for a specific platform. To set 
+the platform you develop, the SWT generator project provides profile specific dependencies.
+The following profiles are supported:
+
+* *windows* for Windows(TM) 32bit
+* *windows_64* for Windows(TM) 64bit
+* *macosx* for MaxOS X 32bit (Cocoa)
+* *macosx_64* for MaxOS X 64bit (Cocoa)
+* *linux_x86* Linux 32 bit (GTK)
+* *linux_x86_64* Linux 64 bit (GTK)
 
 == Eclipse ==
 

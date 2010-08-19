@@ -156,13 +156,13 @@ public class TypeUtil {
 			ParameterizedType pt = (ParameterizedType) type;
 			Type[] args = pt.getActualTypeArguments();
 			for (Type typeArg : args) {
-				Class<?> typeArgClass = (Class<?>) typeArg;
-				return typeArgClass;
+				if (typeArg instanceof Class<?>)
+					return (Class<?>) typeArg;
 			}
 		}
 		// return Object if we have a collection but can't get the parameter
 		// type
-		if ((isList(clazz)) || (isSet(clazz)))
+		if ((isList(type)) || (isSet(type)))
 			return Object.class;
 
 		// no array, no set, no list -> exception
