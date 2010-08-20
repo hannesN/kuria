@@ -94,7 +94,7 @@ public class TableGenerator extends AbstractSWTGenerator {
 	    ITableBinding tb = bindingContainer.getTableBinding(clazz);
 	    TableColumnLayout layout = (TableColumnLayout) table.getParent().getLayout();
 	    
-	    
+	    boolean firstCol = true;
 	    
 	    for (IColumnBinding cb : tb.getColumnBindings()) {
 	    	
@@ -107,11 +107,13 @@ public class TableGenerator extends AbstractSWTGenerator {
 	    	TableViewerColumn column = new TableViewerColumn(tableViewer, tc);
 	    	column.setLabelProvider(new LabelProvider(cb));
 	    	
-	    	// listener registers to column haeder clicks and sets on click so no var needed
-	    	new ColumnViewerSorter(tableViewer, column, cb);
-	    	
-	    	
-	    	
+	    	// listener registers to column haeder clicks and sets on click 
+	    	ColumnViewerSorter sorter = new ColumnViewerSorter(tableViewer, column, cb);
+	    	if (firstCol) {
+	    		// set initial sort to first column
+	    		sorter.setSorter(sorter, ColumnViewerSorter.ASC);
+	    		firstCol = false;
+	    	}
 	    }
 	    
 	    table.setHeaderVisible(true);
@@ -163,6 +165,10 @@ public class TableGenerator extends AbstractSWTGenerator {
 	}
 
 
+	/*
+	 * Based on the implementation in JFace Snippets.
+	 * @see http://dev.eclipse.org/viewcvs/index.cgi/org.eclipse.jface.snippets/Eclipse%20JFace%20Snippets/org/eclipse/jface/snippets/viewers/Snippet040TableViewerSorting.java?view=markup
+	 */
 	private class ColumnViewerSorter extends ViewerSorter {
 		public static final int ASC = 1;
 		
@@ -234,7 +240,7 @@ public class TableGenerator extends AbstractSWTGenerator {
 		protected int doCompare(Viewer viewer, Object e1, Object e2) {
 			String s1 = getText(e1);
 			String s2 = getText(e2);
-			return s1.compareTo(s2);
+			return s1.toLowerCase().compareTo(s2.toLowerCase());
 		}
 		
 		public String getText(Object element) {
