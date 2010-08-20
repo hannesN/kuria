@@ -105,7 +105,7 @@ public class TableGenerator extends AbstractSWTGenerator {
 	    	
 	    	
 	    	TableViewerColumn column = new TableViewerColumn(tableViewer, tc);
-	    	column.setLabelProvider(new LabelProvider(cb));
+	    	column.setLabelProvider(new KuriaColumnLabelProvider(cb));
 	    	
 	    	// listener registers to column haeder clicks and sets on click 
 	    	ColumnViewerSorter sorter = new ColumnViewerSorter(tableViewer, column, cb);
@@ -119,11 +119,11 @@ public class TableGenerator extends AbstractSWTGenerator {
 	    table.setHeaderVisible(true);
     }
 
-	private class LabelProvider extends ColumnLabelProvider {
+	public class KuriaColumnLabelProvider extends ColumnLabelProvider {
 
 		private final IColumnBinding columnBinding;
 		
-		public LabelProvider(IColumnBinding columnBinding) {
+		public KuriaColumnLabelProvider(IColumnBinding columnBinding) {
 	        super();
 	        this.columnBinding = columnBinding;
         }
