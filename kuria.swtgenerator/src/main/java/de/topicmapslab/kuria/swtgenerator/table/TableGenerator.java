@@ -23,12 +23,16 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.IBaseLabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
@@ -67,9 +71,8 @@ public class TableGenerator extends AbstractSWTGenerator {
 		TableViewer viewer = new TableViewer(comp);
 
 		viewer.setContentProvider(new ArrayContentProvider());
-		viewer.setLabelProvider(new LabelProvider());
 
-		generateColumns(clazz, viewer.getTable());
+		generateColumns(clazz, viewer);
 		
 		if (listener!=null) {
 			MenuManager menuMgr = new MenuManager("#PopupMenu");
@@ -86,48 +89,60 @@ public class TableGenerator extends AbstractSWTGenerator {
 		return viewer;
 	}
 
-	private void generateColumns(Class<?> clazz, Table table) {
+	private void generateColumns(Class<?> clazz, TableViewer tableViewer) {
+		Table table = tableViewer.getTable();
 	    ITableBinding tb = bindingContainer.getTableBinding(clazz);
-	    
 	    TableColumnLayout layout = (TableColumnLayout) table.getParent().getLayout();
 	    
+	    
+	    
 	    for (IColumnBinding cb : tb.getColumnBindings()) {
+	    	
 	    	TableColumn tc = new TableColumn(table, 0);
 	    	tc.setText(cb.getColumnTitle());
 	    	tc.setWidth(50);
-	    	layout.setColumnData(tc, new ColumnWeightData(1));	    	
+	    	layout.setColumnData(tc, new ColumnWeightData(1));
+	    	
+	    	
+	    	TableViewerColumn column = new TableViewerColumn(tableViewer, tc);
+	    	column.setLabelProvider(new LabelProvider(cb));
+	    	
+	    	// listener registers to column haeder clicks and sets on click so no var needed
+	    	new ColumnViewerSorter(tableViewer, column, cb);
+	    	
+	    	
+	    	
 	    }
+	    
 	    table.setHeaderVisible(true);
     }
 
-	private class LabelProvider implements ITableLabelProvider, IBaseLabelProvider {
+	private class LabelProvider extends ColumnLabelProvider {
 
-		public Image getColumnImage(Object element, int columnIndex) {
-			ITableBinding tb = bindingContainer.getTableBinding(element.getClass());
-			if (tb == null)
-				throw new IllegalArgumentException("Element is " + element.getClass().getName());
+		private final IColumnBinding columnBinding;
+		
+		public LabelProvider(IColumnBinding columnBinding) {
+	        super();
+	        this.columnBinding = columnBinding;
+        }
 
-			IColumnBinding cb = tb.getColumnBindings().get(columnIndex);
-			if (cb.getColumnImage(element)!=null)
-				return ImageRegistry.getImage(cb.getColumnImage(element));
+		@Override
+		public Image getImage(Object element) {
+			if (columnBinding.getColumnImage(element)!=null)
+				return ImageRegistry.getImage(columnBinding.getColumnImage(element));
 			
 			return null;
 		}
 
-		public String getColumnText(Object element, int columnIndex) {
-			ITableBinding tb = bindingContainer.getTableBinding(element.getClass());
-			if (tb == null)
-				throw new IllegalArgumentException("Element is " + element.getClass().getName());
-
-			IColumnBinding cb = tb.getColumnBindings().get(columnIndex);
-
+		@Override
+		public String getText(Object element) {
 			try {
 				
-				String tmp = cb.getColumnText(element);
+				String tmp = columnBinding.getColumnText(element);
 				if (tmp!=null)
 					return tmp;
 				
-				Object o = cb.getValue(element);
+				Object o = columnBinding.getValue(element);
 				if (o instanceof String)
 					return (String) o;
 				else { 
@@ -145,18 +160,106 @@ public class TableGenerator extends AbstractSWTGenerator {
 			}
 		}
 
-		public void addListener(ILabelProviderListener listener) {
+	}
+
+
+	private class ColumnViewerSorter extends ViewerSorter {
+		public static final int ASC = 1;
+		
+		public static final int NONE = 0;
+		
+		public static final int DESC = -1;
+		
+		private int direction = 0;
+		
+		private final TableViewerColumn column;
+		
+		private final ColumnViewer viewer;
+		
+		private final IColumnBinding columnBinding;
+		
+		public ColumnViewerSorter(ColumnViewer viewer, TableViewerColumn column, IColumnBinding columnBinding) {
+			this.column = column;
+			this.columnBinding = columnBinding;
+			this.viewer = viewer;
+			this.column.getColumn().addSelectionListener(new SelectionAdapter() {
+
+			public void widgetSelected(SelectionEvent e) {
+				if( ColumnViewerSorter.this.viewer.getComparator() != null ) {
+					if( ColumnViewerSorter.this.viewer.getComparator() == ColumnViewerSorter.this ) {
+						int tdirection = ColumnViewerSorter.this.direction;
+						
+						if( tdirection == ASC ) {
+							setSorter(ColumnViewerSorter.this, DESC);
+						} else if( tdirection == DESC ) {
+							setSorter(ColumnViewerSorter.this, NONE);
+						}
+					} else {
+						setSorter(ColumnViewerSorter.this, ASC);
+					}
+				} else {
+					setSorter(ColumnViewerSorter.this, ASC);
+				}
+			}
+		});
+		}
+		public void setSorter(ColumnViewerSorter sorter, int direction) {
+			if( direction == NONE ) {
+				column.getColumn().getParent().setSortColumn(null);
+				column.getColumn().getParent().setSortDirection(SWT.NONE);
+				viewer.setComparator(null);
+			} else {
+				column.getColumn().getParent().setSortColumn(column.getColumn());
+				sorter.direction = direction;
+				
+				if( direction == ASC ) {
+					column.getColumn().getParent().setSortDirection(SWT.DOWN);
+				} else {
+					column.getColumn().getParent().setSortDirection(SWT.UP);
+				}
+				
+				if( viewer.getComparator() == sorter ) {
+					viewer.refresh();
+				} else {
+					viewer.setComparator(sorter);
+				}
+				
+			}
 		}
 
-		public void dispose() {
+		public int compare(Viewer viewer, Object e1, Object e2) {
+			return direction * doCompare(viewer, e1, e2);
 		}
-
-		public boolean isLabelProperty(Object element, String property) {
-			return false;
+		
+		protected int doCompare(Viewer viewer, Object e1, Object e2) {
+			String s1 = getText(e1);
+			String s2 = getText(e2);
+			return s1.compareTo(s2);
 		}
-
-		public void removeListener(ILabelProviderListener listener) {
+		
+		public String getText(Object element) {
+			try {
+				
+				String tmp = columnBinding.getColumnText(element);
+				if (tmp!=null)
+					return tmp;
+				
+				Object o = columnBinding.getValue(element);
+				if (o instanceof String)
+					return (String) o;
+				else { 
+					if (o!=null) {
+						ITextBinding binding = bindingContainer.getTextBinding(o.getClass());
+						if (binding==null)
+							return o.toString();
+						else
+							return binding.getText(o);
+					}
+				}
+				return "";
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
-
 	}
 }
