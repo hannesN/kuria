@@ -15,13 +15,8 @@
  ******************************************************************************/
 package de.topicmapslab.kuria.swtgenerator.widgets;
 
-import org.eclipse.jface.viewers.CellLabelProvider;
-import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -67,7 +62,7 @@ public class FilteredTableViewerWidget {
 		this.modelClass = modelClass;
 	}
 
-	public void createControl(Composite parent) {
+	public void createControl(Composite parent, int style) {
 
 		composite = new Composite(parent, SWT.NONE);
 
@@ -100,7 +95,7 @@ public class FilteredTableViewerWidget {
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = 3;
 
-		tableViewer = generator.generateTable(modelClass, composite);
+		tableViewer = generator.generateTable(modelClass, composite, null, style);
 		tableViewer.getTable().getParent().setLayoutData(gd);
 		tableViewer.addFilter(new Filter());
 	}

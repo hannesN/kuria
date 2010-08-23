@@ -58,9 +58,9 @@ public class TableGenerator extends AbstractSWTGenerator {
 	}
 
 	public TableViewer generateTable(Composite parent, Class<?> clazz) {
-		return generateTable(parent, clazz, null);
+		return generateTable(parent, clazz, null, SWT.NONE);
 	}	
-	public TableViewer generateTable(Composite parent, Class<?> clazz, final IContextMenuListener listener) {
+	public TableViewer generateTable(Composite parent, Class<?> clazz, final IContextMenuListener listener, int style) {
 		ITableBinding tb = bindingContainer.getTableBinding(clazz);
 		if (tb==null)
 			throw new IllegalArgumentException();
@@ -68,7 +68,7 @@ public class TableGenerator extends AbstractSWTGenerator {
 		Composite comp = new Composite(parent, SWT.NONE);
 		comp.setLayout(new TableColumnLayout());
 		
-		TableViewer viewer = new TableViewer(comp);
+		TableViewer viewer = new TableViewer(comp, style);
 
 		viewer.setContentProvider(new ArrayContentProvider());
 

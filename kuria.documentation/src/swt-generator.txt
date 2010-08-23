@@ -14,11 +14,12 @@ more information. The table viewer uses the ColumnBinding and generates the need
 
 The input of the *TableViewer*, set with the method *setInput* must be a Collection of the annotated model class.
 
-To generate a *TableViewer* call the method *generateTable*. The method exists with two or three parameters:
+To generate a *TableViewer* call the method *generateTable*. The method exists with two, three or four parameters:
 
  * *Class<?> clazz* the class object which binding is used
  * *Composite parent* the parent widget, which should be a composite or shell
  * *IContextMenuListener contextMenuListener* a listener which generates actions for a context menu for the table 
+ * *style* the SWT style for the table widget. For more information refer to the SWT documentation 
 
 
 === Tree ===

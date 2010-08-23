@@ -100,10 +100,24 @@ public class WidgetGenerator {
 	 * @param clazz the class which is the type of the table elements
 	 * @param parent the parent widget
 	 * @param contextMenuListener an implementation of {@link IContextMenuListener} which is called when the context menu will be opened to add more actions
+	 * @param style the SWT style for the table widget
+	 * @return
+	 */
+	public TableViewer generateTable(Class<?> clazz, Composite parent, IContextMenuListener contextMenuListener, int style) {
+		return tableGenerator.generateTable(parent, clazz, contextMenuListener, style);
+	}
+	
+	/**
+	 * Generates a table viewer for the specified class. The class must have a {@link TableBinding} in
+	 * the {@link BindingContainer}.
+	 * 
+	 * @param clazz the class which is the type of the table elements
+	 * @param parent the parent widget
+	 * @param contextMenuListener an implementation of {@link IContextMenuListener} which is called when the context menu will be opened to add more actions
 	 * @return
 	 */
 	public TableViewer generateTable(Class<?> clazz, Composite parent, IContextMenuListener contextMenuListener) {
-		return tableGenerator.generateTable(parent, clazz, contextMenuListener);
+		return tableGenerator.generateTable(parent, clazz, contextMenuListener, SWT.NONE);
 	}
 	
 	/**
