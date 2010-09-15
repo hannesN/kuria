@@ -171,7 +171,7 @@ public class InputMask implements IStateListener {
         	dirtyMap.remove(property);
         }
         // checking validity
-        IInputMaskWidget w = widgetMap.get(property);
+        IInputMaskWidget w = getWidgetMap().get(property);
         if (w.isValid()) {
         	putErrorMessage(w, null);
         } else {
@@ -263,7 +263,7 @@ public class InputMask implements IStateListener {
 			}
 		}
 		
-		for (IInputMaskWidget w : widgetMap.values()) {
+		for (IInputMaskWidget w : getWidgetMap().values()) {
 			w.addStateListener(this);
 		}
 		dirtyMap = new HashMap<IPropertyBinding, Boolean>();

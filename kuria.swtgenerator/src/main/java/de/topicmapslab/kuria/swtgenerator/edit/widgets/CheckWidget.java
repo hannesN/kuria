@@ -92,9 +92,6 @@ public class CheckWidget extends AbstractWidget {
 		if (getModel()==null)
 			return;
 		try {
-			if (!isDirty())
-				return;
-			
 			Boolean value = (Boolean) getPropertyBinding().getValue(getModel());
 			button.setSelection(value);
 		} catch (Exception e) {
