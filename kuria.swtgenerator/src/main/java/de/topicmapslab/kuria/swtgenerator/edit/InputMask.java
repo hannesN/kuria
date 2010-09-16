@@ -73,19 +73,19 @@ public class InputMask implements IStateListener {
 	private Object model;
 
 	private Map<IPropertyBinding, IInputMaskWidget> widgetMap;
-	
+
 	private Map<IPropertyBinding, Boolean> dirtyMap;
-	
+
 	private List<IInputMaskListener> inputMaskListeners;
 
 	private final IBindingContainer bindingContainer;
 
 	private IContentProvider contentProvider;
-	
+
 	private Map<IInputMaskWidget, String> errorMessages;
 
 	private Composite container;
-	
+
 	public InputMask(Composite parent, int style, Class<?> clazz, IBindingContainer container) {
 		super();
 		this.clazz = clazz;
@@ -100,22 +100,21 @@ public class InputMask implements IStateListener {
 	}
 
 	public void setModel(Object model) {
-		
-		if ((model!=null) && (!model.getClass().equals(clazz)))
+
+		if ((model != null) && (!model.getClass().equals(clazz)))
 			throw new IllegalArgumentException("Model needs to be instance of " + clazz.getName());
-		
+
 		this.model = model;
-		
+
 		for (IInputMaskWidget w : getWidgetMap().values()) {
 			w.setModel(model);
 		}
-		
+
 		if (model == null) {
 			clearAndDisable();
 			return;
 		}
-		
-		
+
 		setEnabled(true);
 	}
 
@@ -133,15 +132,15 @@ public class InputMask implements IStateListener {
 	public Composite getComposite() {
 		return composite;
 	}
-	
+
 	/**
 	 * Returns the container to add more widgets
 	 * 
-     * @return the container
-     */
-    public Composite getContainer() {
-	    return container;
-    }
+	 * @return the container
+	 */
+	public Composite getContainer() {
+		return container;
+	}
 
 	public void persist() {
 		for (IInputMaskWidget w : getWidgetMap().values()) {
@@ -150,68 +149,68 @@ public class InputMask implements IStateListener {
 	}
 
 	public void refresh(String fieldname) {
-    	for (IInputMaskWidget w : getWidgetMap().values()) {
-    		if (w.getPropertyBinding().getFieldName().equals(fieldname)) {
-    			w.refresh();
-    			return;
-    		}
-    	}
-    }
+		for (IInputMaskWidget w : getWidgetMap().values()) {
+			if (w.getPropertyBinding().getFieldName().equals(fieldname)) {
+				w.refresh();
+				return;
+			}
+		}
+	}
 
 	public void refresh() {
-    	for (IInputMaskWidget w : getWidgetMap().values()) {
-    		w.refresh();
-    	}
-    }
+		for (IInputMaskWidget w : getWidgetMap().values()) {
+			w.refresh();
+		}
+	}
 
 	public void stateChanged(IPropertyBinding property, boolean state) {
-        if (state) {
-        	dirtyMap.put(property, state);
-        } else {
-        	dirtyMap.remove(property);
-        }
-        // checking validity
-        IInputMaskWidget w = getWidgetMap().get(property);
-        if (w.isValid()) {
-        	putErrorMessage(w, null);
-        } else {
-        	putErrorMessage(w, w.getErrorMessage());
-        }
-        notifyDirtyChanged();
-    }
+		if (state) {
+			dirtyMap.put(property, state);
+		} else {
+			dirtyMap.remove(property);
+		}
+		// checking validity
+		IInputMaskWidget w = getWidgetMap().get(property);
+		if (w.isValid()) {
+			putErrorMessage(w, null);
+		} else {
+			putErrorMessage(w, w.getErrorMessage());
+		}
+		notifyDirtyChanged();
+	}
 
 	public boolean isDirty() {
-    	return dirtyMap.size()>0;
-    }
+		return dirtyMap.size() > 0;
+	}
 
 	public List<IInputMaskListener> getInputMaskListeners() {
-    	if (inputMaskListeners==null)
-    		return Collections.emptyList();
-        return inputMaskListeners;
-    }
+		if (inputMaskListeners == null)
+			return Collections.emptyList();
+		return inputMaskListeners;
+	}
 
 	public void addInputMaskListeners(IInputMaskListener listener) {
-    	if (inputMaskListeners==null)
-    		inputMaskListeners = new ArrayList<IInputMaskListener>();
-    	inputMaskListeners.add(listener);
-    }
+		if (inputMaskListeners == null)
+			inputMaskListeners = new ArrayList<IInputMaskListener>();
+		inputMaskListeners.add(listener);
+	}
 
 	public void removeInputMaskListeners(IInputMaskListener listener) {
-    	if (getInputMaskListeners().contains(listener))
-    		inputMaskListeners.remove(listener);
-    }
+		if (getInputMaskListeners().contains(listener))
+			inputMaskListeners.remove(listener);
+	}
 
 	public void setEnabled(boolean enabled) {
-    	composite.setEnabled(enabled);
+		composite.setEnabled(enabled);
 		for (IInputMaskWidget w : getWidgetMap().values()) {
-    		w.setEnabled(enabled);
-    	}
-    }
-	
+			w.setEnabled(enabled);
+		}
+	}
+
 	public boolean isValid() {
 		return getErrorMessagesMap().isEmpty();
 	}
-	
+
 	public Collection<String> getErrorMessages() {
 		List<String> msgs = new ArrayList<String>(getErrorMessagesMap().values());
 		Collections.sort(msgs);
@@ -229,18 +228,18 @@ public class InputMask implements IStateListener {
 		composite = new ScrolledComposite(parent, style);
 		composite.setExpandHorizontal(true);
 		composite.setExpandVertical(true);
-		
+
 		composite.addListener(SWT.Resize, new Listener() {
-			
+
 			public void handleEvent(Event event) {
 				computeSize();
 			}
 		});
-		
+
 		container = new Composite(composite, SWT.NONE);
 		container.setLayout(new GridLayout(3, false));
 		composite.setContent(container);
-		
+
 		IEditableBinding eb = bindingContainer.getEditableBinding(clazz);
 
 		for (IPropertyBinding pb : eb.getPropertieBindings()) {
@@ -262,7 +261,7 @@ public class InputMask implements IStateListener {
 				createFile(container, (IFileBinding) pb);
 			}
 		}
-		
+
 		for (IInputMaskWidget w : getWidgetMap().values()) {
 			w.addStateListener(this);
 		}
@@ -273,16 +272,26 @@ public class InputMask implements IStateListener {
 	/**
      * 
      */
-    private void computeSize() {
-	    composite.setMinSize(new Point(0,container.computeSize(-1, -1).y));
+	private void computeSize() {
+    	int x = 0;
+    	int y = 0;
+    	
+    	Point tmp = container.computeSize(-1, -1);
+    	if ( (composite.getStyle()&SWT.H_SCROLL)!=0) {
+    		x = tmp.x;
+    	}
+    	if ( (composite.getStyle()&SWT.V_SCROLL)!=0) {
+    		y = tmp.y;
+    	}
+		composite.setMinSize(new Point(x, y));
     }
 
 	private void createList(Composite parent, final IListBinding pb) {
 		IInputMaskWidget w;
-		if (pb.getListStyle()==ListStyle.COMPACT) {
+		if (pb.getListStyle() == ListStyle.COMPACT) {
 			w = new CompactListWidget(pb, bindingContainer);
-		} else if (pb.getListStyle()==ListStyle.TABLE) {
-			w = new TableSelectionWidget(pb, bindingContainer);			
+		} else if (pb.getListStyle() == ListStyle.TABLE) {
+			w = new TableSelectionWidget(pb, bindingContainer);
 		} else {
 			return;
 		}
@@ -295,19 +304,19 @@ public class InputMask implements IStateListener {
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
-	
+
 	private void createDate(Composite parent, final IDateBinding pb) {
 		DateWidget w = new DateWidget(pb);
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
-	
+
 	private void createDirectory(Composite parent, final IDirectoryBinding pb) {
 		DirectoryWidget w = new DirectoryWidget(pb);
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
-	
+
 	private void createFile(Composite parent, final IFileBinding pb) {
 		FileWidget w = new FileWidget(pb);
 		w.createControl(parent);
@@ -338,24 +347,24 @@ public class InputMask implements IStateListener {
 			return Collections.emptyMap();
 		return widgetMap;
 	}
-	
+
 	private Map<IInputMaskWidget, String> getErrorMessagesMap() {
-		if (errorMessages==null)
+		if (errorMessages == null)
 			return Collections.emptyMap();
 		return errorMessages;
 	}
 
 	private void putErrorMessage(IInputMaskWidget w, String msg) {
-		if (errorMessages==null) {
+		if (errorMessages == null) {
 			errorMessages = new HashMap<IInputMaskWidget, String>();
 		}
-		
-		if (msg==null) { 
+
+		if (msg == null) {
 			if (errorMessages.containsKey(w)) {
 				errorMessages.remove(w);
 			}
 			return;
-		} 
+		}
 		String m = w.getPropertyBinding().getLabel() + ": " + msg;
 		errorMessages.put(w, m);
 	}
@@ -376,8 +385,6 @@ public class InputMask implements IStateListener {
 		for (IInputMaskListener l : getInputMaskListeners()) {
 			l.newModelElement(newModel);
 		}
-    }
-	
-	
+	}
 
 }
