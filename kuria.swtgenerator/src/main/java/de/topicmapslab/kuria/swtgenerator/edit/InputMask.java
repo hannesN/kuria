@@ -226,13 +226,9 @@ public class InputMask implements IStateListener {
 	}
 
 	private void createControl(Composite parent, int style) {
-		composite = new ScrolledComposite(parent, SWT.V_SCROLL|SWT.H_SCROLL);
-		container = new Composite(composite, SWT.NONE);
-		container.setLayout(new GridLayout(3, false));
-		composite.setContent(container);
+		composite = new ScrolledComposite(parent, style);
 		composite.setExpandHorizontal(true);
 		composite.setExpandVertical(true);
-		
 		
 		composite.addListener(SWT.Resize, new Listener() {
 			
@@ -240,6 +236,10 @@ public class InputMask implements IStateListener {
 				computeSize();
 			}
 		});
+		
+		container = new Composite(composite, SWT.NONE);
+		container.setLayout(new GridLayout(3, false));
+		composite.setContent(container);
 		
 		IEditableBinding eb = bindingContainer.getEditableBinding(clazz);
 
@@ -274,8 +274,7 @@ public class InputMask implements IStateListener {
      * 
      */
     private void computeSize() {
-	    Point size = container.computeSize(-1, -1);
-	    composite.setMinSize(size);
+	    composite.setMinSize(new Point(0,container.computeSize(-1, -1).y));
     }
 
 	private void createList(Composite parent, final IListBinding pb) {
