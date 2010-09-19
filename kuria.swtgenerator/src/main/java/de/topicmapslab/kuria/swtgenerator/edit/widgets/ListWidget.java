@@ -165,6 +165,7 @@ public abstract class ListWidget extends LabeledWidget {
 		System.arraycopy(oldSel, 0, newSelection, 0, oldSel.length);
 		newSelection[oldSel.length]=o;
 		setSelection(newSelection);
+		updateView();
 	}
 	
 	public IBindingContainer getBindingContainer() {
