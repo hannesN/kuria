@@ -241,8 +241,24 @@ public class InputMask implements IStateListener {
 		composite.setContent(container);
 
 		IEditableBinding eb = bindingContainer.getEditableBinding(clazz);
+		createWidgtets(eb);
+		
 
-		for (IPropertyBinding pb : eb.getPropertieBindings()) {
+		for (IInputMaskWidget w : getWidgetMap().values()) {
+			w.addStateListener(this);
+		}
+		dirtyMap = new HashMap<IPropertyBinding, Boolean>();
+		clearAndDisable();
+	}
+
+	/**
+     * @param eb
+     */
+    private void createWidgtets(IEditableBinding eb) {
+    	if (eb.getParentBinding()!=null)
+    		createWidgtets(eb.getParentBinding());
+    	
+	    for (IPropertyBinding pb : eb.getPropertieBindings()) {
 			if (pb instanceof ITextFieldBinding) {
 				createTextField(container, (ITextFieldBinding) pb);
 			} else if (pb instanceof IComboBinding) {
@@ -261,13 +277,7 @@ public class InputMask implements IStateListener {
 				createFile(container, (IFileBinding) pb);
 			}
 		}
-
-		for (IInputMaskWidget w : getWidgetMap().values()) {
-			w.addStateListener(this);
-		}
-		dirtyMap = new HashMap<IPropertyBinding, Boolean>();
-		clearAndDisable();
-	}
+    }
 
 	/**
      * 

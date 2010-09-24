@@ -18,13 +18,16 @@ package de.topicmapslab.kuria.annotation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import de.topicmapslab.kuria.annotation.data.Address;
+import de.topicmapslab.kuria.annotation.data.NamedObject;
 import de.topicmapslab.kuria.annotation.data.Person;
+import de.topicmapslab.kuria.annotation.data.Telephone;
 import de.topicmapslab.kuria.annotation.data.WrappedPerson;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
@@ -36,6 +39,7 @@ import de.topicmapslab.kuria.runtime.widget.DateBinding;
 import de.topicmapslab.kuria.runtime.widget.DirectoryBinding;
 import de.topicmapslab.kuria.runtime.widget.FileBinding;
 import de.topicmapslab.kuria.runtime.widget.GroupBinding;
+import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
 import de.topicmapslab.kuria.runtime.widget.ListBinding;
 import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
 
@@ -46,7 +50,7 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 		IBindingContainer bc = fac.getBindingContainer();
 		try {
 			assertEquals("Check table bindings", 3, bc.getTableBindings().values().size());
-			assertEquals("Check editable bindings", 3, bc.getEditableBindings().values().size());
+			assertEquals("Check editable bindings", 5, bc.getEditableBindings().values().size());
 			assertEquals("Check tree bindings", 2, bc.getTreeNodeBindings().values().size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -266,5 +270,21 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 				}
 			}
 		}
+	}
+
+	@Test
+	public void testInheritance() {
+		IBindingContainer bc = fac.getBindingContainer();
+		IEditableBinding eb = bc.getEditableBinding(NamedObject.class);
+		assertNotNull(eb);
+		assertNull(eb.getParentBinding());
+		assertEquals(1, eb.getPropertieBindings().size());
+		
+		eb = bc.getEditableBinding(Telephone.class);
+		assertNotNull(eb);
+		assertNotNull(eb.getParentBinding());
+		assertEquals(1, eb.getParentBinding().getPropertieBindings().size());
+		
+		assertEquals(4, eb.getPropertieBindings().size());
 	}
 }

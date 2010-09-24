@@ -52,6 +52,7 @@ import de.topicmapslab.kuria.runtime.widget.DirectoryBinding;
 import de.topicmapslab.kuria.runtime.widget.EditableBinding;
 import de.topicmapslab.kuria.runtime.widget.FileBinding;
 import de.topicmapslab.kuria.runtime.widget.GroupBinding;
+import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
 import de.topicmapslab.kuria.runtime.widget.ListBinding;
 import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
 
@@ -68,7 +69,7 @@ import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
 public class AnnotationBindingFactory extends GenericBindingFactory implements IBindingFactory {
 
 	private BindingContainer bindingContainer;
-
+	
 	public IBindingContainer getBindingContainer() {
 		if (bindingContainer == null) {
 			init();
@@ -103,8 +104,22 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 	}
 
 	private EditableBinding createEditableBinding(Class<?> c) {
-		EditableBinding eb = new EditableBinding();
+		// we already have a binding
+		
+		EditableBinding eb = (EditableBinding) bindingContainer.getEditableBinding(c);
+		if (eb!=null)
+			return eb;
+		
+		eb = new EditableBinding();
 
+		Class<?> superClass = c.getSuperclass();
+		if ((superClass!=null) && (superClass!=Object.class)) {
+			if (getClasses().contains(superClass))
+				eb.setParentBinding(createEditableBinding(superClass));
+		}
+		
+		
+		
 		// caching name so we don't create multiple bindings for the same field 
 		ArrayList<String> usedNames = new ArrayList<String>();
 		

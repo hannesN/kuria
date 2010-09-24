@@ -39,6 +39,7 @@ public class EditableBinding implements IEditableBinding {
 	private Class<?> objectType;
 	private List<IPropertyBinding> propertieBindings;
 
+	private IEditableBinding parentBinding;
 	
 	/**
 	 *  {@inheritDoc}
@@ -92,4 +93,19 @@ public class EditableBinding implements IEditableBinding {
 		this.objectType = objectType;
 	}
 
+	/**
+	 * Sets the parent binding o the type
+	 * @param parentBinding the new parent binding
+	 */
+	public void setParentBinding(IEditableBinding parentBinding) {
+	    this.parentBinding = parentBinding;
+    }
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	public IEditableBinding getParentBinding() {
+		return parentBinding;
+	}
 }

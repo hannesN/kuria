@@ -13,29 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package de.topicmapslab.kuria.runtime.widget;
+package de.topicmapslab.kuria.annotation.data;
 
-import java.util.List;
+import de.topicmapslab.kuria.annotation.widgets.Editable;
+import de.topicmapslab.kuria.annotation.widgets.TextField;
 
-import de.topicmapslab.kuria.runtime.IPropertyBinding;
-import de.topicmapslab.kuria.runtime.PropertyBinding;
+/**
+ * @author niederhausen
+ *
+ */
+@Editable
+public class NamedObject {
 
-public interface IEditableBinding {
-
+	@TextField
+	private String name;
+	
 	/**
-	 * Returns the {@link IPropertyBinding}s of this binding.
-	 * <p>This list is unmodifiable. </p>
-	 * 
-	 * @return an unmodifiable list of the {@link PropertyBinding}s
-	 */
-	public abstract List<IPropertyBinding> getPropertieBindings();
-
-	/**
-	 * If a class is a inherited class of an annotated superclass it the value
-	 * of this method returns its binding.
-	 * 
-	 * @return the binding of the super class if exists or <code>null</code>
-	 */
-	public abstract IEditableBinding getParentBinding();
-
+     * @param name the name to set
+     */
+    public void setName(String name) {
+	    this.name = name;
+    }
+    
+    /**
+     * @return the name
+     */
+    public String getName() {
+	    return name;
+    }
 }
