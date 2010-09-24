@@ -56,4 +56,9 @@ public @interface File {
 	 * If a file is loaded the file must exists, else it can be created.
 	 */
 	boolean load() default false;
+	
+	/** the weight is used to create an order of the fields in the input mask. 
+	 *  The field with the highest weight will be the first.
+	 */
+	int weight() default  1;
 }

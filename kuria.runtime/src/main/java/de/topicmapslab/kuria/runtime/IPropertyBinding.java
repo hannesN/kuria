@@ -121,5 +121,15 @@ public interface IPropertyBinding {
 	 * <p>If an collection without parameter is used <b>Object.class</b> will be returned.</p>
 	 */
 	public abstract Type getElementType();
+	
+	/**
+	 * The weight of a property is used to define the position of the property widget.
+	 * 
+	 * The higher the weight the higher the widget in the input mask.
+	 * 
+	 * 
+	 * @return the weight value
+	 */
+	public abstract int getWeight();
 
 }

@@ -59,11 +59,12 @@ import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
  * @author Hannes Niederhausen
  * @version 1.0.0
  */
-public abstract class PropertyBinding implements IPropertyBinding {
+public abstract class PropertyBinding implements IPropertyBinding, Comparable<PropertyBinding> {
 
 	private String label;
 	private boolean readOnly = false;
 	private boolean optional = false;
+	private int weight = 1; 
 
 	private String fieldName;
 	private Type type;
@@ -217,4 +218,28 @@ public abstract class PropertyBinding implements IPropertyBinding {
 		}
 	}
 
+	public int getWeight() {
+	    return weight;
+    }
+	
+	public void setWeight(int weight) {
+	    this.weight = weight;
+    }
+	
+	/**
+	 * Compares to bindings using the weight.
+	 * 
+	 * {@inheritDoc}
+	 * Note: this class has a natural ordering that is inconsistent with equals.
+	 * 
+	 */
+	public int compareTo(PropertyBinding o) {
+		if (getWeight()==o.getWeight())
+			return 0;
+		
+		if (getWeight()<o.getWeight())
+			return -1;
+		
+		return 1;
+	}
 }

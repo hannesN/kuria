@@ -41,4 +41,9 @@ public @interface Check  {
 	
 	/** Indicates if the field is optional and the edit mask may persist without it */
 	boolean optional() default false;
+	
+	/** the weight is used to create an order of the fields in the input mask. 
+	 *  The field with the highest weight will be the first.
+	 */
+	int weight() default  1;
 }

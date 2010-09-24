@@ -207,6 +207,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		fb.setOptional(file.optional());
 		fb.setFileExtensions(file.fileExtensions());
 		fb.setLoad(file.load());
+		fb.setWeight(file.weight());
 		
 		return fb;
     }
@@ -217,6 +218,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 			db.setLabel(directory.label());
 		db.setReadOnly(directory.readOnly());
 		db.setOptional(directory.optional());
+		db.setWeight(directory.weight());
 	    
 		return db;
     }
@@ -229,7 +231,8 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		lb.setCreateNew(list.createNew());
 		lb.setListStyle(list.style());
 		lb.setOptional(list.optional());
-
+		lb.setWeight(list.weight());
+		
 		return lb;
 	}
 
@@ -240,6 +243,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 
 		gb.setReadOnly(group.readOnly());
 		gb.setOptional(group.optional());
+		gb.setWeight(group.weight());
 		return gb;
 	}
 
@@ -250,8 +254,8 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 
 		cb.setReadOnly(combo.readOnly());
 		cb.setShowNewButton(combo.createNew());
-
 		cb.setOptional(combo.optional());
+		cb.setWeight(combo.weight());
 		
 		return cb;
 	}
@@ -264,6 +268,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		db.setFormat(date.format());
 		
 		db.setOptional(date.optional());
+		db.setWeight(date.weight());
 		
 		return db;
 	}
@@ -274,6 +279,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 			cb.setLabel(check.label());
 		
 		cb.setOptional(check.optional());
+		cb.setWeight(check.weight());
 		
 		return cb;
 	}
@@ -290,6 +296,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		tfb.setPassword(textfield.password());
 		tfb.setRows(textfield.rows());
 		tfb.setOptional(textfield.optional());
+		tfb.setWeight(textfield.weight());
 		
 		return tfb;
 	}
