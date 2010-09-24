@@ -61,6 +61,8 @@ The Parameters are:
  * *boolean grabVerticalSpace* Flag to indicate if the input mask is smaller than the parent composite the text field should expand. 
  This is only useful with multiline text fields. Default: false
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
+ * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+ 
 
 .@Check
 This annotation indicates that a boolean property should be modified using a check box.
@@ -70,6 +72,7 @@ The Parameters are:
  * *String label* the label for the text field if not set the name of the property is used
  * *boolean readOnly* Flag to set the text field is only read only. Default: false
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
+ * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
 
 .@Combo
 This annotation indicates hat the property is set via a combo box.
@@ -82,6 +85,7 @@ The Parameters are:
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
  * *boolean createNew* Indicates if a button next to the button is shown. This button opens a 
 	 dialog which let you create a new instance of the type of the annotated field.
+ * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
 	
 .@Date
 The date annotation indicates, that the property should be edited by an calender.
@@ -92,6 +96,7 @@ The Parameters are:
  * *boolean readOnly* Flag to set the text field is only read only. Default: false
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
  * *String format* /** The String format, see SimpleDateFormat */ Default: "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+ * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
  
 .@Directory
 This annotation indicates that the field is a absolute path to a directory.
@@ -101,6 +106,7 @@ The Parameters are:
  * *String label* the label for the text field if not set the name of the property is used
  * *boolean readOnly* Flag to set the text field is only read only. Default: false
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
+ * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
  
 .@File
 This annotation indicates that the field is a absolute path to a file.
@@ -114,7 +120,8 @@ The Parameters are:
 	 _\*.extension_. For every entry in the array the file dialog provides a selection in the combo box. 
 	 If you want to filter more than one extension at once use:
 	 _"\*.ext1;*.ext2"_
-	 
+ * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+ 
 .@Group
 This annotation is used to embed an input mask for the property. This is used if the type of the property is another
 complex type. A *EditableBinding* for the type must exists.
@@ -124,6 +131,7 @@ The Parameters are:
  * *String label* the label for the text field if not set the name of the property is used
  * *boolean readOnly* Flag to set the text field is only read only. Default: false
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
+ * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
  
 .@List
 This annotation indicates hat the property is set via a list.
@@ -140,3 +148,4 @@ The Parameters are:
  * *ListStyle style* style of the list. Its either ListStyle.TABLE or ListStyle.COMPACT. Default: ListStyle.COMPACT
  * *boolean createNew* Indicates if a button next to the button is shown. This button opens a 
 	 dialog which let you create a new instance of the type of the annotated field.
+ * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
