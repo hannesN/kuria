@@ -52,7 +52,6 @@ import de.topicmapslab.kuria.runtime.widget.DirectoryBinding;
 import de.topicmapslab.kuria.runtime.widget.EditableBinding;
 import de.topicmapslab.kuria.runtime.widget.FileBinding;
 import de.topicmapslab.kuria.runtime.widget.GroupBinding;
-import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
 import de.topicmapslab.kuria.runtime.widget.ListBinding;
 import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
 

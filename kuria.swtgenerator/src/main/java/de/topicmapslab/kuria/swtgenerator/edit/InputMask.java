@@ -21,6 +21,7 @@ package de.topicmapslab.kuria.swtgenerator.edit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -240,8 +241,12 @@ public class InputMask implements IStateListener {
 		container.setLayout(new GridLayout(3, false));
 		composite.setContent(container);
 
+		
+		List<IPropertyBinding> bindingList = new ArrayList<IPropertyBinding>();
+		
 		IEditableBinding eb = bindingContainer.getEditableBinding(clazz);
-		createWidgtets(eb);
+		fillList(bindingList, eb);
+		createWidgtets(bindingList);
 		
 
 		for (IInputMaskWidget w : getWidgetMap().values()) {
@@ -251,14 +256,31 @@ public class InputMask implements IStateListener {
 		clearAndDisable();
 	}
 
+	private void fillList(List<IPropertyBinding> pbList, IEditableBinding eb) {
+		if (eb.getParentBinding()!=null)
+			fillList(pbList, eb.getParentBinding());
+		pbList.addAll(eb.getPropertieBindings());
+	}
+	
 	/**
      * @param eb
      */
-    private void createWidgtets(IEditableBinding eb) {
-    	if (eb.getParentBinding()!=null)
-    		createWidgtets(eb.getParentBinding());
+    private void createWidgtets(List<IPropertyBinding> pbList) {
+    	// sorting the list
+    	Collections.sort(pbList, new Comparator<IPropertyBinding>() {
+
+			public int compare(IPropertyBinding o1, IPropertyBinding o2) {
+				if (o1.getWeight()==o2.getWeight())
+					return 0;
+				
+				if (o1.getWeight()>o2.getWeight())
+					return -1;
+				
+	            return 1;
+            }
+		});
     	
-	    for (IPropertyBinding pb : eb.getPropertieBindings()) {
+	    for (IPropertyBinding pb : pbList) {
 			if (pb instanceof ITextFieldBinding) {
 				createTextField(container, (ITextFieldBinding) pb);
 			} else if (pb instanceof IComboBinding) {
