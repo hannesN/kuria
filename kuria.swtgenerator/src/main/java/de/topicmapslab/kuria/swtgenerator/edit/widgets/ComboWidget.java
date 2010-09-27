@@ -221,7 +221,7 @@ public class ComboWidget extends LabeledWidget {
         	        }
         	        
         	        if (getBindingContainer().getEditableBinding((Class<?>) type)!=null) {
-        	        	NewInstanceWizard wzrd = new NewInstanceWizard((Class<?>) type, getBindingContainer());
+        	        	NewInstanceWizard wzrd = new NewInstanceWizard((Class<?>) type, getBindingContainer(), getContentProvider());
         	        	WizardDialog dlg = new WizardDialog(shell, wzrd);
         	            wzrd.setWindowTitle("New "+getPropertyBinding().getLabel()+"...");
         	            if (dlg.open()==Dialog.OK) {

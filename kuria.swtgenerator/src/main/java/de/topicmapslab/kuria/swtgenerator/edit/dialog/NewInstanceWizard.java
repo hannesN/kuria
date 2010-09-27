@@ -29,6 +29,8 @@ import org.eclipse.swt.widgets.Composite;
 
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.swtgenerator.WidgetGenerator;
+import de.topicmapslab.kuria.swtgenerator.edit.IContentProvider;
+import de.topicmapslab.kuria.swtgenerator.edit.IInputMaskListener;
 import de.topicmapslab.kuria.swtgenerator.edit.InputMask;
 
 /**
@@ -41,11 +43,18 @@ public class NewInstanceWizard extends Wizard {
 	private final Class<?> modelType;
 	private final IBindingContainer container;
 	private final Object model;
+
+	private IContentProvider contentProvider;
 	
 	public NewInstanceWizard(Class<?> modelType, IBindingContainer container) throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		this(modelType, container, null);
+    }
+	
+	public NewInstanceWizard(Class<?> modelType, IBindingContainer container, IContentProvider provider) throws IllegalArgumentException, SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		model = modelType.getConstructor().newInstance();
 		this.modelType = modelType;
 		this.container = container;
+		this.contentProvider = provider;
     }
 	
 	@Override
@@ -64,8 +73,12 @@ public class NewInstanceWizard extends Wizard {
 	public Object getModel() {
 	    return model;
     }
+	
+	public void setContentProvider(IContentProvider provider) {
+		
+	}
 
-	private class NewInstanceWizardPage extends WizardPage {
+	private class NewInstanceWizardPage extends WizardPage implements IInputMaskListener {
 		private InputMask mask;
 		
 		protected NewInstanceWizardPage() {
@@ -80,13 +93,29 @@ public class NewInstanceWizard extends Wizard {
 			mask = gen.generateEditable(modelType, comp);
 			mask.setModel(model);
 			mask.getComposite().setLayoutData(new GridData(GridData.FILL_BOTH));
+			mask.setContentProvider(contentProvider);
+			mask.addInputMaskListeners(this);
 			setControl(comp);
+			setPageComplete(false);
         }
 		
 		private void persist() {
 			mask.persist();
 		}
-		
+
+		/**
+         * {@inheritDoc}
+         */
+        public void dirtyChanged() {
+	        setPageComplete(mask.isValid());
+        }
+
+		/**
+         * {@inheritDoc}
+         */
+        public void newModelElement(Object newElement) {
+        }
+	
 	}
 	
 }

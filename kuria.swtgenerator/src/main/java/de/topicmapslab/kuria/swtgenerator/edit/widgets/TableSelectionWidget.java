@@ -196,7 +196,7 @@ public class TableSelectionWidget extends ListWidget {
 	            return;
 	        }
 	        if (getBindingContainer().getEditableBinding((Class<?>) type)!=null) {
-	        	NewInstanceWizard wzrd = new NewInstanceWizard((Class<?>) type, getBindingContainer());
+	        	NewInstanceWizard wzrd = new NewInstanceWizard((Class<?>) type, getBindingContainer(),getContentProvider());
 	        	WizardDialog dlg = new WizardDialog(newButton.getShell(), wzrd);
 	            wzrd.setWindowTitle("New "+getPropertyBinding().getLabel()+"...");
 	            if (dlg.open()==Dialog.OK) {
