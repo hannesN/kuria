@@ -18,6 +18,7 @@ package de.topicmapslab.kuria.annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -86,6 +87,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 
 	private void parseClass(Class<?> c) {
 		// check for TreeNode annotation
+
 		if (c.getAnnotation(TreeNode.class) != null) {
 			TreeNodeBinding tnb = createTreeNodeBinding(c);
 			bindingContainer.putTreeNodeBindings(c, tnb);
@@ -142,11 +144,25 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 			if ((fieldname==null) || (usedNames.contains(fieldname)) || (m.getAnnotations().length == 0))
 				continue;
 
-			PropertyBinding pb = createPropertyBinding(m, fieldname, m.getGenericReturnType());
+			Type genericType = m.getGenericReturnType();
+			PropertyBinding pb = createPropertyBinding(m, fieldname, genericType);
 			if (pb == null)
 				continue;
 			try {
-				c.getDeclaredMethod("s" + methodName.substring(1));
+				// get parameters of setters, needed to find a method with a specific name
+				Class<?> param = null;
+				if (genericType instanceof Class<?>) {
+					param=(Class<?>) genericType;
+				} else if (genericType instanceof ParameterizedType){
+					// generic type like List<Lala>
+					param = (Class<?>) ((ParameterizedType)genericType).getRawType();
+				}
+				// check if we have a "boolean getter"
+				if (methodName.startsWith("is"))
+					c.getDeclaredMethod("set"+methodName.substring(2),param);
+				else
+					c.getDeclaredMethod("s" + methodName.substring(1), param);
+				
 			} catch (SecurityException e) {
 				// TODO log
 			} catch (NoSuchMethodException e) {
