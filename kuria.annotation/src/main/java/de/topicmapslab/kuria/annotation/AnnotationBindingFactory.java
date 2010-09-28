@@ -198,6 +198,10 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 				return tb;
 			}
 		}
+		
+		if (!c.getSuperclass().equals(Object.class))
+			return createTextBinding(c.getSuperclass());
+		
 		return new TextBinding();
 	}
 
