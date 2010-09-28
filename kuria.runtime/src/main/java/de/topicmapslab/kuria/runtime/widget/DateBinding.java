@@ -36,6 +36,7 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
 public class DateBinding extends PropertyBinding implements IDateBinding {
 
 	private String format = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+	private boolean showTime = false;
 	
 	/**
 	 *  {@inheritDoc}
@@ -50,5 +51,21 @@ public class DateBinding extends PropertyBinding implements IDateBinding {
 	 */
 	public void setFormat(String format) {
 	    this.format = format;
+    }
+
+	/**
+	 * Sets the the flag, which indicates whether to show the time of the date in the UI.
+	 * @param showTime
+	 */
+	public void setShowTime(boolean showTime) {
+		this.showTime = showTime;
+    }
+	
+	/**
+	 * Returns the flag whether to show the time of the date in the UI.
+	 * @return the flag whether to show the time of the date in the UI.
+	 */
+	public boolean isShowTime() {
+	    return showTime;
     }
 }

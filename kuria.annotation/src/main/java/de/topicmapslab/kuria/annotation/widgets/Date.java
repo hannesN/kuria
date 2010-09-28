@@ -48,4 +48,9 @@ public @interface Date {
 	 *  The field with the highest weight will be the first.
 	 */
 	int weight() default  1;
+	
+	/**
+	 * flag to tell the UI to show the date with or without the time of the date 
+	 */
+	boolean showTime() default false;
 }

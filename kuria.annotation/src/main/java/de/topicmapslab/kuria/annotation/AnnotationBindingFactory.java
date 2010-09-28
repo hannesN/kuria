@@ -299,6 +299,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		
 		db.setOptional(date.optional());
 		db.setWeight(date.weight());
+		db.setShowTime(date.showTime());
 		
 		return db;
 	}

@@ -97,6 +97,7 @@ The Parameters are:
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
  * *String format* /** The String format, see SimpleDateFormat */ Default: "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+ * *boolean showTime* flag to tell the UI to show the date with or without the time of the date. Default: false 
  
 .@Directory
 This annotation indicates that the field is a absolute path to a directory.

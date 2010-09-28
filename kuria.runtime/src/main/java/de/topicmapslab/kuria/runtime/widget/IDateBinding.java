@@ -25,4 +25,9 @@ public interface IDateBinding extends IPropertyBinding {
 	 */
 	public abstract String getFormat();
 
+	/**
+	 * Returns the flag whether to show the time of the date in the UI.
+	 * @return the flag whether to show the time of the date in the UI.
+	 */
+	public abstract boolean isShowTime();
 }

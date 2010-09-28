@@ -70,6 +70,10 @@ public class Person {
 	@Column
 	private Address address;
 	
+	@Date(optional=true, showTime=true)
+	private java.util.Date appointment;
+	
+	
 	@Children
 	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.COMPACT, createNew=true, optional=true)
 	private List<Person> children;
@@ -82,8 +86,7 @@ public class Person {
 	@Combo(createNew=true, optional=true)
     private Person wife;
 
-	@Date
-	@Hidden
+	@Date(optional=true)
 	private java.util.Date birthdate; 
 
 	@Hidden
@@ -280,4 +283,18 @@ public class Person {
 	public String getImageForPet() {
 		return "tiger.png";
 	}
+	
+	/**
+     * @return the appointment
+     */
+    public java.util.Date getAppointment() {
+	    return appointment;
+    }
+    
+    /**
+     * @param appointment the appointment to set
+     */
+    public void setAppointment(java.util.Date appointment) {
+	    this.appointment = appointment;
+    }
 }
