@@ -19,6 +19,7 @@ import kuria.test.model.Pet;
 import kuria.test.model.Person;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.junit.Ignore;
 
 import de.topicmapslab.kuria.annotation.AnnotationBindingFactory;
 import de.topicmapslab.kuria.swtgenerator.dialogs.ModelDialog;
@@ -27,6 +28,7 @@ import de.topicmapslab.kuria.swtgenerator.dialogs.ModelDialog;
  * @author Hannes Niederhausen
  *
  */
+@Ignore
 public class ModelTest {
 
 	public static void main(String[] args) {
