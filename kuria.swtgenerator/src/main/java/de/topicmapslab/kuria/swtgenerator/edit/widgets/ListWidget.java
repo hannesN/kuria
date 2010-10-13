@@ -47,7 +47,7 @@ public abstract class ListWidget extends LabeledWidget {
 	private IBindingContainer bindingContainer;
 	
 	public ListWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
-		super(propertyBinding);
+		super(propertyBinding, bindingContainer);
 		if (!(propertyBinding instanceof ListBinding))
 			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
 		this.bindingContainer = bindingContainer;
@@ -178,7 +178,7 @@ public abstract class ListWidget extends LabeledWidget {
 	        if ((String.class.equals(type)) || (TypeUtil.isPrimitive(type))) {
 	            NewPrimitiveValueWizard wzrd = new NewPrimitiveValueWizard((Class<?>) type);
 	            WizardDialog dlg = new WizardDialog(shell, wzrd);
-	            wzrd.setWindowTitle("New "+getPropertyBinding().getLabel()+"...");
+	            wzrd.setWindowTitle("New "+getLabel()+"...");
 	            if (dlg.open()==Dialog.OK) {
 	            	addToSelection(wzrd.getResult());
 	            	notifyNewModelListener(wzrd.getResult());
@@ -188,7 +188,7 @@ public abstract class ListWidget extends LabeledWidget {
 	        if (getBindingContainer().getEditableBinding((Class<?>) type)!=null) {
 	        	NewInstanceWizard wzrd = new NewInstanceWizard((Class<?>) type, getBindingContainer(), getContentProvider());
 	        	WizardDialog dlg = new WizardDialog(shell, wzrd);
-	            wzrd.setWindowTitle("New "+getPropertyBinding().getLabel()+"...");
+	            wzrd.setWindowTitle("New "+getLabel()+"...");
 	            if (dlg.open()==Dialog.OK) {
 	            	addToSelection(wzrd.getModel());
 	            	notifyNewModelListener(wzrd.getModel());

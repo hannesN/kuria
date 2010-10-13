@@ -124,4 +124,10 @@ public interface IInputMaskWidget {
 	 * @return <code>null</code> or an error message
 	 */
 	public String getErrorMessage();
+	
+	/**
+	 * Returns the label of the property.
+	 * @return the label of the property
+	 */
+	public String getLabel();
 }

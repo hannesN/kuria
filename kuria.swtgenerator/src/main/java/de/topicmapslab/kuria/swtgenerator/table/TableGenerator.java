@@ -99,7 +99,7 @@ public class TableGenerator extends AbstractSWTGenerator {
 	    for (IColumnBinding cb : tb.getColumnBindings()) {
 	    	
 	    	TableColumn tc = new TableColumn(table, 0);
-	    	tc.setText(cb.getColumnTitle());
+	    	tc.setText(bindingContainer.getLabelProvider().getLabel(cb.getColumnTitle()));
 	    	tc.setWidth(50);
 	    	layout.setColumnData(tc, new ColumnWeightData(1));
 	    	

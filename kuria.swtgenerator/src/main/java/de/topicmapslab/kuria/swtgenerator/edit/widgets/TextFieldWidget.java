@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.widget.ITextFieldBinding;
 import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
@@ -43,8 +44,8 @@ public class TextFieldWidget extends LabeledWidget {
 
 	private Text textField;
 	
-	public TextFieldWidget(IPropertyBinding propertyBinding) {
-		super(propertyBinding);
+	public TextFieldWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
+		super(propertyBinding, bindingContainer);
 		if (!(propertyBinding instanceof TextFieldBinding))
 			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
 	}

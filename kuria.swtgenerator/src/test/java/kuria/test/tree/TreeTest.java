@@ -36,6 +36,7 @@ import org.junit.Ignore;
 
 import de.topicmapslab.kuria.annotation.AnnotationBindingFactory;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.ILabelProvider;
 import de.topicmapslab.kuria.swtgenerator.WidgetGenerator;
 
 /**
@@ -97,6 +98,14 @@ public class TreeTest {
 		fac.addClass(Pet.class);
 		
 		IBindingContainer bc = fac.getBindingContainer();
+		bc.setLabelProvider(new ILabelProvider() {
+			
+			public String getLabel(String label) {
+				if ("children".equals(label))
+					return "Kinder";
+				return label;
+			}
+		});
 		
 		WidgetGenerator gen = new WidgetGenerator(bc);
 		final TreeViewer viewer = gen.generateTree(comp, false);

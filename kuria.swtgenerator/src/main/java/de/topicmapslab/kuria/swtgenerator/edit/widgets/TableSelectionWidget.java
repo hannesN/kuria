@@ -187,7 +187,7 @@ public class TableSelectionWidget extends ListWidget {
 	        if ((String.class.equals(type)) || (TypeUtil.isPrimitive(type))) {
 	            NewPrimitiveValueWizard wzrd = new NewPrimitiveValueWizard((Class<?>) type);
 	            WizardDialog dlg = new WizardDialog(newButton.getShell(), wzrd);
-	            wzrd.setWindowTitle("New "+getPropertyBinding().getLabel()+"...");
+	            wzrd.setWindowTitle("New "+getLabel()+"...");
 	            if (dlg.open()==Dialog.OK) {
 	            	addToSelection(wzrd.getResult());
 	            	notifyNewModelListener(wzrd.getResult());
@@ -198,7 +198,7 @@ public class TableSelectionWidget extends ListWidget {
 	        if (getBindingContainer().getEditableBinding((Class<?>) type)!=null) {
 	        	NewInstanceWizard wzrd = new NewInstanceWizard((Class<?>) type, getBindingContainer(),getContentProvider());
 	        	WizardDialog dlg = new WizardDialog(newButton.getShell(), wzrd);
-	            wzrd.setWindowTitle("New "+getPropertyBinding().getLabel()+"...");
+	            wzrd.setWindowTitle("New "+getLabel()+"...");
 	            if (dlg.open()==Dialog.OK) {
 	            	addToSelection(wzrd.getModel());
 	            	notifyNewModelListener(wzrd.getModel());

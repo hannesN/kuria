@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
 
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.widget.IFileBinding;
 
@@ -44,8 +45,8 @@ public class FileWidget extends LabeledWidget {
 	/**
 	 * @param propertyBinding
 	 */
-	public FileWidget(IPropertyBinding propertyBinding) {
-		super(propertyBinding);
+	public FileWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
+		super(propertyBinding, bindingContainer);
 		if (!(propertyBinding instanceof IFileBinding))
 			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
 	}

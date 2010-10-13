@@ -26,6 +26,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 
 /**
@@ -36,8 +37,8 @@ public class CheckWidget extends AbstractWidget {
 
 	private Button button;
 
-	public CheckWidget(IPropertyBinding propertyBinding) {
-		super(propertyBinding);
+	public CheckWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
+		super(propertyBinding, bindingContainer);
 	}
 
 	/**
@@ -45,7 +46,7 @@ public class CheckWidget extends AbstractWidget {
 	 */
 	public void createControl(Composite parent) {
 		button = new Button(parent, SWT.CHECK);
-		button.setText(getPropertyBinding().getLabel());
+		button.setText(getLabel());
 		GridData gd = new GridData();
 		gd.horizontalSpan = ((GridLayout)parent.getLayout()).numColumns;
 		button.setLayoutData(gd);

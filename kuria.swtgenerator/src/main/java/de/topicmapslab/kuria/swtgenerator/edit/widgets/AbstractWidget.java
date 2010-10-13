@@ -25,6 +25,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Control;
 
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.swtgenerator.edit.IContentProvider;
 
@@ -41,6 +42,7 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 		}
 	};
 
+	private final  IBindingContainer bindingContainer;
 	protected final IPropertyBinding propertyBinding;
 	private Object model;
 	private IContentProvider provider;
@@ -50,9 +52,10 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 
 	private List<IStateListener> listeners;
 
-	public AbstractWidget(IPropertyBinding propertyBinding) {
+	public AbstractWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 		super();
 		this.propertyBinding = propertyBinding;
+		this.bindingContainer = bindingContainer;
 	}
 
 	/**
@@ -185,4 +188,11 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 		}
 	}
 	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	public String getLabel() {
+		return bindingContainer.getLabelProvider().getLabel(propertyBinding.getLabel());
+	}
 }

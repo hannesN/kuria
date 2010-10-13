@@ -44,6 +44,7 @@ import org.junit.Ignore;
 
 import de.topicmapslab.kuria.annotation.AnnotationBindingFactory;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.ILabelProvider;
 import de.topicmapslab.kuria.swtgenerator.WidgetGenerator;
 import de.topicmapslab.kuria.swtgenerator.edit.IContentProvider;
 import de.topicmapslab.kuria.swtgenerator.edit.IInputMaskListener;
@@ -108,6 +109,14 @@ public class EditableTest implements IInputMaskListener {
 		
 		IBindingContainer bc = fac.getBindingContainer();
 	
+		bc.setLabelProvider(new ILabelProvider() {
+			
+			public String getLabel(String label) {
+				if ("FavPet".equals(label))
+					return "Haustier";
+				return label;
+			}
+		});
 		
 		WidgetGenerator gen = new WidgetGenerator(bc);
 		final TableViewer viewer = gen.generateTable(Person.class, comp);

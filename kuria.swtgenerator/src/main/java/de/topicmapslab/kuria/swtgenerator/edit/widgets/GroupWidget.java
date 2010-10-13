@@ -41,7 +41,7 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 	private InputMask inputMask;
 
 	public GroupWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
-		super(propertyBinding);
+		super(propertyBinding, bindingContainer);
 		this.bindingContainer = bindingContainer;
 	}
 
@@ -50,7 +50,7 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 	 */
 	public void createControl(Composite parent) {
 		Group g = new Group(parent, SWT.BORDER);
-		g.setText(getPropertyBinding().getLabel());
+		g.setText(getLabel());
 		g.setLayout(new FillLayout());
 		WidgetGenerator gen = new WidgetGenerator(bindingContainer);
 		inputMask = gen.generateEditable((Class<?>) getPropertyBinding().getType(), g);

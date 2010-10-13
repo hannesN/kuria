@@ -338,19 +338,19 @@ public class InputMask implements IStateListener {
 	}
 
 	private void createDate(Composite parent, final IDateBinding pb) {
-		DateWidget w = new DateWidget(pb);
+		DateWidget w = new DateWidget(pb, bindingContainer);
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
 
 	private void createDirectory(Composite parent, final IDirectoryBinding pb) {
-		DirectoryWidget w = new DirectoryWidget(pb);
+		DirectoryWidget w = new DirectoryWidget(pb, bindingContainer);
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
 
 	private void createFile(Composite parent, final IFileBinding pb) {
-		FileWidget w = new FileWidget(pb);
+		FileWidget w = new FileWidget(pb, bindingContainer);
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
@@ -363,13 +363,13 @@ public class InputMask implements IStateListener {
 	}
 
 	private void createCheck(Composite parent, ICheckBinding cb) {
-		CheckWidget w = new CheckWidget(cb);
+		CheckWidget w = new CheckWidget(cb, bindingContainer);
 		w.createControl(parent);
 		putToWidgetMap(cb, w);
 	}
 
 	private void createTextField(Composite parent, ITextFieldBinding pb) {
-		TextFieldWidget w = new TextFieldWidget(pb);
+		TextFieldWidget w = new TextFieldWidget(pb, bindingContainer);
 		w.createControl(parent);
 		putToWidgetMap(pb, w);
 	}
@@ -397,7 +397,7 @@ public class InputMask implements IStateListener {
 			}
 			return;
 		}
-		String m = w.getPropertyBinding().getLabel() + ": " + msg;
+		String m = w.getLabel() + ": " + msg;
 		errorMessages.put(w, m);
 	}
 

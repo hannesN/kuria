@@ -38,6 +38,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.widget.IDateBinding;
 
@@ -50,8 +51,8 @@ public class DateWidget extends LabeledWidget {
 	private DateTime dateTimeWidget;
 	private CDateTime cdt;
 
-	public DateWidget(IPropertyBinding propertyBinding) {
-		super(propertyBinding);
+	public DateWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
+		super(propertyBinding, bindingContainer);
 	}
 
 	public void createControl(Composite parent) {

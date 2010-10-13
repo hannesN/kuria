@@ -163,7 +163,7 @@ public class TreeGenerator extends AbstractSWTGenerator {
 					Object child = cb.getValue(arg0);
 					if (cb.getNodeTitle() != null) {
 						MediatorNode n = new MediatorNode((Class<?>) cb.getElementType());
-						n.setTitle(cb.getNodeTitle());
+						n.setTitle(bindingContainer.getLabelProvider().getLabel(cb.getNodeTitle()));
 						n.setImage(cb.getNodeImage());
 						n.setChildren(child);
 						children.add(n);

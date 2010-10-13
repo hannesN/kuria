@@ -35,6 +35,7 @@ import org.junit.Ignore;
 
 import de.topicmapslab.kuria.annotation.AnnotationBindingFactory;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
+import de.topicmapslab.kuria.runtime.ILabelProvider;
 import de.topicmapslab.kuria.swtgenerator.WidgetGenerator;
 
 /**
@@ -78,7 +79,14 @@ public class TableTest {
 		fac.addClass(Address.class);
 		
 		IBindingContainer bc = fac.getBindingContainer();
-	
+		bc.setLabelProvider(new ILabelProvider() {
+			
+			public String getLabel(String label) {
+				if ("Firstname".equals(label))
+					return "Vorname";
+				return label;
+			}
+		});
 		Label l = new Label(comp, SWT.NONE);
 		l.setText("Hallo!");
 		

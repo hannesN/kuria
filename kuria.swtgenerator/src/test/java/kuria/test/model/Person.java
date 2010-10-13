@@ -74,7 +74,7 @@ public class Person {
 	private java.util.Date appointment;
 	
 	
-	@Children
+	@Children(title="children")
 	@de.topicmapslab.kuria.annotation.widgets.List(style=ListStyle.COMPACT, createNew=true, optional=true)
 	private List<Person> children;
 	

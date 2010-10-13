@@ -22,6 +22,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.PropertyBinding;
 
@@ -33,8 +34,8 @@ import de.topicmapslab.kuria.runtime.PropertyBinding;
  */
 public abstract class LabeledWidget extends AbstractWidget {
 
-	public LabeledWidget(IPropertyBinding propertyBinding) {
-	    super(propertyBinding);
+	public LabeledWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
+	    super(propertyBinding, bindingContainer);
     }
 
 	/**
@@ -44,7 +45,7 @@ public abstract class LabeledWidget extends AbstractWidget {
 	 */
 	protected Label createLabel(Composite parent) {
 		Label label = new Label(parent, SWT.NONE);
-		label.setText(propertyBinding.getLabel() + ":");
+		label.setText(getLabel() + ":");
 		return label;
 	}
 }

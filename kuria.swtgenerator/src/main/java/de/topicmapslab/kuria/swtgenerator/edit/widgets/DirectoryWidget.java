@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Text;
 
+import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.widget.IDirectoryBinding;
 
@@ -44,8 +45,8 @@ public class DirectoryWidget extends LabeledWidget {
 	/**
 	 * @param propertyBinding
 	 */
-	public DirectoryWidget(IPropertyBinding propertyBinding) {
-		super(propertyBinding);
+	public DirectoryWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
+		super(propertyBinding, bindingContainer);
 		if (!(propertyBinding instanceof IDirectoryBinding))
 			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
 	}
