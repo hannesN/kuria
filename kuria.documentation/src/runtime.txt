@@ -16,6 +16,10 @@ Some factories, like the *AnnotationBindingFactory* need some configuration, lik
 The following chapters will explain the different bindings and their properties.
 For every binding an interface and an example implementations for java beans exists.
 
+=== General BInginds ===
+
+.*ITextBinding*
+TODO
 
 === Tablebindings ===
 

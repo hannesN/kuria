@@ -5,6 +5,17 @@
 The _Kuria_ annotation module provides a set of Java 5 annotations for domain models. In addition the module contains a binding factory 
 which creates bindings for every class which is annotated. Most of the annotations are similar to the bindings.
 
+=== General ===
+
+.@Text
+The text annotation indicates that the field or method should be called when a String representation is needed.
+
+~~~~~~
+public String name(String val);
+~~~~~~
+
+  
+
 === Tables ===
 
 _Kuria_ has two annotations for the table bindings. The first one is *@TableElement* which is used at types. The binding factory creates a 
@@ -150,3 +161,4 @@ The Parameters are:
  * *boolean createNew* Indicates if a button next to the button is shown. This button opens a 
 	 dialog which let you create a new instance of the type of the annotated field.
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+ 
