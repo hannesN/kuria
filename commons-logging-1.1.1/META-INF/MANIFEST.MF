@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: commons_logging
-Bundle-SymbolicName: commons_logging
-Bundle-Version: 1.1.1
-Export-Package: org.apache.commons.logging,
- org.apache.commons.logging.impl
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
