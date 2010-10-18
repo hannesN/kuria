@@ -121,3 +121,13 @@ A callback implementation can be registered in an instance of WidgetGenerator.
 
 NOTE: The callback is added to an internal image registry. The image registry is a singleton and every callback must be removed explicitly when it
 should not be used anymore. 
+
+==== ILabelProvider ====
+
+Labels for Columns or widgets in input masks will be derived by:
+
+ * Annotationproperties like title or label
+ * Name of the field in a class
+ 
+To provide a way of internalization a *ILabelProvider* implementation can be added to a *IBindingContainer*. The method *getLabel* retrieves a *String* 
+which is the label retrieved by annotation or fieldname and returns either the same string or a translation of the String. 
