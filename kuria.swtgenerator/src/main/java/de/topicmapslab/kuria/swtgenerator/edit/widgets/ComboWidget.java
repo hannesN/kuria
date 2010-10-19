@@ -46,6 +46,7 @@ import de.topicmapslab.kuria.runtime.widget.ComboBinding;
 import de.topicmapslab.kuria.runtime.widget.IComboBinding;
 import de.topicmapslab.kuria.swtgenerator.edit.dialog.NewInstanceWizard;
 import de.topicmapslab.kuria.swtgenerator.edit.dialog.NewPrimitiveValueWizard;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * @author Hannes Niederhausen
@@ -62,7 +63,7 @@ public class ComboWidget extends LabeledWidget {
 	public ComboWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 		super(propertyBinding, bindingContainer);
 		if (!(propertyBinding instanceof ComboBinding))
-			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
+			throw new InvalidParameterException(Messages.getString("UI.INVLAID_BINDING") + propertyBinding.getClass().getName()); //$NON-NLS-1$
 		this.bindingContainer = bindingContainer;
 	}
 
@@ -71,7 +72,7 @@ public class ComboWidget extends LabeledWidget {
 	 */
 	public void createControl(Composite parent) {
 		if (!(parent.getLayout() instanceof GridLayout))
-			throw new IllegalArgumentException("Parents layout need to be a GridLayout");
+			throw new IllegalArgumentException(Messages.getString("UI.NO_GRIDLAYOUT_IN_PARENT")); //$NON-NLS-1$
 
 		GridLayout layout = (GridLayout) parent.getLayout();
 		
@@ -95,7 +96,7 @@ public class ComboWidget extends LabeledWidget {
 		if (getPropertyBinding().isShowNewButton()) {
 			gd.horizontalSpan--;
 			newButton = new Button(parent, SWT.PUSH);
-			newButton.setText("New...");
+			newButton.setText(Messages.getString("UI.NEW_BUTTON_LABEL")); //$NON-NLS-1$
 			GridData gridData = new GridData();
 			newButton.setLayoutData(gridData);
 			hookButtonListener();
@@ -177,7 +178,7 @@ public class ComboWidget extends LabeledWidget {
 	private void validate() {
 		if (!(getPropertyBinding().isOptional()||getPropertyBinding().isReadOnly())) {
 			if (combo.getSelectionIndex()==-1) {
-				setErrorMessage("No Value selected");
+				setErrorMessage(Messages.getString("ComboWidget.NO_VALUE_SELECTED")); //$NON-NLS-1$
 			} else {
 				setErrorMessage(null);
 			}			
@@ -212,7 +213,7 @@ public class ComboWidget extends LabeledWidget {
         	        if ((String.class.equals(type)) || (TypeUtil.isPrimitive(type))) {
         	            NewPrimitiveValueWizard wzrd = new NewPrimitiveValueWizard((Class<?>) type);
         	            WizardDialog dlg = new WizardDialog(shell, wzrd);
-        	            wzrd.setWindowTitle("New "+getLabel()+"...");
+        	            wzrd.setWindowTitle(Messages.getString("ComboWidget.NEW_LABEL")+getLabel()+"..."); //$NON-NLS-1$ //$NON-NLS-2$
         	            if (dlg.open()==Dialog.OK) {
         	            	addToComboObjects(wzrd.getResult());
         	            	notifyNewModelListener(wzrd.getResult());
@@ -223,7 +224,7 @@ public class ComboWidget extends LabeledWidget {
         	        if (getBindingContainer().getEditableBinding((Class<?>) type)!=null) {
         	        	NewInstanceWizard wzrd = new NewInstanceWizard((Class<?>) type, getBindingContainer(), getContentProvider());
         	        	WizardDialog dlg = new WizardDialog(shell, wzrd);
-        	            wzrd.setWindowTitle("New "+getLabel()+"...");
+        	            wzrd.setWindowTitle(Messages.getString("Combo.NEW_LABEL")+getLabel()+"..."); //$NON-NLS-1$ //$NON-NLS-2$
         	            if (dlg.open()==Dialog.OK) {
         	            	addToComboObjects(wzrd.getModel());
         	            	notifyNewModelListener(wzrd.getModel());

@@ -35,6 +35,7 @@ import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.ITextBinding;
 import de.topicmapslab.kuria.swtgenerator.edit.IContentProvider;
 import de.topicmapslab.kuria.swtgenerator.edit.dialog.SelectionDialog;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * @author Hannes Niederhausen
@@ -63,7 +64,7 @@ public class CompactListWidget extends ListWidget {
 				} else {
 					builder.append(o.toString());
 				}
-				builder.append(", ");
+				builder.append(", "); //$NON-NLS-1$
 			}
 			// delete the last ", "
 			if (builder.length() > 0)
@@ -89,11 +90,11 @@ public class CompactListWidget extends ListWidget {
 		bBar.setLayout(new GridLayout(2, false));
 		
 		selectionButton = new Button(bBar, SWT.PUSH);
-		selectionButton.setText("...");
+		selectionButton.setText("..."); //$NON-NLS-1$
 		
 		if (getPropertyBinding().isCreateNew()) {
 			newButton = new Button(bBar, SWT.NONE);
-			newButton.setText("New...");
+			newButton.setText(Messages.getString("UI.NEW_BUTTON_LABEL")); //$NON-NLS-1$
 		}
 		createDecoration(textField);
 		hookButtonListener();

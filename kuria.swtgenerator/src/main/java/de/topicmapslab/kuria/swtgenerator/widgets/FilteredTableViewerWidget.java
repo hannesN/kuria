@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Text;
 
 import de.topicmapslab.kuria.swtgenerator.WidgetGenerator;
 import de.topicmapslab.kuria.swtgenerator.table.TableGenerator.KuriaColumnLabelProvider;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * This widget consists of a text field and a table veiwer. The table viewer
@@ -69,7 +70,7 @@ public class FilteredTableViewerWidget {
 		composite.setLayout(new GridLayout(3, false));
 
 		Label l = new Label(composite, SWT.NONE);
-		l.setText("Filter:");
+		l.setText(Messages.getString("FilteredTableViewerWidget.FILTER")+":"); //$NON-NLS-1$ //$NON-NLS-2$
 		searchText = new Text(composite, SWT.BORDER | SWT.SEARCH);
 		searchText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		searchText.addModifyListener(new ModifyListener() {
@@ -81,14 +82,14 @@ public class FilteredTableViewerWidget {
 		});
 
 		clearButton = new Button(composite, SWT.PUSH);
-		clearButton.setText("Clear");
+		clearButton.setText(Messages.getString("FilteredTableViewerWidget.CLEAR")); //$NON-NLS-1$
 		clearButton.addSelectionListener(new SelectionAdapter(){
 			/**
 			 * {@inheritDoc}
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				searchText.setText("");
+				searchText.setText(""); //$NON-NLS-1$
 			}
 		});
 

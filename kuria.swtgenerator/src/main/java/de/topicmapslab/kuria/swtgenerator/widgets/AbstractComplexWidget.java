@@ -23,6 +23,7 @@ import java.util.List;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * Abstract class for widgets with {@link IModelListener}.
@@ -145,7 +146,7 @@ public abstract class AbstractComplexWidget<T> {
      */
     protected void copyFieldValues(Object source, Object target) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
     	if (source.getClass()!=target.getClass())
-    		throw new IllegalArgumentException("target and source need to be of same type");
+    		throw new IllegalArgumentException(Messages.getString("AbstractComplexWidget.SOURCE_TARGET_EQUAL")); //$NON-NLS-1$
     	
     	IEditableBinding editableBinding = getBindingContainer().getEditableBinding(source.getClass());
     	

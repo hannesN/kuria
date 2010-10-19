@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Text;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.widget.IDirectoryBinding;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * @author Hannes Niederhausen
@@ -48,7 +49,7 @@ public class DirectoryWidget extends LabeledWidget {
 	public DirectoryWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 		super(propertyBinding, bindingContainer);
 		if (!(propertyBinding instanceof IDirectoryBinding))
-			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
+			throw new InvalidParameterException(Messages.getString("UI.INVLAID_BINDING") + propertyBinding.getClass().getName()); //$NON-NLS-1$
 	}
 
 	/**
@@ -57,7 +58,7 @@ public class DirectoryWidget extends LabeledWidget {
 	public void createControl(Composite parent) {
 
 		if (!(parent.getLayout() instanceof GridLayout))
-			throw new IllegalArgumentException("Parents layout need to be a GridLayout");
+			throw new IllegalArgumentException(Messages.getString("UI.NO_GRIDLAYOUT_IN_PARENT")); //$NON-NLS-1$
 
 		GridLayout layout = (GridLayout) parent.getLayout();
 
@@ -74,7 +75,7 @@ public class DirectoryWidget extends LabeledWidget {
 		textField.setLayoutData(gd);
 
 		browseButton = new Button(parent, SWT.PUSH);
-		browseButton.setText("...");
+		browseButton.setText("..."); //$NON-NLS-1$
 
 		createDecoration(textField);
 
@@ -93,9 +94,9 @@ public class DirectoryWidget extends LabeledWidget {
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String oldPath = System.getProperty("user.home") + "/.";
+				String oldPath = System.getProperty("user.home") + "/."; //$NON-NLS-1$ //$NON-NLS-2$
 				if (isValid())
-					oldPath = textField.getText() + "/.";
+					oldPath = textField.getText() + "/."; //$NON-NLS-1$
 				DirectoryDialog dlg = new DirectoryDialog(browseButton.getShell());
 				dlg.setFilterPath(oldPath);
 				String newPath = dlg.open();
@@ -131,7 +132,7 @@ public class DirectoryWidget extends LabeledWidget {
 	 * {@inheritDoc}
 	 */
 	public void refresh() {
-		String result = "";
+		String result = ""; //$NON-NLS-1$
 		if (getModel() != null) {
 			try {
 				Object value = getPropertyBinding().getValue(getModel());
@@ -201,7 +202,7 @@ public class DirectoryWidget extends LabeledWidget {
 						String text = textField.getText();
 
 						boolean dirty = true;
-						String tmp = "";
+						String tmp = ""; //$NON-NLS-1$
 						Object val = getPropertyBinding().getValue(getModel());
 						if (val != null)
 							tmp = val.toString();
@@ -211,7 +212,7 @@ public class DirectoryWidget extends LabeledWidget {
 						}
 
 						if ((text.length() == 0) && (!getPropertyBinding().isOptional())) {
-							setErrorMessage("No text entered");
+							setErrorMessage(Messages.getString("UI.NO_TEXT_ENTERED")); //$NON-NLS-1$
 						} else {
 							setErrorMessage(null);
 						}
@@ -219,9 +220,9 @@ public class DirectoryWidget extends LabeledWidget {
 						if (text.length() > 0) {
 								File f = new File(text);
 								if (!f.exists())
-									setErrorMessage("Directory does not exist!");
+									setErrorMessage(Messages.getString("DirectoryWidget.DIRECTORY_DOES_NOT_EXIST")); //$NON-NLS-1$
 								else if (!f.isDirectory())
-									setErrorMessage(f.getName() + " is not a directory");
+									setErrorMessage(Messages.getString("DirectoryWidget.IS_NOT_DIRECTORY", f.getName())); //$NON-NLS-1$
 								else
 									setErrorMessage(null);
 						} else {

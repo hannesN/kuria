@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Text;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.widget.IFileBinding;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * @author Hannes Niederhausen
@@ -48,7 +49,7 @@ public class FileWidget extends LabeledWidget {
 	public FileWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 		super(propertyBinding, bindingContainer);
 		if (!(propertyBinding instanceof IFileBinding))
-			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
+			throw new InvalidParameterException(Messages.getString("UI.INVLAID_BINDING") + propertyBinding.getClass().getName()); //$NON-NLS-1$
 	}
 
 	/**
@@ -57,7 +58,7 @@ public class FileWidget extends LabeledWidget {
 	public void createControl(Composite parent) {
 
 		if (!(parent.getLayout() instanceof GridLayout))
-			throw new IllegalArgumentException("Parents layout need to be a GridLayout");
+			throw new IllegalArgumentException(Messages.getString("UI.NO_GRIDLAYOUT_IN_PARENT")); //$NON-NLS-1$
 
 		GridLayout layout = (GridLayout) parent.getLayout();
 
@@ -74,7 +75,7 @@ public class FileWidget extends LabeledWidget {
 		textField.setLayoutData(gd);
 
 		browseButton = new Button(parent, SWT.PUSH);
-		browseButton.setText("...");
+		browseButton.setText("..."); //$NON-NLS-1$
 
 		createDecoration(textField);
 
@@ -93,9 +94,9 @@ public class FileWidget extends LabeledWidget {
 			 */
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String oldPath = System.getProperty("user.home") + "/.";
+				String oldPath = System.getProperty("user.home") + "/."; //$NON-NLS-1$ //$NON-NLS-2$
 				if (isValid())
-					oldPath = textField.getText() + "/.";
+					oldPath = textField.getText() + "/."; //$NON-NLS-1$
 				
 				int swtFlag = (getPropertyBinding().isLoad()) ? SWT.OPEN : SWT.SAVE;
 				
@@ -135,7 +136,7 @@ public class FileWidget extends LabeledWidget {
 	 * {@inheritDoc}
 	 */
 	public void refresh() {
-		String result = "";
+		String result = ""; //$NON-NLS-1$
 		if (getModel() != null) {
 			try {
 				Object value = getPropertyBinding().getValue(getModel());
@@ -205,7 +206,7 @@ public class FileWidget extends LabeledWidget {
 						String text = textField.getText();
 
 						boolean dirty = true;
-						String tmp = "";
+						String tmp = ""; //$NON-NLS-1$
 						Object val = getPropertyBinding().getValue(getModel());
 						if (val != null)
 							tmp = val.toString();
@@ -215,7 +216,7 @@ public class FileWidget extends LabeledWidget {
 						}
 
 						if ((text.length() == 0) && (!getPropertyBinding().isOptional())) {
-							setErrorMessage("No text entered");
+							setErrorMessage(Messages.getString("UI.NO_TEXT_ENTERED")); //$NON-NLS-1$
 						} else {
 							setErrorMessage(null);
 						}
@@ -223,9 +224,9 @@ public class FileWidget extends LabeledWidget {
 						if (text.length()>0) {
 							File f = new File(text);
 							if (!f.exists() && (getPropertyBinding().isLoad()))
-								setErrorMessage("File does not exist!");
+								setErrorMessage(Messages.getString("FileWidget.FILE_DOES_NOT_EXIST")); //$NON-NLS-1$
 							else if (!f.isFile() && (getPropertyBinding().isLoad()))
-								setErrorMessage(f.getName() + " is not a file");
+								setErrorMessage(Messages.getString("FileWidget.IS_NOT_A_FILE", f.getName())); //$NON-NLS-1$
 							else
 								setErrorMessage(null);
 						}

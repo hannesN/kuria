@@ -45,7 +45,7 @@ public abstract class LabeledWidget extends AbstractWidget {
 	 */
 	protected Label createLabel(Composite parent) {
 		Label label = new Label(parent, SWT.NONE);
-		label.setText(getLabel() + ":");
+		label.setText(getLabel() + ":"); //$NON-NLS-1$
 		return label;
 	}
 }

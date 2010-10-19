@@ -57,6 +57,7 @@ import de.topicmapslab.kuria.swtgenerator.edit.widgets.IInputMaskWidget;
 import de.topicmapslab.kuria.swtgenerator.edit.widgets.IStateListener;
 import de.topicmapslab.kuria.swtgenerator.edit.widgets.TableSelectionWidget;
 import de.topicmapslab.kuria.swtgenerator.edit.widgets.TextFieldWidget;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * An InputMask is a wrapper of the control containing the widgets and labels
@@ -92,7 +93,7 @@ public class InputMask implements IStateListener {
 		this.clazz = clazz;
 		this.bindingContainer = container;
 		if (container.getEditableBinding(clazz) == null)
-			throw new IllegalArgumentException("Class " + clazz.getName() + " has no EdiatableBinding");
+			throw new IllegalArgumentException(Messages.getString("InputMask.CLASS_HAS_NO_EDITABLE_BINDING", clazz.getName())); //$NON-NLS-1$ //$NON-NLS-2$
 		createControl(parent, style);
 	}
 
@@ -103,7 +104,7 @@ public class InputMask implements IStateListener {
 	public void setModel(Object model) {
 
 		if ((model != null) && (!model.getClass().equals(clazz)))
-			throw new IllegalArgumentException("Model needs to be instance of " + clazz.getName());
+			throw new IllegalArgumentException(Messages.getString("InputMask.MODEL_HAS_TO_BE_INSTANCE_OF", clazz.getName())); //$NON-NLS-1$
 
 		this.model = model;
 
@@ -397,7 +398,7 @@ public class InputMask implements IStateListener {
 			}
 			return;
 		}
-		String m = w.getLabel() + ": " + msg;
+		String m = w.getLabel() + ": " + msg; //$NON-NLS-1$
 		errorMessages.put(w, m);
 	}
 

@@ -94,7 +94,7 @@ public class TreeGenerator extends AbstractSWTGenerator {
 		});
 
 		if (listener!=null) {
-			MenuManager menuMgr = new MenuManager("#PopupMenu");
+			MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
 			menuMgr.setRemoveAllWhenShown(true);
 			menuMgr.addMenuListener(new IMenuListener() {
 				public void menuAboutToShow(IMenuManager manager) {

@@ -46,6 +46,7 @@ import de.topicmapslab.kuria.runtime.util.TypeUtil;
 import de.topicmapslab.kuria.swtgenerator.edit.dialog.NewInstanceWizard;
 import de.topicmapslab.kuria.swtgenerator.edit.dialog.NewPrimitiveValueWizard;
 import de.topicmapslab.kuria.swtgenerator.edit.dialog.SelectionDialog;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 import de.topicmapslab.kuria.swtgenerator.util.TextBindingLabelProvider;
 
 /**
@@ -110,16 +111,16 @@ public class TableSelectionWidget extends ListWidget {
 		
 		if (getPropertyBinding().isCreateNew()) {
 			newButton = new Button(bBar, SWT.PUSH);
-			newButton.setText("New...");
+			newButton.setText(Messages.getString("UI.NEW_BUTTON_LABEL")+" "); //$NON-NLS-2$
 			newButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		}
 		
 		addButton = new Button(bBar, SWT.PUSH);
-		addButton.setText("Add...");
+		addButton.setText(Messages.getString("UI.ADD")); //$NON-NLS-1$
 		addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		removeButton = new Button(bBar, SWT.PUSH);
-		removeButton.setText("Remove");
+		removeButton.setText(Messages.getString("UI.REMOVE")); //$NON-NLS-1$
 		removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		createDecoration(viewer.getTable());
@@ -187,7 +188,7 @@ public class TableSelectionWidget extends ListWidget {
 	        if ((String.class.equals(type)) || (TypeUtil.isPrimitive(type))) {
 	            NewPrimitiveValueWizard wzrd = new NewPrimitiveValueWizard((Class<?>) type);
 	            WizardDialog dlg = new WizardDialog(newButton.getShell(), wzrd);
-	            wzrd.setWindowTitle("New "+getLabel()+"...");
+	            wzrd.setWindowTitle(Messages.getString("UI.NEW_LABEL")+getLabel()+"..."); //$NON-NLS-1$ //$NON-NLS-2$
 	            if (dlg.open()==Dialog.OK) {
 	            	addToSelection(wzrd.getResult());
 	            	notifyNewModelListener(wzrd.getResult());
@@ -198,7 +199,7 @@ public class TableSelectionWidget extends ListWidget {
 	        if (getBindingContainer().getEditableBinding((Class<?>) type)!=null) {
 	        	NewInstanceWizard wzrd = new NewInstanceWizard((Class<?>) type, getBindingContainer(),getContentProvider());
 	        	WizardDialog dlg = new WizardDialog(newButton.getShell(), wzrd);
-	            wzrd.setWindowTitle("New "+getLabel()+"...");
+	            wzrd.setWindowTitle(Messages.getString("UI.NEW_LABEL")+getLabel()+"..."); //$NON-NLS-1$ //$NON-NLS-2$
 	            if (dlg.open()==Dialog.OK) {
 	            	addToSelection(wzrd.getModel());
 	            	notifyNewModelListener(wzrd.getModel());

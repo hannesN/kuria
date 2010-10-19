@@ -55,7 +55,7 @@ public class ImageRegistry {
 	
 	private static Image getDefaultImage() {
 	    if (defaultImage==null) {
-	    	InputStream is = getImageMap().getClass().getResourceAsStream("/empty.gif");		
+	    	InputStream is = getImageMap().getClass().getResourceAsStream("/empty.gif");		 //$NON-NLS-1$
 	    	defaultImage = new Image(Display.getCurrent(), is);
 	    }
 		
@@ -64,8 +64,8 @@ public class ImageRegistry {
 
 	private static Image loadImage(String path) {
 		String newpath;
-		if (!path.startsWith("/"))
-			newpath="/"+path;
+		if (!path.startsWith("/")) //$NON-NLS-1$
+			newpath="/"+path; //$NON-NLS-1$
 		else
 			newpath = path;
         

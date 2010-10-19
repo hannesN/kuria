@@ -67,7 +67,7 @@ public class NewPrimitiveValueWizard extends Wizard {
 		private Text inputField;
 
 		protected NewPrimitiveValueWizardPage() {
-	        super("new instance wizard page");
+	        super("new instance wizard page"); //$NON-NLS-1$
         }
 
 		public void createControl(Composite parent) {

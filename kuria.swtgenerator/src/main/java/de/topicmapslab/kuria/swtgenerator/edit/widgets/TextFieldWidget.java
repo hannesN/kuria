@@ -35,6 +35,7 @@ import de.topicmapslab.kuria.runtime.IPropertyBinding;
 import de.topicmapslab.kuria.runtime.widget.ITextFieldBinding;
 import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
 import de.topicmapslab.kuria.swtgenerator.edit.Validators;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * @author Hannes Niederhausen
@@ -47,7 +48,7 @@ public class TextFieldWidget extends LabeledWidget {
 	public TextFieldWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 		super(propertyBinding, bindingContainer);
 		if (!(propertyBinding instanceof TextFieldBinding))
-			throw new InvalidParameterException("Invalid binding:" + propertyBinding.getClass().getName());
+			throw new InvalidParameterException("" + propertyBinding.getClass().getName()); //$NON-NLS-1$
 	}
 
 	/**
@@ -55,7 +56,7 @@ public class TextFieldWidget extends LabeledWidget {
 	 */
 	public void createControl(Composite parent) {
 		if (!(parent.getLayout() instanceof GridLayout))
-			throw new IllegalArgumentException("Parents layout need to be a GridLayout");
+			throw new IllegalArgumentException(Messages.getString("UI.NO_GRIDLAYOUT_IN_PARENT")); //$NON-NLS-1$
 
 		GridLayout layout = (GridLayout) parent.getLayout();
 
@@ -108,7 +109,7 @@ public class TextFieldWidget extends LabeledWidget {
 	 * {@inheritDoc}
 	 */
 	public void refresh() {
-		String result = "";
+		String result = ""; //$NON-NLS-1$
 		if (getModel() != null) {
 			try {
 				Object value = getPropertyBinding().getValue(getModel());
@@ -205,7 +206,7 @@ public class TextFieldWidget extends LabeledWidget {
 						String text = textField.getText();
 	
 						boolean dirty = true;
-						String tmp = "";
+						String tmp = ""; //$NON-NLS-1$
 						Object val = getPropertyBinding().getValue(getModel());
 						if (val != null)
 							tmp = val.toString();
@@ -215,7 +216,7 @@ public class TextFieldWidget extends LabeledWidget {
 						}
 						
 						if ((text.length()==0) && (!getPropertyBinding().isOptional())) {
-							setErrorMessage("No text entered");
+							setErrorMessage(Messages.getString("UI.NO_TEXT_ENTERED")); //$NON-NLS-1$
 						} else {
 							setErrorMessage(null);
 						}

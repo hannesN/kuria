@@ -82,7 +82,7 @@ public class NewInstanceWizard extends Wizard {
 		private InputMask mask;
 		
 		protected NewInstanceWizardPage() {
-	        super("new instance wizard page");
+	        super("new instance wizard page"); //$NON-NLS-1$
         }
 
 		public void createControl(Composite parent) {

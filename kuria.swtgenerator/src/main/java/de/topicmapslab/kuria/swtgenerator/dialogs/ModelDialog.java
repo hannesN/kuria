@@ -30,6 +30,7 @@ import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.swtgenerator.WidgetGenerator;
 import de.topicmapslab.kuria.swtgenerator.edit.IInputMaskListener;
 import de.topicmapslab.kuria.swtgenerator.edit.InputMask;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * 
@@ -106,7 +107,7 @@ public class ModelDialog extends Dialog implements IInputMaskListener {
      */
     public void setModel(Object model) {
     	if (model.getClass()!=modelClass) {
-    		throw new IllegalArgumentException("Model is not instance of the type given in constructor");
+    		throw new IllegalArgumentException(Messages.getString("ModelDialog.MODEL_INSTANCE_OF_TYPE")); //$NON-NLS-1$
     	}
     	
     	this.model = model;

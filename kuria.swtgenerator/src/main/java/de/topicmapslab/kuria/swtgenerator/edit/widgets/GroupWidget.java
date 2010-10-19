@@ -31,6 +31,7 @@ import de.topicmapslab.kuria.swtgenerator.WidgetGenerator;
 import de.topicmapslab.kuria.swtgenerator.edit.IContentProvider;
 import de.topicmapslab.kuria.swtgenerator.edit.IInputMaskListener;
 import de.topicmapslab.kuria.swtgenerator.edit.InputMask;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * @author Hannes Niederhausen
@@ -125,7 +126,7 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 		if (inputMask.isValid()) {
 			setErrorMessage(null);
 		} else {
-			setErrorMessage("Not all needed items filled out");
+			setErrorMessage(Messages.getString("GroupWidget.NOT_ITEMS_ENTERED")); //$NON-NLS-1$
 		}
 	   notifyStateListener(inputMask.isDirty()); 
     }

@@ -75,7 +75,7 @@ public class TableGenerator extends AbstractSWTGenerator {
 		generateColumns(clazz, viewer);
 		
 		if (listener!=null) {
-			MenuManager menuMgr = new MenuManager("#PopupMenu");
+			MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
 			menuMgr.setRemoveAllWhenShown(true);
 			menuMgr.addMenuListener(new IMenuListener() {
 				public void menuAboutToShow(IMenuManager manager) {
@@ -156,7 +156,7 @@ public class TableGenerator extends AbstractSWTGenerator {
 							return binding.getText(o);
 					}
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -262,7 +262,7 @@ public class TableGenerator extends AbstractSWTGenerator {
 							return binding.getText(o);
 					}
 				}
-				return "";
+				return ""; //$NON-NLS-1$
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}

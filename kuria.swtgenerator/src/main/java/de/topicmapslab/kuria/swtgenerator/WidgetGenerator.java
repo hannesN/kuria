@@ -27,6 +27,7 @@ import de.topicmapslab.kuria.runtime.BindingContainer;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.runtime.table.TableBinding;
 import de.topicmapslab.kuria.runtime.widget.EditableBinding;
+import de.topicmapslab.kuria.swtgenerator.IContextMenuListener;
 import de.topicmapslab.kuria.swtgenerator.edit.EditableGenerator;
 import de.topicmapslab.kuria.swtgenerator.edit.InputMask;
 import de.topicmapslab.kuria.swtgenerator.table.TableGenerator;

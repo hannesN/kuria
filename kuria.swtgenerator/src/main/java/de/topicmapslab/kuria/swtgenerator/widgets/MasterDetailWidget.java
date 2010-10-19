@@ -38,6 +38,7 @@ import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.swtgenerator.WidgetGenerator;
 import de.topicmapslab.kuria.swtgenerator.edit.IInputMaskListener;
 import de.topicmapslab.kuria.swtgenerator.edit.InputMask;
+import de.topicmapslab.kuria.swtgenerator.util.Messages;
 
 /**
  * A widget which combines a table viewer with an input mask. The table viewer
@@ -124,7 +125,7 @@ public class MasterDetailWidget<T> extends AbstractComplexWidget<T> {
 		buttonBar.setLayout(new GridLayout(2, false));
 		
 		saveButton = new Button(buttonBar, SWT.PUSH);
-		saveButton.setText("Save");
+		saveButton.setText(Messages.getString("UI.SAVE_LABEL")); //$NON-NLS-1$
 		gd = new GridData();
 		gd.widthHint = 120;
 		gd.heightHint = 20;
@@ -132,7 +133,7 @@ public class MasterDetailWidget<T> extends AbstractComplexWidget<T> {
 		
 		
 		cancelButton = new Button(buttonBar, SWT.PUSH);
-		cancelButton.setText("Cancel");
+		cancelButton.setText(Messages.getString("UI.CANCEL_LABEL")); //$NON-NLS-1$
 		gd = new GridData();
 		gd.widthHint = 120;
 		gd.heightHint = 20;
@@ -160,10 +161,10 @@ public class MasterDetailWidget<T> extends AbstractComplexWidget<T> {
 		buttonBar.setLayout(new FormLayout());
 		
 		addButton = new Button(buttonBar, SWT.PUSH);
-		addButton.setText("New");
+		addButton.setText(Messages.getString("UI.NEW_LABEL")); //$NON-NLS-1$
 		
 		removeButton = new Button(buttonBar, SWT.PUSH);
-		removeButton.setText("Delete");
+		removeButton.setText(Messages.getString("UI.DELETE_LABEL")); //$NON-NLS-1$
 	}
 
 	private void setLayoutData() {
@@ -191,7 +192,7 @@ public class MasterDetailWidget<T> extends AbstractComplexWidget<T> {
 			fd.right = new FormAttachment(100, 0);
 			addButton.setLayoutData(fd);
 
-			removeButton.setText("Delete");
+			removeButton.setText(Messages.getString("UI.DELETE_LABEL")); //$NON-NLS-1$
 			fd = new FormData();
 			fd.height = 30;
 			fd.top = new FormAttachment(addButton, 10);
@@ -231,7 +232,7 @@ public class MasterDetailWidget<T> extends AbstractComplexWidget<T> {
 			fd.bottom = new FormAttachment(100, 0);
 			addButton.setLayoutData(fd);
 
-			removeButton.setText("Delete");
+			removeButton.setText(Messages.getString("UI.DELETE_LABEL")); //$NON-NLS-1$
 			fd = new FormData();
 			fd.width = 120;
 			fd.left = new FormAttachment(addButton, 10);
@@ -257,10 +258,10 @@ public class MasterDetailWidget<T> extends AbstractComplexWidget<T> {
 		tableViewer = gen.generateTable(getClazz(), parent);
 
 		saveButton = new Button(parent, SWT.PUSH);
-		saveButton.setText("Save");
+		saveButton.setText(Messages.getString("UI.SAVE_LABEL")); //$NON-NLS-1$
 
 		cancelButton = new Button(parent, SWT.PUSH);
-		cancelButton.setText("Cancel");
+		cancelButton.setText(Messages.getString("UI.CANCEL_LABEL")); //$NON-NLS-1$
 		hookTableListener();
 	}
 
