@@ -104,6 +104,7 @@ public class ComboWidget extends LabeledWidget {
 		}
 
 		combo.setLayoutData(gd);
+		combo.setToolTipText(propertyBinding.getDescription());
 		createDecoration(combo);
 		validate();
 	}

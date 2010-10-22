@@ -77,6 +77,7 @@ public class TableSelectionWidget extends ListWidget {
 	
 	public void setEnabled(boolean enabled) {
 	    viewer.getTable().setEnabled(enabled);
+	    viewer.getTable().setToolTipText(propertyBinding.getDescription());
 	    if (addButton!=null)
 	    	addButton.setEnabled(enabled);
 	    if (newButton!=null)

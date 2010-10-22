@@ -72,6 +72,7 @@ public class TextFieldWidget extends LabeledWidget {
 		flag |= (getPropertyBinding().getRows() > 1) ? SWT.MULTI | SWT.V_SCROLL | SWT.WRAP: 0;
 
 		textField = new Text(parent, flag | SWT.BORDER);
+		textField.setToolTipText(propertyBinding.getDescription());
 		
 		GridData gd = new GridData(GridData.FILL_BOTH);
 		gd.horizontalSpan = layout.numColumns - 1;

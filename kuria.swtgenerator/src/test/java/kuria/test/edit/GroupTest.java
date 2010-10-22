@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.Ignore;
 
 import de.topicmapslab.kuria.annotation.AnnotationBindingFactory;
 import de.topicmapslab.kuria.runtime.IBindingContainer;
@@ -39,9 +40,9 @@ import de.topicmapslab.kuria.swtgenerator.edit.InputMask;
  * @author niederhausen
  *
  */
+@Ignore
 public class GroupTest implements IInputMaskListener{
 	private InputMask inputMask;
-	private Button button;
 
 	public static void main(String[] args) {
 		new GroupTest().run();

@@ -237,6 +237,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		FileBinding fb = new FileBinding();
 		if (file.label().length() > 0)
 			fb.setLabel(file.label());
+		fb.setDescription(file.description());
 		fb.setReadOnly(file.readOnly());
 		fb.setOptional(file.optional());
 		fb.setFileExtensions(file.fileExtensions());
@@ -250,6 +251,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		DirectoryBinding db = new DirectoryBinding();
 		if (directory.label().length() > 0)
 			db.setLabel(directory.label());
+		db.setDescription(directory.description());
 		db.setReadOnly(directory.readOnly());
 		db.setOptional(directory.optional());
 		db.setWeight(directory.weight());
@@ -261,6 +263,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		ListBinding lb = new ListBinding();
 		if (list.label().length() > 0)
 			lb.setLabel(list.label());
+		lb.setDescription(list.description());
 		lb.setReadOnly(list.readOnly());
 		lb.setCreateNew(list.createNew());
 		lb.setListStyle(list.style());
@@ -275,6 +278,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		if (group.label().length() > 0)
 			gb.setLabel(group.label());
 
+		gb.setDescription(group.description());
 		gb.setReadOnly(group.readOnly());
 		gb.setOptional(group.optional());
 		gb.setWeight(group.weight());
@@ -301,6 +305,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		db.setReadOnly(date.readOnly());
 		db.setFormat(date.format());
 		
+		db.setDescription(date.description());
 		db.setOptional(date.optional());
 		db.setWeight(date.weight());
 		db.setShowTime(date.showTime());
@@ -326,6 +331,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		if (textfield.label().length() > 0)
 			tfb.setLabel(textfield.label());
 
+		tfb.setDescription(textfield.description());
 		tfb.setGrabVerticalSpace(textfield.grabVerticalSpace());
 		tfb.setRegExp(textfield.regexp());
 		tfb.setPassword(textfield.password());

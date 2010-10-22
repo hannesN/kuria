@@ -67,6 +67,7 @@ In addition it provides a label for the widget and the following flags:
 * optional - indicates the property is optional and their is not needed to be set
 * isArray - indicates the property is an array
 * is Collection - indicates the property is a java.util.Collection or of a subclass
+* description - a description of the field; may be used in tooltips
 
 The *IPropertyBinding* provides methods to access and modify the value of the property for a specific property container.
 

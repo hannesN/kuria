@@ -45,4 +45,8 @@ public @interface Directory {
 	 */
 	int weight() default  1;
 	
+	/**
+	 * An optional description used for tooltips 
+	 */
+	String description() default "";
 }

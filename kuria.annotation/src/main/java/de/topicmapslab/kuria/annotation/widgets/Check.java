@@ -46,4 +46,9 @@ public @interface Check  {
 	 *  The field with the highest weight will be the first.
 	 */
 	int weight() default  1;
+	
+	/**
+	 * An optional description used for tooltips 
+	 */
+	String description() default "";
 }

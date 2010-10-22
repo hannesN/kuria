@@ -77,6 +77,7 @@ public class DateWidget extends LabeledWidget {
 			gd.horizontalSpan = ((GridLayout) parent.getLayout()).numColumns - 1;
 			cdt.setLayoutData(gd);
 			createDecoration(cdt);
+			cdt.setToolTipText(propertyBinding.getDescription());
 		} catch (Throwable e) {
 			createDateWidget(parent);
 		}

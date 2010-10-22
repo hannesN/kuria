@@ -65,6 +65,7 @@ public abstract class PropertyBinding implements IPropertyBinding, Comparable<Pr
 	private boolean readOnly = false;
 	private boolean optional = false;
 	private int weight = 1; 
+	private String description = "";
 
 	private String fieldName;
 	private Type type;
@@ -242,4 +243,20 @@ public abstract class PropertyBinding implements IPropertyBinding, Comparable<Pr
 		
 		return 1;
 	}
+	
+	/**
+	 * Sets the description of the field.
+	 * @param description the new description
+	 */
+	public void setDescription(String description) {
+	    this.description = description;
+    }
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	public String getDescription() {
+	    return description;
+    }
 }

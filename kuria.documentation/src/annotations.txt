@@ -73,6 +73,7 @@ The Parameters are:
  This is only useful with multiline text fields. Default: false
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+ * *description* A text which describes the field Default: empty string
  
 
 .@Check
@@ -84,6 +85,7 @@ The Parameters are:
  * *boolean readOnly* Flag to set the text field is only read only. Default: false
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+* *description* A text which describes the field Default: empty string
 
 .@Combo
 This annotation indicates hat the property is set via a combo box.
@@ -97,6 +99,7 @@ The Parameters are:
  * *boolean createNew* Indicates if a button next to the button is shown. This button opens a 
 	 dialog which let you create a new instance of the type of the annotated field.
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+ * *description* A text which describes the field Default: empty string
 	
 .@Date
 The date annotation indicates, that the property should be edited by an calender.
@@ -109,6 +112,7 @@ The Parameters are:
  * *String format* /** The String format, see SimpleDateFormat */ Default: "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
  * *boolean showTime* flag to tell the UI to show the date with or without the time of the date. Default: false 
+ * *description* A text which describes the field Default: empty string
  
 .@Directory
 This annotation indicates that the field is a absolute path to a directory.
@@ -119,6 +123,7 @@ The Parameters are:
  * *boolean readOnly* Flag to set the text field is only read only. Default: false
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+ * *description* A text which describes the field Default: empty string
  
 .@File
 This annotation indicates that the field is a absolute path to a file.
@@ -133,6 +138,7 @@ The Parameters are:
 	 If you want to filter more than one extension at once use:
 	 _"\*.ext1;*.ext2"_
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+ * *description* A text which describes the field Default: empty string
  
 .@Group
 This annotation is used to embed an input mask for the property. This is used if the type of the property is another
@@ -144,6 +150,7 @@ The Parameters are:
  * *boolean readOnly* Flag to set the text field is only read only. Default: false
  * *boolean optional* Flag which indicates that the property is optional. Default: false;
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+ * *description* A text which describes the field Default: empty string
  
 .@List
 This annotation indicates hat the property is set via a list.
@@ -161,4 +168,5 @@ The Parameters are:
  * *boolean createNew* Indicates if a button next to the button is shown. This button opens a 
 	 dialog which let you create a new instance of the type of the annotated field.
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
+ * *description* A text which describes the field Default: empty string
  

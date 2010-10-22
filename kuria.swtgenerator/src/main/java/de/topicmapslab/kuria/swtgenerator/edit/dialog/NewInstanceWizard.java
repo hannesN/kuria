@@ -96,7 +96,7 @@ public class NewInstanceWizard extends Wizard {
 			mask.setContentProvider(contentProvider);
 			mask.addInputMaskListeners(this);
 			setControl(comp);
-			setPageComplete(false);
+			dirtyChanged();
         }
 		
 		private void persist() {

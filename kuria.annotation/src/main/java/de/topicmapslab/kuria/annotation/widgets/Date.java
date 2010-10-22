@@ -53,4 +53,9 @@ public @interface Date {
 	 * flag to tell the UI to show the date with or without the time of the date 
 	 */
 	boolean showTime() default false;
+	
+	/**
+	 * An optional description used for tooltips 
+	 */
+	String description() default "";
 }

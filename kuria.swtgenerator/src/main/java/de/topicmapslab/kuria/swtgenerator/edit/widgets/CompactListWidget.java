@@ -85,7 +85,8 @@ public class CompactListWidget extends ListWidget {
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = ((GridLayout) parent.getLayout()).numColumns - 2;
 		textField.setLayoutData(gd);
-
+		textField.setToolTipText(propertyBinding.getDescription());
+		
 		Composite bBar = new Composite(parent, SWT.NONE);
 		bBar.setLayout(new GridLayout(2, false));
 		

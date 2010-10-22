@@ -53,6 +53,7 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 		Group g = new Group(parent, SWT.BORDER);
 		g.setText(getLabel());
 		g.setLayout(new FillLayout());
+		g.setToolTipText(propertyBinding.getDescription());
 		WidgetGenerator gen = new WidgetGenerator(bindingContainer);
 		inputMask = gen.generateEditable((Class<?>) getPropertyBinding().getType(), g);
 

@@ -132,4 +132,9 @@ public interface IPropertyBinding {
 	 */
 	public abstract int getWeight();
 
+	/**
+	 * Returns a description of the field which couzld be used as tooltip.
+	 * @return
+	 */
+	public String getDescription();
 }

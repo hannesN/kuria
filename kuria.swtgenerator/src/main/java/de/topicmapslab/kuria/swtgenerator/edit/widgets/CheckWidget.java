@@ -50,6 +50,7 @@ public class CheckWidget extends AbstractWidget {
 		GridData gd = new GridData();
 		gd.horizontalSpan = ((GridLayout)parent.getLayout()).numColumns;
 		button.setLayoutData(gd);
+		button.setToolTipText(propertyBinding.getDescription());
 		hookButtonListener();
 	}
 

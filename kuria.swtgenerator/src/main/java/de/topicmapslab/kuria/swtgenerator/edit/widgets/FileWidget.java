@@ -73,6 +73,7 @@ public class FileWidget extends LabeledWidget {
 
 		// set a height hint for multi column textfields.
 		textField.setLayoutData(gd);
+		textField.setToolTipText(propertyBinding.getDescription());
 
 		browseButton = new Button(parent, SWT.PUSH);
 		browseButton.setText("..."); //$NON-NLS-1$

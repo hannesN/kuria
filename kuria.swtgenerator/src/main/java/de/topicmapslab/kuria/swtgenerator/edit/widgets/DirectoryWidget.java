@@ -78,7 +78,7 @@ public class DirectoryWidget extends LabeledWidget {
 		browseButton.setText("..."); //$NON-NLS-1$
 
 		createDecoration(textField);
-
+		textField.setToolTipText(propertyBinding.getDescription());
 		addModifyListener();
 		addBrowseListener();
 
