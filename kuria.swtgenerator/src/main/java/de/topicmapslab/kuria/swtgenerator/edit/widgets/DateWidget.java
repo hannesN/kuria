@@ -62,58 +62,7 @@ public class DateWidget extends LabeledWidget {
 
 	}
 
-	/**
-	 * @param parent
-	 */
-	private void createDateTimeWidget(Composite parent) {
-		try {
-			int flags = CDT.DROP_DOWN | CDT.DATE_LONG;
-			if (getPropertyBinding().isShowTime()) {
-				flags |= CDT.TIME_MEDIUM | CDT.CLOCK_24_HOUR;
-			}
-
-			cdt = new CDateTime(parent, CDT.BORDER | flags);
-			GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-			gd.horizontalSpan = ((GridLayout) parent.getLayout()).numColumns - 1;
-			cdt.setLayoutData(gd);
-			createDecoration(cdt);
-			cdt.setToolTipText(propertyBinding.getDescription());
-		} catch (Throwable e) {
-			createDateWidget(parent);
-		}
-
-	}
-
-	/**
-	 * @param parent
-	 */
-	private void createDateWidget(Composite parent) {
-		dateTimeWidget = new DateTime(parent, SWT.DROP_DOWN);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = ((GridLayout) parent.getLayout()).numColumns - 1;
-		dateTimeWidget.setLayoutData(gd);
-		dateTimeWidget.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent arg0) {
-				if (getModel() == null)
-					return;
-				try {
-					Calendar cal = getCalender();
-					Date val = (Date) getPropertyBinding().getValue(getModel());
-					if (val == null)
-						notifyStateListener(true);
-					else
-						notifyStateListener(!isEqual(val, cal));
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
-		});
-		createDecoration(dateTimeWidget);
-	}
-
 	public void persist() {
-		if (!isDirty())
-			return;
 		try {
 			Calendar cal = getCalender();
 
@@ -122,22 +71,6 @@ public class DateWidget extends LabeledWidget {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	private Calendar getCalender() {
-		Calendar cal = Calendar.getInstance();
-
-		if (dateTimeWidget != null) {
-			cal.set(YEAR, dateTimeWidget.getYear());
-			cal.set(MONTH, dateTimeWidget.getMonth());
-			cal.set(DAY_OF_MONTH, dateTimeWidget.getDay());
-			cal.set(HOUR_OF_DAY, dateTimeWidget.getHours());
-			cal.set(MINUTE, dateTimeWidget.getMinutes());
-			cal.set(SECOND, dateTimeWidget.getSeconds());
-		} else {
-			cal.setTime(cdt.getSelection());
-		}
-		return cal;
 	}
 
 	public void refresh() {
@@ -186,4 +119,70 @@ public class DateWidget extends LabeledWidget {
 	public IDateBinding getPropertyBinding() {
 		return (IDateBinding) super.getPropertyBinding();
 	}
+	
+	
+	/**
+     * @param parent
+     */
+    private void createDateTimeWidget(Composite parent) {
+    	try {
+    		int flags = CDT.DROP_DOWN | CDT.DATE_LONG;
+    		if (getPropertyBinding().isShowTime()) {
+    			flags |= CDT.TIME_MEDIUM | CDT.CLOCK_24_HOUR;
+    		}
+    
+    		cdt = new CDateTime(parent, CDT.BORDER | flags);
+    		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+    		gd.horizontalSpan = ((GridLayout) parent.getLayout()).numColumns - 1;
+    		cdt.setLayoutData(gd);
+    		createDecoration(cdt);
+    		cdt.setToolTipText(propertyBinding.getDescription());
+    	} catch (Throwable e) {
+    		createDateWidget(parent);
+    	}
+    
+    }
+
+	/**
+     * @param parent
+     */
+    private void createDateWidget(Composite parent) {
+    	dateTimeWidget = new DateTime(parent, SWT.DROP_DOWN);
+    	GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+    	gd.horizontalSpan = ((GridLayout) parent.getLayout()).numColumns - 1;
+    	dateTimeWidget.setLayoutData(gd);
+    	dateTimeWidget.addSelectionListener(new SelectionAdapter() {
+    		public void widgetSelected(SelectionEvent arg0) {
+    			if (getModel() == null)
+    				return;
+    			try {
+    				Calendar cal = getCalender();
+    				Date val = (Date) getPropertyBinding().getValue(getModel());
+    				if (val == null)
+    					notifyStateListener(true);
+    				else
+    					notifyStateListener(!isEqual(val, cal));
+    			} catch (Exception e) {
+    				throw new RuntimeException(e);
+    			}
+    		}
+    	});
+    	createDecoration(dateTimeWidget);
+    }
+
+	private Calendar getCalender() {
+    	Calendar cal = Calendar.getInstance();
+    
+    	if (dateTimeWidget != null) {
+    		cal.set(YEAR, dateTimeWidget.getYear());
+    		cal.set(MONTH, dateTimeWidget.getMonth());
+    		cal.set(DAY_OF_MONTH, dateTimeWidget.getDay());
+    		cal.set(HOUR_OF_DAY, dateTimeWidget.getHours());
+    		cal.set(MINUTE, dateTimeWidget.getMinutes());
+    		cal.set(SECOND, dateTimeWidget.getSeconds());
+    	} else {
+    		cal.setTime(cdt.getSelection());
+    	}
+    	return cal;
+    }
 }
