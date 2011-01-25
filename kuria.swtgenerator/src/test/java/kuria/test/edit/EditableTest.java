@@ -89,7 +89,7 @@ public class EditableTest implements IInputMaskListener {
 		p.get(0).setAddress(createAddress());
 		
 		final ArrayList<Person> children = new ArrayList<Person>();
-		for (int i=0; i<2; i++) {
+		for (int i=0; i<4; i++) {
 			children.add(createPerson("Meyer", "Hans "+i+" max", (i+1)*2));
 		}
 		
@@ -140,6 +140,8 @@ public class EditableTest implements IInputMaskListener {
 				if (fieldname.equals("pets"))
 					return pets.toArray();
 				if (fieldname.equals("children"))
+					return children.toArray();
+				if (fieldname.equals("wife"))
 					return children.toArray();
 				if ( (fieldname.equals("favPet")) && (model instanceof Person) ) {
 	                Set<Pet> petsList = ((Person)model).getPets();

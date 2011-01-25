@@ -149,18 +149,19 @@ public class ComboWidget extends LabeledWidget {
 	@Override
     public boolean isValid() {
     	if (!isOptional())
-    		return combo.getSelectionIndex()>-1;
+    		return combo.getSelectionIndex()>0;
     		
         return super.isValid();
     }
 
 	private void addToComboObjects(Object o) {
     	try {
-            if (comboValues == null)
-    	    comboValues = new ArrayList<Object>();
+            if (comboValues == null) {
+	    	    comboValues = new ArrayList<Object>();
+            }
             comboValues.add(o);
             addComboItem(o);
-            combo.select(comboValues.indexOf(o));
+            combo.select(comboValues.indexOf(o)+1);
             validate();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -194,10 +195,14 @@ public class ComboWidget extends LabeledWidget {
 	        if ((idx == -1) && (val == null)) {
 		        notifyStateListener(false);
 	        } else {
-		        if (val != null)
-			        notifyStateListener(!val.equals(getCurrentSelection(idx)));
-		        else
-			        notifyStateListener(true);
+	        	if ((!isOptional()) && (idx==0)) {
+	        		notifyStateListener(false);
+	        	} else {
+			        if (val != null)
+				        notifyStateListener(!val.equals(getCurrentSelection(idx)));
+			        else
+				        notifyStateListener(true);
+	        	}
 	        }
         } catch (Exception e) {
         	throw new RuntimeException(e);
@@ -240,7 +245,11 @@ public class ComboWidget extends LabeledWidget {
     }
 
 	private void addComboItem(Object o) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-	    if (o instanceof String) {
+	    // add the empty string to clear the selection
+		if (combo.getItemCount()==0) {
+	    	combo.add("");
+	    }
+		if (o instanceof String) {
 	    	combo.add((String) o);
 	    } else {
 	    	ITextBinding textBinding = bindingContainer.getTextBinding(o.getClass());
@@ -256,15 +265,15 @@ public class ComboWidget extends LabeledWidget {
 	private int indexOfComboElement(Object element) {
 		String fieldName = getPropertyBinding().getFieldName();
 		if ((element == null) || (!getContentProvider().hasContent(fieldName, getModel())) )
-			return -1;
+			return 0;
 
 		Object[] elements = getContentProvider().getElements(fieldName, getModel());
 		for (int i = 0; i < elements.length; i++) {
 			if (element.equals(elements[i]))
-				return i;
+				return i+1;
 		}
 
-		return -1;
+		return 0;
 	}
 
 	/**
@@ -289,10 +298,9 @@ public class ComboWidget extends LabeledWidget {
 				return;
 			
 			int idx = combo.getSelectionIndex();
-			if (idx > -1) {
-				Object val = getCurrentSelection(idx);
-				getPropertyBinding().setValue(getModel(), val);
-			}
+			Object val = getCurrentSelection(idx);
+			getPropertyBinding().setValue(getModel(), val);
+
 			notifyStateListener(false);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -300,13 +308,16 @@ public class ComboWidget extends LabeledWidget {
 	}
 
 	private Object getCurrentSelection(int idx) {
-	    Object val =null;
+	    if (idx==0)
+	    	return null; // its the empty element charly brown
+		Object val =null;
+	    idx--;
 	    Object[] elements = getContentProvider().getElements(getPropertyBinding().getFieldName(), getModel());
 	    if (idx<elements.length) {
 	    	val = elements[idx];
 	    } else {
 	    	idx-=elements.length;
-	    	if (getComboValues().size()<idx)
+	    	if (idx<getComboValues().size())
 	    		val = getComboValues().get(idx);
 	    }
 	    return val;
