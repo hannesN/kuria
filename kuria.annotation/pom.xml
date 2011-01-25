@@ -15,8 +15,12 @@
 	<name>Kuria Annotation Library</name>
 	<description>Kuria Annotation Library</description>
 	
+	
+	
 	<build>
 		<plugins>
+		
+		<!--
 			<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -26,6 +30,18 @@
                     </archive>
                 </configuration>
             </plugin>
+            -->
+            <plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<version>2.2.0</version>
+				<configuration>
+					<instructions>
+						<Bundle-Version>${project.version}${maven.build.timestamp}</Bundle-Version>
+					</instructions>
+				</configuration>
+			</plugin>
         </plugins>
 	</build>
 	
