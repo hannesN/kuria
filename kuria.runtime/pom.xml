@@ -11,12 +11,9 @@
 	<groupId>de.topicmapslab.kuria</groupId>
 	<artifactId>kuria-runtime</artifactId>
 	<version>${project.parent.version}</version>
-	<packaging>bundle</packaging>
 	<name>Kuria Runtime</name>
 	<description>Set of binding classes which represent the UI Metamodel.</description>
-	<properties>
-    	<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
-  	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -24,16 +21,29 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<extensions>true</extensions>
 				<version>2.2.0</version>
+				<!-- configure plugin to generate MANIFEST.MF -->
+				<executions>
+					<execution>
+						<id>bundle-manifest</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
+					<!-- configure plugin to support jar packaging -->
+					<supportedProjectTypes>
+						<supportedProjectType>jar</supportedProjectType>
+					</supportedProjectTypes>
 					<instructions>
-						<Bundle-Version>${project.version}${maven.build.timestamp}</Bundle-Version>
+						<Bundle-Version>${osgi.version}</Bundle-Version>
+						<Import-Package> org.apache.commons.beanutils,
+							org.apache.commons.collections
+ 						</Import-Package>
 					</instructions>
 				</configuration>
 			</plugin>
-			
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
-				<configuration> <archive> <manifestFile>META-INF/MANIFEST.MF</manifestFile> 
-				</archive> </configuration> </plugin> -->
 		</plugins>
 	</build>
 
