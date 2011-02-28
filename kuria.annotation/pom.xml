@@ -48,6 +48,7 @@
 							de.topicmapslab.kuria.runtime.util,
 							de.topicmapslab.kuria.runtime.widget
  						</Import-Package>
+ 						<Bundle-RequiredExecutionEnvironment>JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
 					</instructions>
 				</configuration>
 			</plugin>

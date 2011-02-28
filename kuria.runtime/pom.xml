@@ -42,6 +42,7 @@
 						<Import-Package> org.apache.commons.beanutils,
 							org.apache.commons.collections
  						</Import-Package>
+ 						<Bundle-RequiredExecutionEnvironment>JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
 					</instructions>
 				</configuration>
 			</plugin>

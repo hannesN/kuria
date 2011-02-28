@@ -15,3 +15,4 @@ bin
 kuria.documentation/doc
 **/pom.xml.versionsBackup
 **/lib
+**/MANIFEST.MF

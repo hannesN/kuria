@@ -53,6 +53,7 @@
 										 org.eclipse.nebula.cwt;bundle-version="0.9.0";resolution:=optional,
 										 org.eclipse.nebula.widgets.cdatetime;bundle-version="0.14.0";resolution:=optional
 						</Require-Bundle>
+						<Bundle-RequiredExecutionEnvironment>JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
 					</instructions>
 				</configuration>
 			</plugin>
