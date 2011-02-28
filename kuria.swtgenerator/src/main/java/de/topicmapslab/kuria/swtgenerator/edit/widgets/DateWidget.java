@@ -28,8 +28,6 @@ import static java.util.Calendar.YEAR;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.eclipse.nebula.widgets.cdatetime.CDateTime;
-import org.eclipse.nebula.widgets.cdatetime.CDT;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -49,7 +47,7 @@ import de.topicmapslab.kuria.runtime.widget.IDateBinding;
 public class DateWidget extends LabeledWidget {
 
 	private DateTime dateTimeWidget;
-	private CDateTime cdt;
+//	private CDateTime cdt;
 
 	public DateWidget(IPropertyBinding propertyBinding, IBindingContainer bindingContainer) {
 		super(propertyBinding, bindingContainer);
@@ -58,7 +56,7 @@ public class DateWidget extends LabeledWidget {
 	public void createControl(Composite parent) {
 		createLabel(parent);
 
-		createDateTimeWidget(parent);
+		createDateWidget(parent);
 
 	}
 
@@ -90,7 +88,7 @@ public class DateWidget extends LabeledWidget {
 					dateTimeWidget.setDay(cal.get(DAY_OF_MONTH));
 					dateTimeWidget.setTime(cal.get(HOUR_OF_DAY), cal.get(MINUTE), cal.get(SECOND));
 				} else {
-					cdt.setSelection(val);
+//					cdt.setSelection(val);
 				}
 			}
 		} catch (Exception e) {
@@ -111,8 +109,8 @@ public class DateWidget extends LabeledWidget {
 	public void setEnabled(boolean enabled) {
 		if (dateTimeWidget != null)
 			dateTimeWidget.setEnabled(enabled);
-		else
-			cdt.setEnabled(enabled);
+//		else
+//			cdt.setEnabled(enabled);
 	}
 
 	@Override
@@ -123,14 +121,17 @@ public class DateWidget extends LabeledWidget {
 	
 	/**
      * @param parent
+     * 
      */
+	/*
+	 * Can't use right now because of segfaults in linux
     private void createDateTimeWidget(Composite parent) {
     	try {
     		int flags = CDT.DROP_DOWN | CDT.DATE_LONG;
     		if (getPropertyBinding().isShowTime()) {
     			flags |= CDT.TIME_MEDIUM | CDT.CLOCK_24_HOUR;
     		}
-    
+
     		cdt = new CDateTime(parent, CDT.BORDER | flags);
     		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
     		gd.horizontalSpan = ((GridLayout) parent.getLayout()).numColumns - 1;
@@ -142,7 +143,7 @@ public class DateWidget extends LabeledWidget {
     	}
     
     }
-
+*/
 	/**
      * @param parent
      */
@@ -181,7 +182,7 @@ public class DateWidget extends LabeledWidget {
     		cal.set(MINUTE, dateTimeWidget.getMinutes());
     		cal.set(SECOND, dateTimeWidget.getSeconds());
     	} else {
-    		cal.setTime(cdt.getSelection());
+//    		cal.setTime(cdt.getSelection());
     	}
     	return cal;
     }

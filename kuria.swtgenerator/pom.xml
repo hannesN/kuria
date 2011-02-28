@@ -34,7 +34,8 @@
 					<!-- configure plugin to support jar packaging -->
                     <supportedProjectTypes>  
                         <supportedProjectType>jar</supportedProjectType>  
-                    </supportedProjectTypes> 
+                    </supportedProjectTypes>
+                    <manifestLocation>META-INF</manifestLocation> 
 					<instructions>
 						<Bundle-Version>${osgi.version}</Bundle-Version>
 						<Import-Package> de.topicmapslab.kuria.annotation;resolution:=optional,
