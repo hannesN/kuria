@@ -187,26 +187,22 @@ public class ComboWidget extends LabeledWidget {
 		}
 			
 		try {
-			if (getModel()==null)
+			if (getModel() == null)
 				return;
-			
-	        Object val = getPropertyBinding().getValue(getModel());
-	        int idx = combo.getSelectionIndex();
-	        if ((idx == -1) && (val == null)) {
-		        notifyStateListener(false);
-	        } else {
-	        	if ((!isOptional()) && (idx==0)) {
-	        		notifyStateListener(false);
-	        	} else {
-			        if (val != null)
-				        notifyStateListener(!val.equals(getCurrentSelection(idx)));
-			        else
-				        notifyStateListener(true);
-	        	}
-	        }
-        } catch (Exception e) {
-        	throw new RuntimeException(e);
-        }
+
+			Object val = getPropertyBinding().getValue(getModel());
+			int idx = combo.getSelectionIndex();
+			if ((idx == -1) && (val == null)) {
+				notifyStateListener(false);
+			} else {
+				if (val != null)
+					notifyStateListener(!val.equals(getCurrentSelection(idx)));
+				else
+					notifyStateListener(true);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
     }
 
 	private void hookButtonListener() {
@@ -245,10 +241,6 @@ public class ComboWidget extends LabeledWidget {
     }
 
 	private void addComboItem(Object o) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-	    // add the empty string to clear the selection
-		if (combo.getItemCount()==0) {
-	    	combo.add("");
-	    }
 		if (o instanceof String) {
 	    	combo.add((String) o);
 	    } else {
@@ -265,12 +257,12 @@ public class ComboWidget extends LabeledWidget {
 	private int indexOfComboElement(Object element) {
 		String fieldName = getPropertyBinding().getFieldName();
 		if ((element == null) || (!getContentProvider().hasContent(fieldName, getModel())) )
-			return 0;
+			return -1;
 
 		Object[] elements = getContentProvider().getElements(fieldName, getModel());
 		for (int i = 0; i < elements.length; i++) {
 			if (element.equals(elements[i]))
-				return i+1;
+				return i;
 		}
 
 		return 0;
@@ -308,10 +300,7 @@ public class ComboWidget extends LabeledWidget {
 	}
 
 	private Object getCurrentSelection(int idx) {
-	    if (idx==0)
-	    	return null; // its the empty element charly brown
 		Object val =null;
-	    idx--;
 	    Object[] elements = getContentProvider().getElements(getPropertyBinding().getFieldName(), getModel());
 	    if (idx<elements.length) {
 	    	val = elements[idx];
