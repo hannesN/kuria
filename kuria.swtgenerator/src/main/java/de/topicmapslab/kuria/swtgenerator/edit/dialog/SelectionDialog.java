@@ -21,17 +21,22 @@ package de.topicmapslab.kuria.swtgenerator.edit.dialog;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import de.topicmapslab.kuria.runtime.IBindingContainer;
 import de.topicmapslab.kuria.swtgenerator.edit.IContentProvider;
@@ -50,6 +55,7 @@ public class SelectionDialog extends Dialog {
 	
 	private Object[] initialSelection;
 	private CheckboxTableViewer checkTableViewer;
+	private Text filterText;
 	
 	private Object[] selection;
 	
@@ -66,6 +72,16 @@ public class SelectionDialog extends Dialog {
 	protected Control createDialogArea(Composite parent) {
 	    Composite comp = new Composite(parent, SWT.NONE);
 	    comp.setLayout(new GridLayout());
+	    
+	    filterText = new Text(comp, SWT.ICON_SEARCH|SWT.SEARCH|SWT.BORDER);
+	    filterText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+	    filterText.addModifyListener(new ModifyListener() {
+			
+			public void modifyText(ModifyEvent e) {
+				checkTableViewer.refresh();
+			}
+		});
+        
 	    
 	    checkTableViewer = CheckboxTableViewer.newCheckList(comp, SWT.BORDER);
 	    checkTableViewer.setContentProvider(new ArrayContentProvider());
@@ -115,6 +131,22 @@ public class SelectionDialog extends Dialog {
 				String t1 = ((TextBindingLabelProvider) tv.getLabelProvider()).getText(e1);
 				String t2 = ((TextBindingLabelProvider) tv.getLabelProvider()).getText(e2);
 			    return t1.compareTo(t2);
+			}
+		});
+		
+		checkTableViewer.addFilter(new ViewerFilter() {
+			
+			@Override
+			public boolean select(Viewer viewer, Object parentElement, Object element) {
+				if (filterText.getText().length()==0)
+					return true;
+				
+				if (((CheckboxTableViewer) viewer).getChecked(element))
+					return true;
+				
+				String text = ((TextBindingLabelProvider) ((AbstractTableViewer) viewer).getLabelProvider()).getText(element);
+				
+				return (text.startsWith(filterText.getText())); 
 			}
 		});
 	}
