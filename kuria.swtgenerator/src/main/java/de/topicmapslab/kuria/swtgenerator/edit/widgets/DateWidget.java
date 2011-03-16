@@ -148,29 +148,43 @@ public class DateWidget extends LabeledWidget {
      * @param parent
      */
     private void createDateWidget(Composite parent) {
+    	
+    	
+    	
     	dateTimeWidget = new DateTime(parent, SWT.DROP_DOWN);
     	GridData gd = new GridData(GridData.FILL_HORIZONTAL);
     	gd.horizontalSpan = ((GridLayout) parent.getLayout()).numColumns - 1;
     	dateTimeWidget.setLayoutData(gd);
-    	dateTimeWidget.addSelectionListener(new SelectionAdapter() {
-    		public void widgetSelected(SelectionEvent arg0) {
-    			if (getModel() == null)
-    				return;
-    			try {
-    				Calendar cal = getCalender();
-    				Date val = (Date) getPropertyBinding().getValue(getModel());
-    				if (val == null)
-    					notifyStateListener(true);
-    				else
-    					notifyStateListener(!isEqual(val, cal));
-    			} catch (Exception e) {
-    				throw new RuntimeException(e);
-    			}
-    		}
-    	});
     	createDecoration(dateTimeWidget);
-    	if (!isEditable())
-			dateTimeWidget.setEnabled(false);
+    	
+		if (isEditable()) {
+			dateTimeWidget.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent arg0) {
+					if (getModel() == null)
+						return;
+					try {
+						Calendar cal = getCalender();
+						Date val = (Date) getPropertyBinding().getValue(getModel());
+						if (val == null)
+							notifyStateListener(true);
+						else
+							notifyStateListener(!isEqual(val, cal));
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
+			});
+		} else {
+			// add a listener which resets any changes
+			dateTimeWidget.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent arg0) {
+					refresh();
+				}
+			});
+		}
+    	
+    	
+    	
 		
     }
 
