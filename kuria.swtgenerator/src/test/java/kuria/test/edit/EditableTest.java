@@ -19,6 +19,7 @@
 package kuria.test.edit;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -86,6 +87,8 @@ public class EditableTest implements IInputMaskListener {
 			p.add(createPerson("Meyer", "Hans "+i, (i+1)*2));
 		}
 		
+
+		
 		p.get(0).setAddress(createAddress());
 		
 		final ArrayList<Person> children = new ArrayList<Person>();
@@ -93,7 +96,7 @@ public class EditableTest implements IInputMaskListener {
 			children.add(createPerson("Meyer", "Hans "+i+" max", (i+1)*2));
 		}
 		
-		
+		Collections.shuffle(children);
 		
 		shell.setText("TableTest");
 		shell.setSize(800, 1000);
