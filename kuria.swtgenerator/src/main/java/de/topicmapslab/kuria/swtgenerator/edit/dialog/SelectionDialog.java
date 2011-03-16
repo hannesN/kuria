@@ -73,7 +73,7 @@ public class SelectionDialog extends Dialog {
 	    Composite comp = new Composite(parent, SWT.NONE);
 	    comp.setLayout(new GridLayout());
 	    
-	    filterText = new Text(comp, SWT.ICON_SEARCH|SWT.SEARCH|SWT.BORDER);
+	    filterText = new Text(comp, SWT.ICON_SEARCH|SWT.SEARCH|SWT.BORDER|SWT.ICON_CANCEL);
 	    filterText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	    filterText.addModifyListener(new ModifyListener() {
 			
