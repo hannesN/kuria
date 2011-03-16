@@ -77,33 +77,58 @@ public class ComboWidget extends LabeledWidget {
 		GridLayout layout = (GridLayout) parent.getLayout();
 		
 		createLabel(parent);
-		combo = new Combo(parent, SWT.BORDER | SWT.READ_ONLY);
-		combo.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				if (getModel()==null)
-					return;
-				try {
-	                validate();
-                } catch (Exception e) {
-                	throw new RuntimeException(e);
-                }
-			}
-		});
+		
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = layout.numColumns-1;
-
-		if (getPropertyBinding().isShowNewButton()) {
-			gd.horizontalSpan--;
-			newButton = new Button(parent, SWT.PUSH);
-			newButton.setText(Messages.getString("UI.NEW_BUTTON_LABEL")); //$NON-NLS-1$
-			GridData gridData = new GridData();
-			newButton.setLayoutData(gridData);
-			hookButtonListener();
-
-		}
-
+		combo = new Combo(parent, SWT.BORDER | SWT.READ_ONLY);
 		combo.setLayoutData(gd);
+		
+		if (isEditable()) {
+			
+			if (getPropertyBinding().isShowNewButton()) {
+				gd.horizontalSpan--;
+				newButton = new Button(parent, SWT.PUSH);
+				newButton.setText(Messages.getString("UI.NEW_BUTTON_LABEL")); //$NON-NLS-1$
+				GridData gridData = new GridData();
+				newButton.setLayoutData(gridData);
+				hookButtonListener();
+
+			}
+			combo.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent arg0) {
+					if (getModel()==null)
+						return;
+					try {
+		                validate();
+	                } catch (Exception e) {
+	                	throw new RuntimeException(e);
+	                }
+				}
+			});
+		} else {
+			combo.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent arg0) {
+					// we just select the models value again...
+					try {
+	                    int index = indexOfComboElement(getPropertyBinding().getValue(getModel()));
+	                    if (index >= 0) {
+	                    	combo.select(index);
+	                    } else {
+	                    	combo.deselectAll();
+	                    }
+                    } catch (Exception e) {
+                    	throw new RuntimeException(e);
+                    }
+				}
+			});
+		}
+		
+		
+
+		
+
 		combo.setToolTipText(propertyBinding.getDescription());
 		createDecoration(combo);
 		validate();
@@ -148,7 +173,7 @@ public class ComboWidget extends LabeledWidget {
 
 	@Override
     public boolean isValid() {
-    	if (!isOptional())
+    	if (!isOptional() && isEditable())
     		return combo.getSelectionIndex()>0;
     		
         return super.isValid();
@@ -178,7 +203,7 @@ public class ComboWidget extends LabeledWidget {
 	}
 
 	private void validate() {
-		if (!(getPropertyBinding().isOptional()||getPropertyBinding().isReadOnly())) {
+		if (!(getPropertyBinding().isOptional())&&isEditable()) {
 			if (combo.getSelectionIndex()==-1) {
 				setErrorMessage(Messages.getString("ComboWidget.NO_VALUE_SELECTED")); //$NON-NLS-1$
 			} else {

@@ -49,6 +49,8 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 	private boolean dirty = false;
 	private String errorMessage;
 	private ControlDecoration textFieldDecoration;
+	
+	private boolean editable;
 
 	private List<IStateListener> listeners;
 
@@ -56,6 +58,7 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 		super();
 		this.propertyBinding = propertyBinding;
 		this.bindingContainer = bindingContainer;
+		this.editable = true;
 	}
 
 	/**
@@ -194,5 +197,24 @@ public abstract class AbstractWidget implements IInputMaskWidget {
 	 */
 	public String getLabel() {
 		return bindingContainer.getLabelProvider().getLabel(propertyBinding.getLabel());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	public boolean isEditable() {
+		if (this.editable) {
+			if (!getPropertyBinding().isReadOnly())
+				return true;
+		}
+		return false;
 	}
 }

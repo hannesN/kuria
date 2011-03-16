@@ -64,7 +64,7 @@ public class FileWidget extends LabeledWidget {
 
 		createLabel(parent);
 
-		int flag = (getPropertyBinding().isReadOnly()) ? SWT.READ_ONLY : 0;
+		int flag = (!isEditable()) ? SWT.READ_ONLY : 0;
 
 		textField = new Text(parent, flag | SWT.BORDER);
 
@@ -75,9 +75,12 @@ public class FileWidget extends LabeledWidget {
 		textField.setLayoutData(gd);
 		textField.setToolTipText(propertyBinding.getDescription());
 
-		browseButton = new Button(parent, SWT.PUSH);
-		browseButton.setText("..."); //$NON-NLS-1$
-
+		if (isEditable()) {
+			browseButton = new Button(parent, SWT.PUSH);
+			browseButton.setText("..."); //$NON-NLS-1$
+		} else {
+			gd.horizontalSpan++;
+		}
 		createDecoration(textField);
 
 		addModifyListener();
@@ -89,29 +92,30 @@ public class FileWidget extends LabeledWidget {
      * 
      */
 	private void addBrowseListener() {
-		browseButton.addSelectionListener(new SelectionAdapter() {
-			/**
-			 * {@inheritDoc}
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String oldPath = System.getProperty("user.home") + "/."; //$NON-NLS-1$ //$NON-NLS-2$
-				if (isValid())
-					oldPath = textField.getText() + "/."; //$NON-NLS-1$
-				
-				int swtFlag = (getPropertyBinding().isLoad()) ? SWT.OPEN : SWT.SAVE;
-				
-				FileDialog dlg = new FileDialog(browseButton.getShell(), swtFlag);
-				dlg.setFilterPath(oldPath);
-				dlg.setFilterExtensions(getPropertyBinding().getFileExtensions());
-				String newPath = dlg.open();
-				if (newPath != null) {
-					textField.setText(newPath);
+		if (browseButton != null) {
+			browseButton.addSelectionListener(new SelectionAdapter() {
+				/**
+				 * {@inheritDoc}
+				 */
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					String oldPath = System.getProperty("user.home") + "/."; //$NON-NLS-1$ //$NON-NLS-2$
+					if (isValid())
+						oldPath = textField.getText() + "/."; //$NON-NLS-1$
+
+					int swtFlag = (getPropertyBinding().isLoad()) ? SWT.OPEN : SWT.SAVE;
+
+					FileDialog dlg = new FileDialog(browseButton.getShell(), swtFlag);
+					dlg.setFilterPath(oldPath);
+					dlg.setFilterExtensions(getPropertyBinding().getFileExtensions());
+					String newPath = dlg.open();
+					if (newPath != null) {
+						textField.setText(newPath);
+					}
+
 				}
-
-			}
-		});
-
+			});
+		}
 	}
 
 	/**
@@ -119,7 +123,7 @@ public class FileWidget extends LabeledWidget {
 	 */
 	@Override
 	public boolean isValid() {
-		if (!isOptional()) {
+		if (!isOptional() && isEditable()) {
 			if (textField.getText().length() == 0)
 				return false;
 			java.io.File f = new java.io.File(textField.getText());
@@ -169,7 +173,8 @@ public class FileWidget extends LabeledWidget {
 	 */
 	public void setEnabled(boolean enabled) {
 		textField.setEnabled(enabled);
-		browseButton.setEnabled(enabled);
+		if (browseButton!=null)
+			browseButton.setEnabled(enabled);
 		refresh();
 	}
 
@@ -216,7 +221,7 @@ public class FileWidget extends LabeledWidget {
 							dirty = false;
 						}
 
-						if ((text.length() == 0) && (!getPropertyBinding().isOptional())) {
+						if ((text.length() == 0) && (!getPropertyBinding().isOptional()&&isEditable())) {
 							setErrorMessage(Messages.getString("UI.NO_TEXT_ENTERED")); //$NON-NLS-1$
 						} else {
 							setErrorMessage(null);

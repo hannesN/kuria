@@ -64,19 +64,22 @@ public class DirectoryWidget extends LabeledWidget {
 
 		createLabel(parent);
 
-		int flag = (getPropertyBinding().isReadOnly()) ? SWT.READ_ONLY : 0;
+		int flag = (isEditable()) ? 0 : SWT.READ_ONLY;
 
 		textField = new Text(parent, flag | SWT.BORDER);
 
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = layout.numColumns - 2;
 
-		// set a height hint for multi column textfields.
 		textField.setLayoutData(gd);
 
-		browseButton = new Button(parent, SWT.PUSH);
-		browseButton.setText("..."); //$NON-NLS-1$
-
+		if (isEditable()) {
+			browseButton = new Button(parent, SWT.PUSH);
+			browseButton.setText("..."); //$NON-NLS-1$
+		} else {
+			gd.horizontalSpan++;
+		}
+		
 		createDecoration(textField);
 		textField.setToolTipText(propertyBinding.getDescription());
 		addModifyListener();
@@ -88,25 +91,26 @@ public class DirectoryWidget extends LabeledWidget {
      * 
      */
 	private void addBrowseListener() {
-		browseButton.addSelectionListener(new SelectionAdapter() {
-			/**
-			 * {@inheritDoc}
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				String oldPath = System.getProperty("user.home") + "/."; //$NON-NLS-1$ //$NON-NLS-2$
-				if (isValid())
-					oldPath = textField.getText() + "/."; //$NON-NLS-1$
-				DirectoryDialog dlg = new DirectoryDialog(browseButton.getShell());
-				dlg.setFilterPath(oldPath);
-				String newPath = dlg.open();
-				if (newPath != null) {
-					textField.setText(newPath);
+		if (browseButton!=null) {
+			browseButton.addSelectionListener(new SelectionAdapter() {
+				/**
+				 * {@inheritDoc}
+				 */
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					String oldPath = System.getProperty("user.home") + "/."; //$NON-NLS-1$ //$NON-NLS-2$
+					if (isValid())
+						oldPath = textField.getText() + "/."; //$NON-NLS-1$
+					DirectoryDialog dlg = new DirectoryDialog(browseButton.getShell());
+					dlg.setFilterPath(oldPath);
+					String newPath = dlg.open();
+					if (newPath != null) {
+						textField.setText(newPath);
+					}
+	
 				}
-
-			}
-		});
-
+			});
+		}
 	}
 
 	/**
@@ -114,7 +118,7 @@ public class DirectoryWidget extends LabeledWidget {
 	 */
 	@Override
 	public boolean isValid() {
-		if (!isOptional()) {
+		if (!isOptional() && isEditable()) {
 			if (textField.getText().length() == 0)
 				return false;
 			java.io.File f = new java.io.File(textField.getText());
@@ -164,7 +168,8 @@ public class DirectoryWidget extends LabeledWidget {
 	 */
 	public void setEnabled(boolean enabled) {
 		textField.setEnabled(enabled);
-		browseButton.setEnabled(enabled);
+		if (browseButton!=null)
+			browseButton.setEnabled(enabled);
 		refresh();
 	}
 
@@ -211,7 +216,7 @@ public class DirectoryWidget extends LabeledWidget {
 							dirty = false;
 						}
 
-						if ((text.length() == 0) && (!getPropertyBinding().isOptional())) {
+						if ((text.length() == 0) && (!getPropertyBinding().isOptional()&&isEditable())) {
 							setErrorMessage(Messages.getString("UI.NO_TEXT_ENTERED")); //$NON-NLS-1$
 						} else {
 							setErrorMessage(null);

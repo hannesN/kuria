@@ -51,7 +51,11 @@ public class CheckWidget extends AbstractWidget {
 		gd.horizontalSpan = ((GridLayout)parent.getLayout()).numColumns;
 		button.setLayoutData(gd);
 		button.setToolTipText(propertyBinding.getDescription());
-		hookButtonListener();
+		if (isEditable()) {
+			hookButtonListener();
+		} else {
+			button.setEnabled(false);
+		}
 	}
 
 	private void hookButtonListener() {

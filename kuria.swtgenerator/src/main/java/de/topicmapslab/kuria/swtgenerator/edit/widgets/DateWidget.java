@@ -169,6 +169,9 @@ public class DateWidget extends LabeledWidget {
     		}
     	});
     	createDecoration(dateTimeWidget);
+    	if (!isEditable())
+			dateTimeWidget.setEnabled(false);
+		
     }
 
 	private Calendar getCalender() {

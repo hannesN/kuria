@@ -83,10 +83,10 @@ public class Person {
 	@Combo(createNew=false, optional=true)
 	private Pet favPet;
 	
-	@Combo(createNew=true, optional=true)
+	@Combo(createNew=true, optional=true, readOnly=true)
     private Person wife;
 
-	@Date(optional=true)
+	@Date(optional=true, readOnly=true)
 	private java.util.Date birthdate; 
 
 	@Hidden
@@ -105,10 +105,10 @@ public class Person {
 	private double hourlyWage;
 
 	
-	@Directory(optional=true)
+	@Directory(optional=true, readOnly=true)
 	private String homeDirectory;
 	
-	@File(fileExtensions="*.jpg;*.png", load=true)
+	@File(fileExtensions="*.jpg;*.png", load=true, readOnly=true)
 	private String imagePath;
 	
 	/**

@@ -78,11 +78,13 @@ public class TableSelectionWidget extends ListWidget {
 	public void setEnabled(boolean enabled) {
 	    viewer.getTable().setEnabled(enabled);
 	    viewer.getTable().setToolTipText(propertyBinding.getDescription());
+
 	    if (addButton!=null)
 	    	addButton.setEnabled(enabled);
 	    if (newButton!=null)
 	    	newButton.setEnabled(enabled);
-	    removeButton.setEnabled(enabled);
+	    if (removeButton!=null)
+	    	removeButton.setEnabled(enabled);
 	    if (!enabled)
 	    	setSelection(null);
 	    updateView();
@@ -103,27 +105,33 @@ public class TableSelectionWidget extends ListWidget {
 		gd.horizontalSpan = ((GridLayout)parent.getLayout()).numColumns-2;
 		viewer.getTable().setLayoutData(gd);
 
-		// buttonbar
-		Composite bBar = new Composite(parent, SWT.NONE);
-		gd = new GridData();
-		gd.verticalAlignment = SWT.CENTER;
-		bBar.setLayoutData(gd);
-		bBar.setLayout(new GridLayout());
 		
-		if (getPropertyBinding().isCreateNew()) {
-			newButton = new Button(bBar, SWT.PUSH);
-			newButton.setText(Messages.getString("UI.NEW_BUTTON_LABEL")+" "); //$NON-NLS-2$
-			newButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		}
 		
-		addButton = new Button(bBar, SWT.PUSH);
-		addButton.setText(Messages.getString("UI.ADD")); //$NON-NLS-1$
-		addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		if (isEditable()) {
+			// button bar
+			Composite bBar = new Composite(parent, SWT.NONE);
+			gd = new GridData();
+			gd.verticalAlignment = SWT.CENTER;
+			bBar.setLayoutData(gd);
+			bBar.setLayout(new GridLayout());
+			
+			if (getPropertyBinding().isCreateNew()) {
+				newButton = new Button(bBar, SWT.PUSH);
+				newButton.setText(Messages.getString("UI.NEW_BUTTON_LABEL") + " "); //$NON-NLS-2$
+				newButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			}
 
-		removeButton = new Button(bBar, SWT.PUSH);
-		removeButton.setText(Messages.getString("UI.REMOVE")); //$NON-NLS-1$
-		removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		
+			addButton = new Button(bBar, SWT.PUSH);
+			addButton.setText(Messages.getString("UI.ADD")); //$NON-NLS-1$
+			addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+			removeButton = new Button(bBar, SWT.PUSH);
+			removeButton.setText(Messages.getString("UI.REMOVE")); //$NON-NLS-1$
+			removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		} else {
+			// its a column wider because we have no button bar
+			gd.horizontalSpan++;
+		}
 		createDecoration(viewer.getTable());
 		hookButtonListener();
 	}
@@ -162,25 +170,27 @@ public class TableSelectionWidget extends ListWidget {
 				}
 			});
 		}
-	    removeButton.addSelectionListener(new SelectionAdapter() {
-			@SuppressWarnings("unchecked")
-            @Override
-			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection sel = (IStructuredSelection) viewer.getSelection();
-				if (sel.isEmpty())
-					setSelection(new Object[0]);
-				else {
-					List<Object> list = new ArrayList<Object>(Arrays.asList(getSelection()));
-					Iterator<Object> it = sel.iterator();
-					while (it.hasNext()) {
-						Object o = it.next();
-						list.remove(o);
+		if (removeButton != null) {
+			removeButton.addSelectionListener(new SelectionAdapter() {
+				@SuppressWarnings("unchecked")
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					IStructuredSelection sel = (IStructuredSelection) viewer.getSelection();
+					if (sel.isEmpty())
+						setSelection(new Object[0]);
+					else {
+						List<Object> list = new ArrayList<Object>(Arrays.asList(getSelection()));
+						Iterator<Object> it = sel.iterator();
+						while (it.hasNext()) {
+							Object o = it.next();
+							list.remove(o);
+						}
+						setSelection(list.toArray());
 					}
-					setSelection(list.toArray());
+					updateView();
 				}
-				updateView();
-			}
-		});
+			});
+		}
     }
 
 	private void createNewObject() {

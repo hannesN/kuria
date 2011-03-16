@@ -109,7 +109,7 @@ public abstract class ListWidget extends LabeledWidget {
 	
 	@Override
 	public boolean isValid() {
-		if (!isOptional())
+		if (!isOptional() && isEditable())
 			return getSelection().length>0;
 		
 	    return super.isValid();
@@ -127,7 +127,7 @@ public abstract class ListWidget extends LabeledWidget {
 			if (selection == null)
 				return;
 
-			if (!isOptional()) {
+			if (!isOptional()&&isEditable()) {
 				if (getSelection().length == 0) {
 					setErrorMessage("No Item chosen"); //$NON-NLS-1$
 				} else {

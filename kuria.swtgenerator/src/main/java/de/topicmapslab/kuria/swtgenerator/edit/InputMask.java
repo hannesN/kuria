@@ -88,12 +88,15 @@ public class InputMask implements IStateListener {
 
 	private Composite container;
 
+	private boolean editable;
+	
 	public InputMask(Composite parent, int style, Class<?> clazz, IBindingContainer container) {
 		super();
 		this.clazz = clazz;
 		this.bindingContainer = container;
 		if (container.getEditableBinding(clazz) == null)
 			throw new IllegalArgumentException(Messages.getString("InputMask.CLASS_HAS_NO_EDITABLE_BINDING", clazz.getName())); //$NON-NLS-1$ //$NON-NLS-2$
+		this.editable = true;
 		createControl(parent, style);
 	}
 
@@ -117,7 +120,8 @@ public class InputMask implements IStateListener {
 			return;
 		}
 
-		setEnabled(true);
+		if (editable)
+			setEnabled(true);
 	}
 
 	public void setContentProvider(IContentProvider contentProvider) {
@@ -182,7 +186,10 @@ public class InputMask implements IStateListener {
 	}
 
 	public boolean isDirty() {
-		return dirtyMap.size() > 0;
+		if (editable)
+			return dirtyMap.size() > 0;
+			
+		return false;
 	}
 
 	public List<IInputMaskListener> getInputMaskListeners() {
@@ -202,6 +209,10 @@ public class InputMask implements IStateListener {
 			inputMaskListeners.remove(listener);
 	}
 
+	/**
+	 * Enables the widgets of
+	 * @param enabled
+	 */
 	public void setEnabled(boolean enabled) {
 		composite.setEnabled(enabled);
 		for (IInputMaskWidget w : getWidgetMap().values()) {
@@ -209,15 +220,47 @@ public class InputMask implements IStateListener {
 		}
 	}
 
+	/**
+	 * 
+	 * @return whether the input is valid
+	 */
 	public boolean isValid() {
 		return getErrorMessagesMap().isEmpty();
 	}
 
+	/**
+	 * 
+	 * @return the list of error messages
+	 */
 	public Collection<String> getErrorMessages() {
 		List<String> msgs = new ArrayList<String>(getErrorMessagesMap().values());
 		Collections.sort(msgs);
 		return msgs;
 	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 */
+	public void newModelCreated(Object newModel) {
+    	for (IInputMaskListener l : getInputMaskListeners()) {
+    		l.newModelElement(newModel);
+    	}
+    }
+
+	/**
+     * Sets the input mask editable
+     * 
+     * @param editable 
+     */
+    public void setEditable(boolean editable) {
+    	this.editable = editable;
+    	if (getWidgetMap().isEmpty())
+    		return;
+    	for (IInputMaskWidget w : getWidgetMap().values()) {
+    		w.setEditable(editable);
+    	}
+    }
 
 	private void clearAndDisable() {
 		for (IInputMaskWidget w : getWidgetMap().values()) {
@@ -252,6 +295,7 @@ public class InputMask implements IStateListener {
 
 		for (IInputMaskWidget w : getWidgetMap().values()) {
 			w.addStateListener(this);
+			w.setEditable(this.editable);
 		}
 		dirtyMap = new HashMap<IPropertyBinding, Boolean>();
 		clearAndDisable();
@@ -413,11 +457,4 @@ public class InputMask implements IStateListener {
 			l.dirtyChanged();
 		}
 	}
-
-	public void newModelCreated(Object newModel) {
-		for (IInputMaskListener l : getInputMaskListeners()) {
-			l.newModelElement(newModel);
-		}
-	}
-
 }

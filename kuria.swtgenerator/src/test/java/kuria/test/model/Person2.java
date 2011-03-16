@@ -29,7 +29,7 @@ public class Person2 {
 
 	private String name;
 	
-	@Group
+	@Group(readOnly=true)
 	private Address address;
 	
 	/**

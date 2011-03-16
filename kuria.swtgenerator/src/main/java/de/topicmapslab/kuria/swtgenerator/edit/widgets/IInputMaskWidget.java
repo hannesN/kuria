@@ -130,4 +130,16 @@ public interface IInputMaskWidget {
 	 * @return the label of the property
 	 */
 	public String getLabel();
+	
+	/**
+	 * Flag whether the widget is editable
+	 * @return true if the widget is editable
+	 */
+	public boolean isEditable();
+	
+	/**
+	 * Sets the flag whether the widget is editable
+	 * @param editable the value of the flag
+	 */
+	public void setEditable(boolean editable);
 }

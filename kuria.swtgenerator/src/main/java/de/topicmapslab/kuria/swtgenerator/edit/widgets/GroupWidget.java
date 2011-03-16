@@ -64,6 +64,8 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 		createDecoration(g);
 		inputMask.setContentProvider(getContentProvider());
 		inputMask.addInputMaskListeners(this);
+		inputMask.setEditable(isEditable());
+		
 	}
 
 	/**
@@ -100,7 +102,8 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 	 * {@inheritDoc}
 	 */
 	public void setEnabled(boolean enabled) {
-		inputMask.setEnabled(enabled);
+		if (isEditable() && enabled)
+			inputMask.setEnabled(enabled);
 	}
 	
 	@Override
@@ -138,7 +141,7 @@ public class GroupWidget extends AbstractWidget implements IInputMaskListener {
 
 	@Override
 	public boolean isValid() {
-		if (!getPropertyBinding().isOptional())
+		if (!getPropertyBinding().isOptional() && isEditable())
 			return inputMask.isValid();
 		return true;
 	}

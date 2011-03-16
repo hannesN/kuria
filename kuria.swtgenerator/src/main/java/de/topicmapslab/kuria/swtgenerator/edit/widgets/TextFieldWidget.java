@@ -100,7 +100,7 @@ public class TextFieldWidget extends LabeledWidget {
 	
 	@Override
 	public boolean isValid() {
-		if (!isOptional())
+		if (!(isOptional()) && isEditable())
 			return textField.getText().length()>0;
 		// TODO regexp check
 		return super.isValid();
@@ -216,7 +216,7 @@ public class TextFieldWidget extends LabeledWidget {
 							dirty = false;
 						}
 						
-						if ((text.length()==0) && (!getPropertyBinding().isOptional())) {
+						if ((text.length()==0) && (!getPropertyBinding().isOptional()&&isEditable())) {
 							setErrorMessage(Messages.getString("UI.NO_TEXT_ENTERED")); //$NON-NLS-1$
 						} else {
 							setErrorMessage(null);
