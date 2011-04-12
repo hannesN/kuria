@@ -68,7 +68,15 @@ public class BindingContainer implements IBindingContainer {
 		if (editableBindings == null) {
 			return null;
 		}
-		return editableBindings.get(clazz);
+		do {
+			IEditableBinding eb = editableBindings.get(clazz);
+			if (eb!=null)
+				return eb;
+			clazz = clazz.getSuperclass();
+		} while (clazz!=Object.class);
+		
+		return null;
+//		throw new RuntimeException("Invalid clazz - no binding founhd: "+clazz.getName());
 	}
 
 	/**
@@ -98,7 +106,14 @@ public class BindingContainer implements IBindingContainer {
     	if (tableBindings == null) {
     		return null;
     	}
-    	return tableBindings.get(clazz);
+    	do {
+    		ITableBinding eb = tableBindings.get(clazz);
+			if (eb!=null)
+				return eb;
+			clazz = clazz.getSuperclass();
+		} while (clazz!=Object.class);
+		
+		return null;
     }
 
 	/**
@@ -129,7 +144,13 @@ public class BindingContainer implements IBindingContainer {
 		if (treeNodeBindings == null) {
 			return null;
 		}
-		return treeNodeBindings.get(clazz);
+		do {
+			ITreeNodeBinding eb = treeNodeBindings.get(clazz);
+			if (eb!=null)
+				return eb;
+			clazz = clazz.getSuperclass();
+		} while (clazz!=Object.class);
+		return null;
 	}
 	
 	/**
@@ -166,7 +187,16 @@ public class BindingContainer implements IBindingContainer {
 	 *  {@inheritDoc}
 	 */
 	public ITextBinding getTextBinding(Class<?> c) {
-		return getTextBindings().get(c);
+		if (textBindings==null) {
+			return null;
+		}
+		do {
+			ITextBinding eb = textBindings.get(c);
+			if (eb!=null)
+				return eb;
+			c = c.getSuperclass();
+		} while (c!=Object.class);
+		return null;
 	}
 
 	/**
