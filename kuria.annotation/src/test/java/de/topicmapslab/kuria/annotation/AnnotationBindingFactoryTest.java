@@ -39,6 +39,7 @@ import de.topicmapslab.kuria.runtime.widget.DateBinding;
 import de.topicmapslab.kuria.runtime.widget.DirectoryBinding;
 import de.topicmapslab.kuria.runtime.widget.FileBinding;
 import de.topicmapslab.kuria.runtime.widget.GroupBinding;
+import de.topicmapslab.kuria.runtime.widget.ICheckBinding;
 import de.topicmapslab.kuria.runtime.widget.IEditableBinding;
 import de.topicmapslab.kuria.runtime.widget.ListBinding;
 import de.topicmapslab.kuria.runtime.widget.TextFieldBinding;
@@ -284,7 +285,11 @@ public class AnnotationBindingFactoryTest extends AbstractBindingTest {
 		assertNotNull(eb);
 		assertNotNull(eb.getParentBinding());
 		assertEquals(1, eb.getParentBinding().getPropertieBindings().size());
-		
+		for (IPropertyBinding pb : eb.getPropertieBindings()) {
+			if (pb instanceof ICheckBinding)
+				// in class annotated with weight 0 but overridden by annox xml file
+				assertEquals(1,  pb.getWeight());
+		}
 		assertEquals(4, eb.getPropertieBindings().size());
 	}
 }

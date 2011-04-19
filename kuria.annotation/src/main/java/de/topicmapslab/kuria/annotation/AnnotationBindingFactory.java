@@ -22,6 +22,12 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import org.jvnet.annox.reader.resourced.ResourcedXReader;
+import org.jvnet.annox.reflect.AnnotatedElementException;
+import org.jvnet.annox.reflect.DirectAnnotatedElementFactory;
+import org.jvnet.annox.reflect.DualAnnotatedElementFactory;
+import org.jvnet.annox.reflect.ResourcedAnnotatedElementFactory;
+
 import de.topicmapslab.kuria.annotation.table.Column;
 import de.topicmapslab.kuria.annotation.table.TableElement;
 import de.topicmapslab.kuria.annotation.tree.Children;
@@ -70,6 +76,27 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 
 	private BindingContainer bindingContainer;
 	
+	private DualAnnotatedElementFactory annoxElementFactory;
+	
+	/**
+	 * Default constructor searching for annox annotations in the current classloader
+	 */
+	public AnnotationBindingFactory() {
+		annoxElementFactory = new DualAnnotatedElementFactory();
+    }
+	
+	/**
+	 * Constructor getting a classloader containing the xml files. This might come hanhdy in an OSGi environemnt
+	 * @param classloader the classloader which has access to the annox xml files
+	 */
+	public AnnotationBindingFactory(ClassLoader classloader) {
+		annoxElementFactory = new DualAnnotatedElementFactory(
+				new ResourcedAnnotatedElementFactory(new ResourcedXReader(classloader)),
+				new DirectAnnotatedElementFactory());
+    }
+	
+	
+	
 	public IBindingContainer getBindingContainer() {
 		if (bindingContainer == null) {
 			init();
@@ -88,23 +115,29 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 	private void parseClass(Class<?> c) {
 		// check for TreeNode annotation
 
-		if (c.getAnnotation(TreeNode.class) != null) {
-			TreeNodeBinding tnb = createTreeNodeBinding(c);
-			bindingContainer.putTreeNodeBindings(c, tnb);
-		}
-		if (c.getAnnotation(TableElement.class) != null) {
-			TableBinding tb = createTableBinding(c);
-			bindingContainer.putTableBindings(c, tb);
-		}
-		if (c.getAnnotation(Editable.class) != null) {
-			EditableBinding eb = createEditableBinding(c);
-			bindingContainer.putEditableBindings(c, eb);
-		}
-		TextBinding tb = createTextBinding(c);
-		bindingContainer.putTextBinding(c, tb);
+		try {
+	        AnnotatedElement ae = annoxElementFactory.getAnnotatedElement(c);
+	        
+	        if (ae.getAnnotation(TreeNode.class) != null) {
+	        	TreeNodeBinding tnb = createTreeNodeBinding(c);
+	        	bindingContainer.putTreeNodeBindings(c, tnb);
+	        }
+	        if (ae.getAnnotation(TableElement.class) != null) {
+	        	TableBinding tb = createTableBinding(c);
+	        	bindingContainer.putTableBindings(c, tb);
+	        }
+	        if (ae.getAnnotation(Editable.class) != null) {
+	        	EditableBinding eb = createEditableBinding(c);
+	        	bindingContainer.putEditableBindings(c, eb);
+	        }
+	        TextBinding tb = createTextBinding(c);
+	        bindingContainer.putTextBinding(c, tb);
+        } catch (AnnotatedElementException e) {
+        	throw new RuntimeException(e);
+        }
 	}
 
-	private EditableBinding createEditableBinding(Class<?> c) {
+	private EditableBinding createEditableBinding(Class<?> c) throws AnnotatedElementException {
 		// we already have a binding
 		
 		EditableBinding eb = (EditableBinding) bindingContainer.getEditableBinding(c);
@@ -125,7 +158,8 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		ArrayList<String> usedNames = new ArrayList<String>();
 		
 		for (Field f : c.getDeclaredFields()) {
-			if ((hasAccessor(f, c)) && (f.getAnnotation(Hidden.class) == null)) {
+			AnnotatedElement ae = annoxElementFactory.getAnnotatedElement(f);
+			if ((hasAccessor(f, c)) && (ae.getAnnotation(Hidden.class) == null)) {
 				PropertyBinding pb = createPropertyBinding(f, f.getName(), f.getGenericType());
 				usedNames.add(f.getName());
 				eb.addPropertyBinding(pb);
@@ -133,6 +167,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		}
 		
 		for (Method m : c.getDeclaredMethods()) {
+			AnnotatedElement ae = annoxElementFactory.getAnnotatedElement(m);
 			String methodName = m.getName();
 			String fieldname = null;
 			if (methodName.startsWith("get")) {
@@ -141,7 +176,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 				fieldname = Character.toLowerCase(methodName.charAt(2)) + methodName.substring(3);
 			} 
 				
-			if ((fieldname==null) || (usedNames.contains(fieldname)) || (m.getAnnotations().length == 0))
+			if ((fieldname==null) || (usedNames.contains(fieldname)) || (ae.getAnnotations().length == 0))
 				continue;
 
 			Type genericType = m.getGenericReturnType();
@@ -177,9 +212,10 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		return eb;
 	}
 
-	private TextBinding createTextBinding(Class<?> c) {
+	private TextBinding createTextBinding(Class<?> c) throws AnnotatedElementException {
 		for (Field f : c.getDeclaredFields()) {
-			Text text = f.getAnnotation(Text.class);
+			AnnotatedElement ae = annoxElementFactory.getAnnotatedElement(f);
+			Text text = ae.getAnnotation(Text.class);
 			if (text != null) {
 				TextBinding tb = new TextBinding();
 				tb.setFieldName(f.getName());
@@ -187,7 +223,8 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 			}
 		}
 		for (Method m : c.getDeclaredMethods()) {
-			if (m.getAnnotation(Text.class) != null) {
+			AnnotatedElement ae = annoxElementFactory.getAnnotatedElement(m);
+			if (ae.getAnnotation(Text.class) != null) {
 				TextBinding tb = new TextBinding();
 				StringBuilder sb = new StringBuilder();
 				char character = Character.toLowerCase(m.getName().charAt(3));
@@ -205,8 +242,9 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		return new TextBinding();
 	}
 
-	private PropertyBinding createPropertyBinding(AnnotatedElement f, String name, Type type) {
+	private PropertyBinding createPropertyBinding(AnnotatedElement f, String name, Type type) throws AnnotatedElementException {
 		PropertyBinding pb = null;
+		f = annoxElementFactory.getAnnotatedElement(f);
 		if (f.getAnnotation(TextField.class) != null) {
 			pb = createTextFieldBinding(f.getAnnotation(TextField.class));
 		} else if (f.getAnnotation(Check.class) != null) {
@@ -342,11 +380,12 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		return tfb;
 	}
 
-	private TableBinding createTableBinding(Class<?> c) {
+	private TableBinding createTableBinding(Class<?> c) throws AnnotatedElementException {
 		TableBinding b = new TableBinding();
 
 		for (Field f : c.getDeclaredFields()) {
-			Column col = f.getAnnotation(Column.class);
+			AnnotatedElement ae = annoxElementFactory.getAnnotatedElement(f);
+			Column col = ae.getAnnotation(Column.class);
 			if (col != null) {
 				ColumnBinding cb = new ColumnBinding();
 				if (col.image().length() > 0) {
@@ -369,17 +408,20 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		return b;
 	}
 
-	private TreeNodeBinding createTreeNodeBinding(Class<?> c) {
+	private TreeNodeBinding createTreeNodeBinding(Class<?> c) throws AnnotatedElementException {
 		TreeNodeBinding b = new TreeNodeBinding();
-		TreeNode a = c.getAnnotation(TreeNode.class);
+		{
+			AnnotatedElement ae = annoxElementFactory.getAnnotatedElement(c);
+			TreeNode a = ae.getAnnotation(TreeNode.class);
 
-		if (a.image().length() > 0)
-			b.setImage(a.image());
-		if (a.imageMethod().length() > 0)
-			b.setImageMethod(a.imageMethod());
-
+			if (a.image().length() > 0)
+				b.setImage(a.image());
+			if (a.imageMethod().length() > 0)
+				b.setImageMethod(a.imageMethod());
+		}
 		for (Field f : c.getDeclaredFields()) {
-			Children children = f.getAnnotation(Children.class);
+			AnnotatedElement ae = annoxElementFactory.getAnnotatedElement(f);
+			Children children = ae.getAnnotation(Children.class);
 			if (children != null) {
 				ChildrenBinding cb = new ChildrenBinding();
 				if (children.title().length() > 0) {
@@ -394,7 +436,8 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 		}
 		
 		for (Method m : c.getDeclaredMethods()) {
-			Children children = m.getAnnotation(Children.class);
+			AnnotatedElement ae = annoxElementFactory.getAnnotatedElement(m);
+			Children children = ae.getAnnotation(Children.class);
 			if (children != null) {
 				ChildrenBinding cb = new ChildrenBinding();
 				if (children.title().length() > 0) {

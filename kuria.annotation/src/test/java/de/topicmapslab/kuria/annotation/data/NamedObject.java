@@ -18,6 +18,7 @@ package de.topicmapslab.kuria.annotation.data;
 import de.topicmapslab.kuria.annotation.widgets.Editable;
 import de.topicmapslab.kuria.annotation.widgets.TextField;
 
+
 /**
  * @author niederhausen
  *

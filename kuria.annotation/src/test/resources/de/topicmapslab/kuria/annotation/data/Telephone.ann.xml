@@ -1,0 +1,22 @@
+<class xmlns="http://annox.dev.java.net"
+	xmlns:k="http://annox.dev.java.net/de.topicmapslab.kuria.annotation"
+	xmlns:kt="http://annox.dev.java.net/de.topicmapslab.kuria.annotation.table"
+	xmlns:ktr="http://annox.dev.java.net/de.topicmapslab.kuria.annotation.tree"
+	xmlns:kw="http://annox.dev.java.net/de.topicmapslab.kuria.annotation.widgets">
+
+
+	<kw:Editable />
+	
+	<field name="serialNumber">
+		<kw:TextField />
+	</field>
+	<field name="works">
+		<kw:Check weight="1" />
+	</field>
+	<field name="vendor">
+		<kw:TextField />
+	</field>
+	<field name="age">
+				<kw:TextField />
+	</field>
+</class>

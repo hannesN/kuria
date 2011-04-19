@@ -39,16 +39,26 @@
 					<supportedProjectTypes>
 						<supportedProjectType>jar</supportedProjectType>
 					</supportedProjectTypes>
-                    <manifestLocation>META-INF</manifestLocation>
+					<manifestLocation>META-INF</manifestLocation>
 					<instructions>
 						<Bundle-Version>${osgi.version}</Bundle-Version>
 						<Import-Package> *,de.topicmapslab.kuria.runtime,
 							de.topicmapslab.kuria.runtime.table,
 							de.topicmapslab.kuria.runtime.tree,
 							de.topicmapslab.kuria.runtime.util,
-							de.topicmapslab.kuria.runtime.widget
- 						</Import-Package>
- 						<Bundle-RequiredExecutionEnvironment>JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
+							de.topicmapslab.kuria.runtime.widget,
+							org.jvnet.annox,
+							org.jvnet.annox.annotation,
+							org.jvnet.annox.io,
+							org.jvnet.annox.model,
+							org.jvnet.annox.parser,
+							org.jvnet.annox.reader,
+							org.jvnet.annox.reader.resourced,
+							org.jvnet.annox.reflect,
+							org.jvnet.annox.util,
+							org.jvnet.annox.xml.bind
+						</Import-Package>
+						<Bundle-RequiredExecutionEnvironment>JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -76,6 +86,11 @@
 			<groupId>de.topicmapslab.kuria</groupId>
 			<artifactId>kuria-runtime</artifactId>
 			<version>${parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.annox</groupId>
+			<artifactId>annox</artifactId>
+			<version>0.5.0</version>
 		</dependency>
 	</dependencies>
 </project>

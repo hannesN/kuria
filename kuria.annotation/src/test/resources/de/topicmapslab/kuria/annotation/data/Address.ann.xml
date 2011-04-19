@@ -1,0 +1,24 @@
+<class xmlns="http://annox.dev.java.net"
+	xmlns:k="http://annox.dev.java.net/de.topicmapslab.kuria.annotation"
+	xmlns:kt="http://annox.dev.java.net/de.topicmapslab.kuria.annotation.table"
+	xmlns:ktr="http://annox.dev.java.net/de.topicmapslab.kuria.annotation.tree"
+	xmlns:kw="http://annox.dev.java.net/de.topicmapslab.kuria.annotation.widgets">
+
+	<kw:Editable />
+	<kt:TableElement />
+	<field name="street">
+		<kt:Column />
+	</field>
+	<field name="number">
+		<kt:Column />
+	</field>
+	<field name="zipcode">
+		<kt:Column />
+	</field>
+	<field name="city">
+		<kt:Column />
+	</field>
+	<method name="getText">
+		<k:Text />
+	</method>
+</class>

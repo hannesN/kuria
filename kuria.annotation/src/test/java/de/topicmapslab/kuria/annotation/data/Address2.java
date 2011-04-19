@@ -15,18 +15,28 @@
  ******************************************************************************/
 package de.topicmapslab.kuria.annotation.data;
 
+import de.topicmapslab.kuria.annotation.Text;
+import de.topicmapslab.kuria.annotation.table.Column;
+import de.topicmapslab.kuria.annotation.table.TableElement;
+import de.topicmapslab.kuria.annotation.widgets.Editable;
 
 /**
  * @author Hannes Niederhausen
  */
-public class Address {
+@Editable
+@TableElement
+public class Address2 {
 
+	@Column
 	private String street;
 
+	@Column
 	private String number;
 
+	@Column
 	private String zipcode;
 
+	@Column
 	private String city;
 
 	public String getStreet() {
@@ -61,6 +71,7 @@ public class Address {
 		this.city = city;
 	}
 
+	@Text
 	public String getText() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(street);
