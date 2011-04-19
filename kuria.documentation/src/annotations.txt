@@ -170,3 +170,128 @@ The Parameters are:
  * *int weight* A weight which is sued to sort the widgets in an input mask. Default: 1;
  * *description* A text which describes the field Default: empty string
  
+ 
+=== Using Annox to Annotate Models ===
+ 
+Instead of using Java annotations or to override them, it is possible to use Annox (see http://confluence.highsource.org/display/ANX/Home ) to
+annotate the model objects via xml files.
+ 
+Look at the following class:
+ 
+------------------------------
+package de.topicmapslab.kuria.annotation.data;
+
+public class Address {
+
+	private String street;
+
+	private String number;
+
+	private String zipcode;
+
+	private String city;
+
+	// getter setter for the attributes
+	.
+	.
+	.
+	
+	public String getText() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(street);
+		builder.append(" ");
+		builder.append(number);
+		builder.append(", ");
+		builder.append(zipcode);
+		builder.append(" ");
+		builder.append(city);
+		
+		return builder.toString();
+	}
+}
+ 
+-----------------------------
+ 
+A mapping file should be in the classpath, in the same package. It has the name of the class with a suffix _.ann.xml_ In the example case:
+ 
+de.topicmapslab.kuria.annotation.data.Address.ann.xml
+ 
+The content would be:
+--------------------------
+<class xmlns="http://annox.dev.java.net"
+	xmlns:k="http://annox.dev.java.net/de.topicmapslab.kuria.annotation"
+	xmlns:kt="http://annox.dev.java.net/de.topicmapslab.kuria.annotation.table"
+	xmlns:ktr="http://annox.dev.java.net/de.topicmapslab.kuria.annotation.tree"
+	xmlns:kw="http://annox.dev.java.net/de.topicmapslab.kuria.annotation.widgets">
+
+	<!-- class annotation: de.topicmapslab.kuria.annotation.widgets.Editable -->
+	<kw:Editable />
+	<!-- class annotation: de.topicmapslab.kuria.annotation.table.TableElement -->
+	<kt:TableElement />
+	
+	<field name="street">
+		<!-- Field annotation: de.topicmapslab.kuria.annotation.table.Column -->
+		<kt:Column />
+	</field>
+	<field name="number">
+		<kt:Column />
+	</field>
+	<field name="zipcode">
+		<kt:Column />
+	</field>
+	<field name="city">
+		<kt:Column />
+	</field>
+	<method name="getText">
+		<k:Text />
+	</method>
+</class>
+--------------------------
+ 
+The above mapping xml would result in bindings like the annotated class below.
+
+---------------------- 
+package de.topicmapslab.kuria.annotation.data;
+
+@Editable
+@TableElement
+public class Address {
+
+	@Column
+	private String street;
+
+	@Column
+	private String number;
+
+	@Column
+	private String zipcode;
+
+	@Column
+	private String city;
+
+	// getter setter for the attributes
+	.
+	.
+	.
+	
+	@Text
+	public String getText() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(street);
+		builder.append(" ");
+		builder.append(number);
+		builder.append(", ");
+		builder.append(zipcode);
+		builder.append(" ");
+		builder.append(city);
+		
+		return builder.toString();
+	}
+}
+------------------------------
+
+NOTE: This only works in non OSGi Environments because of some classloader issues in the Annox libs.
+
+
+
+For more information how to use Annox see http://confluence.highsource.org/display/ANX/Home .
