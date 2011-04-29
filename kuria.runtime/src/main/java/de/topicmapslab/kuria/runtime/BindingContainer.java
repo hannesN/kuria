@@ -78,6 +78,19 @@ public class BindingContainer implements IBindingContainer {
 		return null;
 //		throw new RuntimeException("Invalid clazz - no binding founhd: "+clazz.getName());
 	}
+	
+	/**
+	 *  {@inheritDoc}
+	 */
+	public IEditableBinding getDirectEditableBinding(Class<?> clazz) {
+		if (editableBindings == null) {
+			return null;
+		}
+		IEditableBinding eb = editableBindings.get(clazz);
+
+		return eb;
+//		throw new RuntimeException("Invalid clazz - no binding founhd: "+clazz.getName());
+	}
 
 	/**
 	 *  {@inheritDoc}
@@ -115,6 +128,17 @@ public class BindingContainer implements IBindingContainer {
 		
 		return null;
     }
+	
+	/**
+	 *  {@inheritDoc}
+	 */
+	public ITableBinding getDirectTableBinding(Class<?> clazz) {
+		if (tableBindings == null) {
+			return null;
+		}
+		ITableBinding eb = tableBindings.get(clazz);
+		return eb;
+	}
 
 	/**
 	 * 
@@ -156,6 +180,17 @@ public class BindingContainer implements IBindingContainer {
 	/**
 	 *  {@inheritDoc}
 	 */
+	public ITreeNodeBinding getDirectTreeNodeBinding(Class<?> clazz) {
+		if (treeNodeBindings == null) {
+			return null;
+		}
+		ITreeNodeBinding eb = treeNodeBindings.get(clazz);
+		return eb;
+	}
+
+	/**
+	 *  {@inheritDoc}
+	 */
 	public Map<Class<?>, ITreeNodeBinding> getTreeNodeBindings() {
 		if (treeNodeBindings==null)
 			return Collections.emptyMap();
@@ -176,6 +211,11 @@ public class BindingContainer implements IBindingContainer {
 		return textBindings;
     }
 	
+	/**
+	 * Puts a textbinding
+	 * @param c the class which is bound
+	 * @param textBinding the binding
+	 */
 	public void putTextBinding(Class<?> c, TextBinding textBinding) {
 		if (textBindings == null) {
 			textBindings = new HashMap<Class<?>, ITextBinding>();
@@ -197,6 +237,17 @@ public class BindingContainer implements IBindingContainer {
 			c = c.getSuperclass();
 		} while (c!=Object.class);
 		return null;
+	}
+	
+	/**
+	 *  {@inheritDoc}
+	 */
+	public ITextBinding getDirectTextBinding(Class<?> c) {
+		if (textBindings==null) {
+			return null;
+		}
+		ITextBinding eb = textBindings.get(c);
+		return eb;
 	}
 
 	/**

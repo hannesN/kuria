@@ -140,7 +140,7 @@ public class AnnotationBindingFactory extends GenericBindingFactory implements I
 	private EditableBinding createEditableBinding(Class<?> c) throws AnnotatedElementException {
 		// we already have a binding
 		
-		EditableBinding eb = (EditableBinding) bindingContainer.getEditableBinding(c);
+		EditableBinding eb = (EditableBinding) bindingContainer.getDirectEditableBinding(c);
 		if (eb!=null)
 			return eb;
 		
