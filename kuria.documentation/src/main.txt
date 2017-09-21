@@ -12,7 +12,7 @@ include::runtime.txt[]
 
 include::annotations.txt[]
 
-include::swt-generator.txt[]
+include::fx-generator.txt[]
 
 include::glossary.txt[]
 

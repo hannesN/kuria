@@ -1,0 +1,4 @@
+== FX Generator ==
+
+=== Introduction ===
+The FX Generator is used to generate widgets based in the bindings. These widgets are generated with the JavaFX.
